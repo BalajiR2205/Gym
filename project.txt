@@ -1,0 +1,94 @@
+.
+├── Mindmap.txt
+├── README.md
+├── app
+│   ├── favicon.ico
+│   ├── fonts
+│   │   ├── GeistMonoVF.woff
+│   │   └── GeistVF.woff
+│   ├── globals.css
+│   ├── join
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   └── page.tsx
+├── components
+│   ├── layout
+│   │   ├── Footer.tsx
+│   │   ├── Navbar.tsx
+│   │   └── WhatsAppButton.tsx
+│   ├── sections
+│   │   ├── ContactSection.tsx
+│   │   ├── FacilitiesSection.tsx
+│   │   ├── GallerySection.tsx
+│   │   ├── HeroSection.tsx
+│   │   ├── MembershipSection.tsx
+│   │   └── TrainersSection.tsx
+│   └── ui
+│       ├── CTAButton.tsx
+│       ├── MembershipCard.tsx
+│       ├── SectionHeading.tsx
+│       └── TrainerCard.tsx
+├── data
+│   └── siteContent.ts
+├── next-env.d.ts
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── project
+│   ├── Mindmap.txt
+│   ├── README.md
+│   ├── app
+│   │   ├── favicon.ico
+│   │   ├── fonts
+│   │   │   ├── GeistMonoVF.woff
+│   │   │   └── GeistVF.woff
+│   │   ├── globals.css
+│   │   ├── join
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components
+│   │   ├── layout
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   └── WhatsAppButton.tsx
+│   │   ├── sections
+│   │   │   ├── ContactSection.tsx
+│   │   │   ├── FacilitiesSection.tsx
+│   │   │   ├── GallerySection.tsx
+│   │   │   ├── HeroSection.tsx
+│   │   │   ├── MembershipSection.tsx
+│   │   │   └── TrainersSection.tsx
+│   │   └── ui
+│   │       ├── CTAButton.tsx
+│   │       ├── MembershipCard.tsx
+│   │       ├── SectionHeading.tsx
+│   │       └── TrainerCard.tsx
+│   ├── data
+│   │   └── siteContent.ts
+│   ├── next-env.d.ts
+│   ├── next.config.mjs
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.mjs
+│   ├── public
+│   │   └── images
+│   │       ├── hero-bg.png
+│   │       ├── payment-qr.jpg
+│   │       └── placeholder.jpg
+│   ├── repomix-output.xml
+│   ├── tailwind.config.ts
+│   └── tsconfig.json
+├── project.txt
+├── project.zip
+├── public
+│   └── images
+│       ├── hero-bg.png
+│       ├── payment-qr.jpg
+│       └── placeholder.jpg
+├── repomix-output.xml
+├── tailwind.config.ts
+└── tsconfig.json
+
+22 directories, 70 files

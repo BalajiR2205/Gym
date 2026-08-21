@@ -1,0 +1,2529 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+app/
+  fonts/
+    GeistMonoVF.woff
+    GeistVF.woff
+  join/
+    page.tsx
+  favicon.ico
+  globals.css
+  layout.tsx
+  page.tsx
+components/
+  layout/
+    Footer.tsx
+    Navbar.tsx
+    WhatsAppButton.tsx
+  sections/
+    ContactSection.tsx
+    FacilitiesSection.tsx
+    GallerySection.tsx
+    HeroSection.tsx
+    MembershipSection.tsx
+    TrainersSection.tsx
+  ui/
+    CTAButton.tsx
+    MembershipCard.tsx
+    SectionHeading.tsx
+    TrainerCard.tsx
+data/
+  siteContent.ts
+public/
+  images/
+    hero-bg.png
+    payment-qr.jpg
+    placeholder.jpg
+.eslintrc.json
+.gitignore
+next.config.mjs
+package.json
+postcss.config.mjs
+README.md
+tailwind.config.ts
+tsconfig.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app/join/page.tsx">
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, CheckCircle2, Dumbbell } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import CTAButton from "@/components/ui/CTAButton";
+
+interface FormData {
+  fullName: string;
+  phone: string;
+  email: string;
+  age: string;
+  gender: string;
+  plan: string;
+  referral: string;
+  healthConditions: string;
+}
+
+const INITIAL_FORM_STATE: FormData = {
+  fullName: "",
+  phone: "",
+  email: "",
+  age: "",
+  gender: "Male",
+  plan: "Quarterly",
+  referral: "Walk-in",
+  healthConditions: "",
+};
+
+export default function JoinNowPage() {
+  const [formData, setFormData] = useState<FormData>(INITIAL_FORM_STATE);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+
+  const validate = (): boolean => {
+    const newErrors: Partial<Record<keyof FormData, string>> = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+    }
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^\+?[0-9\s-]{7,15}$/.test(formData.phone.trim())) {
+      newErrors.phone = "Enter a valid phone number";
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Email address is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address";
+    }
+    if (!formData.age.trim()) {
+      newErrors.age = "Age is required";
+    } else {
+      const parsedAge = parseInt(formData.age, 10);
+      if (isNaN(parsedAge) || parsedAge < 12 || parsedAge > 100) {
+        newErrors.age = "Age must be between 12 and 100";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    if (errors[name as keyof FormData]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
+  };
+
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (validate()) {
+      setIsSubmitted(true);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0A0A0A] pt-28 pb-20 flex items-center justify-center relative px-6 overflow-hidden">
+      <div className="absolute top-20 left-10 w-[500px] h-[500px] bg-[rgba(212,175,55,0.02)] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-[rgba(212,175,55,0.02)] rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="w-full max-w-2xl relative z-10">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-sm text-[#BDBDBD] hover:text-[#D4AF37] transition-colors duration-300 mb-8"
+        >
+          <ArrowLeft className="w-4 h-4 stroke-[1.5]" />
+          Back to Homepage
+        </Link>
+
+        <AnimatePresence mode="wait">
+          {!isSubmitted ? (
+            <motion.div
+              key="form-card"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -24 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-[#141414] border border-[rgba(212,175,55,0.08)] rounded-2xl p-8 md:p-10 shadow-gold-elevated"
+            >
+              <div className="flex flex-col items-center text-center mb-10">
+                <div className="w-14 h-14 bg-gradient-to-br from-[#F5E6A3] via-[#D4AF37] to-[#8B6914] rounded-full flex items-center justify-center text-[#0A0A0A] mb-5 shadow-luxury-lg">
+                  <Dumbbell className="w-7 h-7" />
+                </div>
+                <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight text-white mb-3">
+                  Begin Your Journey
+                </h1>
+                <p className="text-sm text-[#BDBDBD] max-w-md leading-[1.7]">
+                  Fill out the form below to lock in your membership. Our team will contact you within 24 hours to complete your registration.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col">
+                    <label htmlFor="fullName" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      placeholder="John Doe"
+                      className={`bg-[#1A1A1A] border rounded-lg px-4 py-3.5 text-sm text-white placeholder:text-[#525252] focus:outline-none transition-all duration-400 ${
+                        errors.fullName
+                          ? "border-red-500/80 focus:border-red-500"
+                          : "border-[rgba(212,175,55,0.08)] focus:border-[#D4AF37]"
+                      }`}
+                    />
+                    {errors.fullName && (
+                      <span className="text-red-400 text-xs mt-2">{errors.fullName}</span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label htmlFor="phone" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+91 90000 00000"
+                      className={`bg-[#1A1A1A] border rounded-lg px-4 py-3.5 text-sm text-white placeholder:text-[#525252] focus:outline-none transition-all duration-400 ${
+                        errors.phone
+                          ? "border-red-500/80 focus:border-red-500"
+                          : "border-[rgba(212,175,55,0.08)] focus:border-[#D4AF37]"
+                      }`}
+                    />
+                    {errors.phone && (
+                      <span className="text-red-400 text-xs mt-2">{errors.phone}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col">
+                    <label htmlFor="email" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="johndoe@example.com"
+                      className={`bg-[#1A1A1A] border rounded-lg px-4 py-3.5 text-sm text-white placeholder:text-[#525252] focus:outline-none transition-all duration-400 ${
+                        errors.email
+                          ? "border-red-500/80 focus:border-red-500"
+                          : "border-[rgba(212,175,55,0.08)] focus:border-[#D4AF37]"
+                      }`}
+                    />
+                    {errors.email && (
+                      <span className="text-red-400 text-xs mt-2">{errors.email}</span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label htmlFor="age" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                      Age
+                    </label>
+                    <input
+                      type="number"
+                      id="age"
+                      name="age"
+                      value={formData.age}
+                      onChange={handleChange}
+                      placeholder="25"
+                      min="12"
+                      max="100"
+                      className={`bg-[#1A1A1A] border rounded-lg px-4 py-3.5 text-sm text-white placeholder:text-[#525252] focus:outline-none transition-all duration-400 ${
+                        errors.age
+                          ? "border-red-500/80 focus:border-red-500"
+                          : "border-[rgba(212,175,55,0.08)] focus:border-[#D4AF37]"
+                      }`}
+                    />
+                    {errors.age && (
+                      <span className="text-red-400 text-xs mt-2">{errors.age}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="flex flex-col">
+                    <label htmlFor="gender" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                      Gender
+                    </label>
+                    <select
+                      id="gender"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      className="bg-[#1A1A1A] border border-[rgba(212,175,55,0.08)] text-white rounded-lg px-4 py-3.5 text-sm focus:outline-none focus:border-[#D4AF37] transition-all duration-400 appearance-none"
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label htmlFor="plan" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                      Membership Plan
+                    </label>
+                    <select
+                      id="plan"
+                      name="plan"
+                      value={formData.plan}
+                      onChange={handleChange}
+                      className="bg-[#1A1A1A] border border-[rgba(212,175,55,0.08)] text-white rounded-lg px-4 py-3.5 text-sm focus:outline-none focus:border-[#D4AF37] transition-all duration-400 appearance-none"
+                    >
+                      <option value="Monthly">Monthly Plan</option>
+                      <option value="Quarterly">Quarterly Plan</option>
+                      <option value="Annual">Annual Plan</option>
+                    </select>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label htmlFor="referral" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                      How did you hear about us?
+                    </label>
+                    <select
+                      id="referral"
+                      name="referral"
+                      value={formData.referral}
+                      onChange={handleChange}
+                      className="bg-[#1A1A1A] border border-[rgba(212,175,55,0.08)] text-white rounded-lg px-4 py-3.5 text-sm focus:outline-none focus:border-[#D4AF37] transition-all duration-400 appearance-none"
+                    >
+                      <option value="Walk-in">Walk-in</option>
+                      <option value="Friend">Friend</option>
+                      <option value="Instagram">Instagram</option>
+                      <option value="Facebook">Facebook</option>
+                      <option value="Google">Google</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  <label htmlFor="healthConditions" className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#BDBDBD] mb-2.5">
+                    Health Conditions / Injuries (Optional)
+                  </label>
+                  <textarea
+                    id="healthConditions"
+                    name="healthConditions"
+                    value={formData.healthConditions}
+                    onChange={handleChange}
+                    rows={4}
+                    placeholder="List any medical concerns, surgeries, or injuries our coaches should know about..."
+                    className="bg-[#1A1A1A] border border-[rgba(212,175,55,0.08)] text-white rounded-lg px-4 py-3.5 text-sm placeholder:text-[#525252] focus:outline-none focus:border-[#D4AF37] transition-all duration-400 resize-none"
+                  />
+                </div>
+
+                <div className="pt-2">
+                  <CTAButton onClick={() => handleSubmit()} className="w-full">
+                    Submit Registration
+                  </CTAButton>
+                </div>
+              </form>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="success-card"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 160, damping: 18 }}
+              className="bg-[#141414] border border-[rgba(212,175,55,0.1)] rounded-2xl p-8 md:p-12 text-center shadow-gold-elevated flex flex-col items-center"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.15 }}
+                className="w-20 h-20 bg-[rgba(212,175,55,0.08)] text-[#D4AF37] rounded-full flex items-center justify-center mb-7 border border-[rgba(212,175,55,0.15)]"
+              >
+                <CheckCircle2 className="w-12 h-12" />
+              </motion.div>
+
+              <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight text-white mb-4">
+                Congratulations, {formData.fullName.split(" ")[0]}!
+              </h1>
+              <p className="text-[#BDBDBD] text-base max-w-md mb-10 leading-[1.7]">
+                Your application for the <span className="text-white font-semibold">{formData.plan} Plan</span> has been successfully logged.
+              </p>
+
+              <div className="w-full max-w-md bg-[#0A0A0A] border border-[rgba(212,175,55,0.06)] rounded-xl p-6 mb-10 text-left space-y-3.5">
+                <h4 className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#D4AF37] border-b border-[rgba(212,175,55,0.08)] pb-3 mb-3">
+                  Registration Summary
+                </h4>
+                <div className="grid grid-cols-2 text-xs md:text-sm py-1.5">
+                  <span className="text-[#525252]">Contact:</span>
+                  <span className="text-white text-right font-medium">{formData.phone}</span>
+                </div>
+                <div className="grid grid-cols-2 text-xs md:text-sm py-1.5">
+                  <span className="text-[#525252]">Email:</span>
+                  <span className="text-white text-right font-medium truncate ml-2">{formData.email}</span>
+                </div>
+                <div className="grid grid-cols-2 text-xs md:text-sm py-1.5">
+                  <span className="text-[#525252]">Membership Term:</span>
+                  <span className="text-white text-right font-medium">{formData.plan}</span>
+                </div>
+              </div>
+
+              <CTAButton href="/" variant="outline" className="w-full sm:w-auto">
+                Return to Home
+              </CTAButton>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="components/layout/Footer.tsx">
+"use client";
+
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Dumbbell, Mail, Phone, MapPin, Clock } from "lucide-react";
+import { SITE_NAME, BRAND_TAGLINE, EMAIL, PHONE_NUMBER, ADDRESS, WORKING_HOURS, SOCIAL_LINKS } from "@/data/siteContent";
+
+export default function Footer() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+
+    if (pathname !== "/") {
+      router.push(`/${href}`);
+      return;
+    }
+
+    const element = document.getElementById(targetId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
+  };
+
+  const socialLinks = [
+    {
+      icon: (
+        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      ),
+      href: SOCIAL_LINKS.instagram,
+      label: "Instagram",
+    },
+    {
+      icon: (
+        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      ),
+      href: SOCIAL_LINKS.facebook,
+      label: "Facebook",
+    },
+    {
+      icon: (
+        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.498 6.163a3.003 3.003 0 00-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.507a3.003 3.003 0 00-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 002.11 2.11c1.871.507 9.388.507 9.388.507s7.517 0 9.388-.507a3.003 3.003 0 002.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      ),
+      href: SOCIAL_LINKS.youtube,
+      label: "YouTube",
+    },
+  ];
+
+  return (
+    <footer className="relative bg-[#0A0A0A] border-t border-[rgba(212,175,55,0.05)] pt-20 pb-10 text-[#BDBDBD] overflow-hidden">
+      <div className="absolute inset-0 bg-noise opacity-[0.015]" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div>
+          <Link
+            href="#home"
+            onClick={(e) => handleNavClick(e, "#home")}
+            className="flex items-center gap-2.5 text-white group mb-5"
+          >
+            <Dumbbell className="w-6 h-6 text-[#D4AF37] group-hover:rotate-45 transition-transform duration-500 ease-out" />
+            <span className="font-display font-bold text-lg tracking-tight">
+              BE <span className="text-gradient-gold">STRONG</span>
+            </span>
+          </Link>
+          <p className="text-[11px] text-[#BDBDBD]/60 mb-5 font-semibold tracking-[0.2em] uppercase">
+            {BRAND_TAGLINE}
+          </p>
+          <p className="text-sm text-[#BDBDBD] leading-[1.8] max-w-xs">
+            Elevate your body, push past your limits, and sculpt your ultimate form. Be Strong is your home for peak physical and mental output.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-white font-display font-semibold uppercase tracking-[0.2em] text-[10px] mb-7">
+            Quick Links
+          </h4>
+          <ul className="space-y-3.5">
+            {[
+              { label: "Home", href: "#home" },
+              { label: "Plans", href: "#plans" },
+              { label: "Facilities", href: "#facilities" },
+              { label: "Trainers", href: "#trainers" },
+              { label: "Gallery", href: "#gallery" },
+              { label: "Contact Us", href: "#contact" },
+            ].map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-[13px] text-[#BDBDBD] hover:text-[#D4AF37] transition-colors duration-300"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-display font-semibold uppercase tracking-[0.2em] text-[10px] mb-7">
+            Contact Info
+          </h4>
+          <ul className="space-y-4">
+            <li className="flex items-start gap-3">
+              <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5 stroke-[1.5]" />
+              <span className="text-[13px] text-[#BDBDBD] leading-[1.6]">{ADDRESS}</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <Phone className="w-4 h-4 text-[#D4AF37] shrink-0 stroke-[1.5]" />
+              <span className="text-[13px] text-[#BDBDBD]">{PHONE_NUMBER}</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <Mail className="w-4 h-4 text-[#D4AF37] shrink-0 stroke-[1.5]" />
+              <span className="text-[13px] text-[#BDBDBD]">{EMAIL}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-white font-display font-semibold uppercase tracking-[0.2em] text-[10px] mb-7">
+            Hours & Connect
+          </h4>
+          <div className="space-y-4 mb-7">
+            <div className="flex items-start gap-3">
+              <Clock className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5 stroke-[1.5]" />
+              <div className="text-[13px] text-[#BDBDBD] leading-[1.6]">
+                <p>{WORKING_HOURS.weekdays}</p>
+                <p>{WORKING_HOURS.sunday}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-3">
+            {socialLinks.map((soc, idx) => (
+              <a
+                key={idx}
+                href={soc.href}
+                className="w-9 h-9 rounded-full bg-[#1A1A1A] border border-[rgba(212,175,55,0.08)] flex items-center justify-center text-[#BDBDBD] hover:text-[#0A0A0A] hover:bg-gradient-to-b hover:from-[#F5E6A3] hover:via-[#D4AF37] hover:to-[#8B6914] hover:border-transparent transition-all duration-400 ease-out"
+                aria-label={soc.label}
+              >
+                {soc.icon}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <hr className="border-[rgba(212,175,55,0.05)] max-w-7xl mx-auto mb-8" />
+
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#525252]">
+        <p>© {new Date().getFullYear()} {SITE_NAME}. All Rights Reserved.</p>
+        <p>
+          <span className="text-[#BDBDBD] font-semibold">Unisex Fitness Center</span>
+        </p>
+      </div>
+    </footer>
+  );
+}
+</file>
+
+<file path="components/layout/Navbar.tsx">
+"use client";
+
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { Menu, X, Dumbbell } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import CTAButton from "../ui/CTAButton";
+
+const NAV_ITEMS = [
+  { label: "Home", href: "#home" },
+  { label: "Plans", href: "#plans" },
+  { label: "Facilities", href: "#facilities" },
+  { label: "Trainers", href: "#trainers" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Contact", href: "#contact" },
+];
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+    const targetId = href.replace("#", "");
+
+    if (pathname !== "/") {
+      router.push(`/${href}`);
+      return;
+    }
+
+    const element = document.getElementById(targetId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <>
+      <header
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-[#0A0A0A]/75 backdrop-blur-2xl border-b border-[rgba(212,175,55,0.08)] py-3"
+            : "bg-transparent py-5"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <Link
+            href="/"
+            onClick={(e) => handleNavClick(e, "#home")}
+            className="flex items-center gap-3 text-white group"
+          >
+            <Dumbbell className="w-6 h-6 text-[#D4AF37] group-hover:rotate-45 transition-transform duration-500 ease-out" />
+            <div className="flex flex-col">
+              <span className="font-display font-bold text-lg tracking-tight leading-none">
+                BE <span className="text-gradient-gold">STRONG</span>
+              </span>
+              <span className="text-[9px] tracking-[0.3em] text-[#BDBDBD]/50 uppercase leading-none mt-1">
+                GYM A/C
+              </span>
+            </div>
+          </Link>
+
+          <nav className="hidden lg:flex items-center gap-10">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="relative text-[13px] font-medium tracking-[0.1em] text-[#BDBDBD] hover:text-white transition-colors duration-300 py-1 gold-border"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="hidden lg:block">
+            <CTAButton href="/join" className="py-2.5 px-7 text-xs">
+              Join Now
+            </CTAButton>
+          </div>
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden text-white hover:text-[#D4AF37] transition-colors duration-300"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </header>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
+            className="fixed top-[64px] left-0 w-full bg-[#0A0A0A]/95 backdrop-blur-2xl border-b border-[rgba(212,175,55,0.08)] z-40 lg:hidden py-10 px-6"
+          >
+            <nav className="flex flex-col gap-6 items-center">
+              {NAV_ITEMS.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="text-sm font-medium tracking-[0.15em] text-[#BDBDBD] hover:text-[#D4AF37] transition-colors duration-300 py-2"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <CTAButton
+                href="/join"
+                onClick={() => setIsOpen(false)}
+                className="w-full max-w-xs text-center mt-2"
+              >
+                Join Now
+              </CTAButton>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+</file>
+
+<file path="components/layout/WhatsAppButton.tsx">
+"use client";
+
+import { motion } from "framer-motion";
+import { WHATSAPP_NUMBER } from "@/data/siteContent";
+
+export default function WhatsAppButton() {
+  const waLink = `https://wa.me/${encodeURIComponent(WHATSAPP_NUMBER)}`;
+
+  return (
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 1.2, type: "spring", stiffness: 180, damping: 16 }}
+      className="fixed bottom-6 right-6 z-40"
+    >
+      <motion.a
+        href={waLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ scale: 1.06 }}
+        whileTap={{ scale: 0.96 }}
+        className="relative flex items-center justify-center w-14 h-14 bg-[#25D366] hover:bg-[#1fb85a] text-white rounded-full shadow-[0_8px_28px_-6px_rgba(37,211,102,0.35)] transition-colors duration-400"
+        aria-label="Contact us on WhatsApp"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          className="w-7 h-7 fill-current"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 2.003 14.12 1.05 11.998 1.05c-5.44 0-9.866 4.372-9.87 9.802-.001 1.772.487 3.5 1.411 5.012l-.995 3.634 3.738-.973zm13.125-9.362c-.3-.15-1.771-.875-2.046-.975-.276-.1-.477-.15-.677.15-.2.3-.777.975-.951 1.175-.176.2-.351.225-.651.075-1.026-.514-1.742-.916-2.428-2.09-.18-.31-.18-.57-.03-.72.136-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.676-1.625-.926-2.225-.244-.589-.493-.51-.677-.52l-.576-.007c-.2 0-.526.075-.801.375-.276.3-1.053 1.025-1.053 2.5s1.078 2.9 1.228 3.1c.15.2 2.122 3.24 5.141 4.541.718.309 1.279.494 1.716.633.722.23 1.38.196 1.9.119.58-.087 1.771-.725 2.022-1.425.25-.7.25-1.299.175-1.425-.075-.125-.275-.2-.575-.35z" />
+        </svg>
+      </motion.a>
+    </motion.div>
+  );
+}
+</file>
+
+<file path="components/sections/ContactSection.tsx">
+"use client";
+
+import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
+import SectionHeading from "../ui/SectionHeading";
+import CTAButton from "../ui/CTAButton";
+import {
+  ADDRESS,
+  PHONE_NUMBER,
+  EMAIL,
+  WORKING_HOURS,
+  GOOGLE_MAPS_EMBED_URL,
+  WHATSAPP_NUMBER,
+} from "@/data/siteContent";
+
+export default function ContactSection() {
+  const waLink = `https://wa.me/${encodeURIComponent(WHATSAPP_NUMBER)}`;
+
+  const infoItems = [
+    { icon: MapPin, label: "Our Location", value: ADDRESS },
+    { icon: Phone, label: "Call Us", value: PHONE_NUMBER },
+    { icon: Mail, label: "Email Address", value: EMAIL },
+    {
+      icon: Clock,
+      label: "Working Hours",
+      value: (
+        <div className="space-y-0.5">
+          <p>{WORKING_HOURS.weekdays}</p>
+          <p>{WORKING_HOURS.sunday}</p>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <section id="contact" className="relative py-32 md:py-40 bg-[#0A0A0A] overflow-hidden">
+      <div className="absolute inset-0 bg-noise opacity-[0.02]" />
+      <div className="absolute top-1/2 right-0 w-[600px] h-[400px] bg-[rgba(212,175,55,0.015)] rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeading
+          title="Contact & Location"
+          subtitle="Get in touch with us, find our facilities on the map, or drop by for a tour during our operational hours."
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch mt-14">
+          <div className="flex flex-col justify-between space-y-8">
+            <div className="space-y-7">
+              <h3 className="text-xl font-display font-semibold uppercase text-white tracking-wide mb-1">
+                Connect With Us
+              </h3>
+              <p className="text-[#BDBDBD] text-sm max-w-md leading-[1.7]">
+                Have questions about our plans, trainers, or equipment? Send us a message or visit us in person. Our team is ready to assist.
+              </p>
+
+              <div className="space-y-4 pt-2">
+                {infoItems.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-5 p-5 rounded-xl bg-[#141414] border border-[rgba(212,175,55,0.05)] transition-all duration-400 ease-out hover:border-[rgba(212,175,55,0.14)] hover:bg-[#1A1A1A]"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#F5E6A3] via-[#D4AF37] to-[#8B6914] flex items-center justify-center text-[#0A0A0A] shrink-0 mt-0.5">
+                      <item.icon className="w-4 h-4 stroke-[1.5]" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-display font-semibold uppercase text-[10px] tracking-[0.25em] mb-1.5">
+                        {item.label}
+                      </h4>
+                      <div className="text-[13px] text-[#BDBDBD] leading-[1.6]">
+                        {item.value}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <CTAButton
+                href={waLink}
+                isExternal
+                variant="solid"
+                className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1fb85a] hover:shadow-[0_10px_28px_-6px_rgba(37,211,102,0.25)] group transition-all duration-400"
+              >
+                <MessageCircle className="w-4 h-4 mr-2 stroke-[1.5]" />
+                Chat on WhatsApp
+              </CTAButton>
+            </div>
+          </div>
+
+          <div className="relative w-full min-h-[400px] lg:min-h-full rounded-2xl overflow-hidden border border-[rgba(212,175,55,0.05)] shadow-gold-elevated bg-[#141414]">
+              <iframe
+                title="Be Strong Gym Location Map"
+                src={GOOGLE_MAPS_EMBED_URL}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 w-full h-full"
+              />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="components/sections/FacilitiesSection.tsx">
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  Activity,
+  Dumbbell,
+  Zap,
+  ShieldCheck,
+  MapPin,
+  Wind,
+  Apple,
+  Shield,
+  LucideIcon,
+} from "lucide-react";
+import SectionHeading from "../ui/SectionHeading";
+import { FACILITIES } from "@/data/siteContent";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Activity,
+  Dumbbell,
+  Zap,
+  ShieldCheck,
+  MapPin,
+  Wind,
+  Apple,
+  Shield,
+};
+
+export default function FacilitiesSection() {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.06,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+    },
+  };
+
+  return (
+    <section id="facilities" className="relative py-24 md:py-28 bg-[#0A0A0A] overflow-hidden">
+      <div className="absolute inset-0 bg-noise opacity-[0.02]" />
+      <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-[rgba(212,175,55,0.015)] rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeading
+          title="Our Facilities"
+          subtitle="Explore the state-of-the-art features and client-first amenities crafted to support your fitness progress and keep you safe."
+        />
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12"
+        >
+          {FACILITIES.map((facility) => {
+            const IconComponent = ICON_MAP[facility.iconName] || Dumbbell;
+
+            return (
+              <motion.div
+                key={facility.id}
+                variants={itemVariants}
+                className="group relative bg-[#141414] border border-[rgba(212,175,55,0.05)] rounded-2xl p-7 transition-all duration-500 ease-out hover:border-[rgba(212,175,55,0.18)] hover:shadow-card-elevated"
+              >
+                <div className="w-11 h-11 rounded-xl bg-[#1A1A1A] border border-[rgba(212,175,55,0.08)] flex items-center justify-center text-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-[#0A0A0A] group-hover:border-[#D4AF37] transition-all duration-500 mb-5">
+                  <IconComponent className="w-5 h-5 stroke-[1.5]" />
+                </div>
+                <h3 className="text-[15px] font-display font-semibold tracking-wide text-white mb-2 group-hover:text-[#D4AF37] transition-colors duration-300">
+                  {facility.title}
+                </h3>
+                <p className="text-[13px] text-[#BDBDBD] leading-[1.6]">
+                  {facility.description}
+                </p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="components/sections/GallerySection.tsx">
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+import { Maximize2, X } from "lucide-react";
+import { motion } from "framer-motion";
+import SectionHeading from "../ui/SectionHeading";
+import { GALLERY_ITEMS } from "@/data/siteContent";
+
+export default function GallerySection() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+
+  const openLightbox = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+    if (dialogRef.current) {
+      dialogRef.current.showModal();
+    }
+  };
+
+  const closeLightbox = () => {
+    if (dialogRef.current) {
+      dialogRef.current.close();
+    }
+    setSelectedImage(null);
+  };
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const hasClosedBy = "closedBy" in HTMLDialogElement.prototype;
+
+    if (!hasClosedBy) {
+      const handleBackdropClick = (event: MouseEvent) => {
+        if (event.target !== dialog) return;
+
+        const rect = dialog.getBoundingClientRect();
+        const isDialogContent =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+
+        if (!isDialogContent) {
+          dialog.close();
+        }
+      };
+
+      dialog.addEventListener("click", handleBackdropClick);
+      return () => {
+        dialog.removeEventListener("click", handleBackdropClick);
+      };
+    }
+  }, []);
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.04,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.97 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+    },
+  };
+
+  return (
+    <section id="gallery" className="relative py-28 md:py-32 bg-[#0A0A0A] overflow-hidden">
+      <div className="absolute inset-0 bg-noise opacity-[0.02]" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeading
+          title="Transformation Gallery"
+          subtitle="Real results from real members. Witness the power of consistency and dedication in our fitness transformation hall of fame."
+        />
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 mt-12"
+        >
+          {GALLERY_ITEMS.map((item) => (
+            <motion.div
+              key={item.id}
+              variants={itemVariants}
+              onClick={() => openLightbox(item.image)}
+              className="group relative aspect-[3/4] rounded-xl overflow-hidden cursor-pointer bg-[#141414] border border-[rgba(212,175,55,0.05)]"
+            >
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out flex flex-col items-center justify-end p-5 gap-3">
+                <div className="w-10 h-10 rounded-full bg-[rgba(212,175,55,0.12)] backdrop-blur-md border border-[rgba(212,175,55,0.2)] flex items-center justify-center text-[#D4AF37] scale-75 group-hover:scale-100 transition-transform duration-500 ease-out">
+                  <Maximize2 className="w-4 h-4" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      <dialog
+        ref={dialogRef}
+        closedby="any"
+        onClose={closeLightbox}
+        aria-label="Transformation photo viewer"
+        className="fixed inset-0 bg-transparent p-0 m-auto border-0 max-w-[90vw] max-h-[85vh] overflow-visible outline-none backdrop:bg-black/90 backdrop:backdrop-blur-md shadow-2xl focus:outline-none"
+      >
+        {selectedImage && (
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            <button
+              onClick={closeLightbox}
+              className="absolute -top-12 right-0 md:-right-12 text-white hover:text-[#D4AF37] bg-[#141414]/90 p-2.5 rounded-full border border-[rgba(212,175,55,0.1)] transition-all duration-300 backdrop-blur-md"
+              aria-label="Close dialog"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="relative aspect-video max-w-full w-[800px] h-[500px] max-h-[75vh] rounded-lg overflow-hidden border border-[rgba(212,175,55,0.08)] shadow-gold-lg">
+              <Image
+                src={selectedImage}
+                alt="Enlarged transformation view"
+                fill
+                priority
+                sizes="(max-width: 768px) 90vw, 800px"
+                className="object-cover"
+              />
+            </div>
+          </div>
+        )}
+      </dialog>
+    </section>
+  );
+}
+</file>
+
+<file path="components/sections/HeroSection.tsx">
+"use client";
+
+import { motion } from "framer-motion";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import CTAButton from "../ui/CTAButton";
+import { BRAND_TAGLINE, HERO_SUBHEADING } from "@/data/siteContent";
+
+export default function HeroSection() {
+  const handleScrollToPlans = (e?: React.MouseEvent<HTMLElement>) => {
+    if (e) e.preventDefault();
+    const plansSection = document.getElementById("plans");
+    if (plansSection) {
+      const navHeight = 80;
+      const elementPosition = plansSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <section
+      id="home"
+      className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#0A0A0A]"
+    >
+      {/* Layer 1: Background Video */}
+      <div className="absolute inset-0 overflow-hidden">
+        <iframe
+          src="https://www.youtube.com/embed/uNN62f55EV0?autoplay=1&mute=1&loop=1&playlist=uNN62f55EV0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=0"
+          title="Be Strong Gym Background Video"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full opacity-50 pointer-events-none"
+          style={{ border: "none" }}
+        />
+      </div>
+
+      {/* Cinematic depth overlays */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-[#0A0A0A]/60" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/50 via-transparent to-[#0A0A0A]/50" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#0A0A0A_140%)]" />
+
+      {/* Layer 2: Brand graphics and motion */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Floating gold orb — top left */}
+        <motion.div
+          className="absolute -top-[10%] -left-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[rgba(212,175,55,0.05)] rounded-full blur-[120px]"
+          animate={{
+            y: [0, -30, 0],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 10,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+
+        {/* Floating gold orb — bottom right */}
+        <motion.div
+          className="absolute -bottom-[10%] -right-[10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[rgba(212,175,55,0.04)] rounded-full blur-[100px]"
+          animate={{
+            y: [0, 25, 0],
+            scale: [1, 0.95, 1],
+          }}
+          transition={{
+            duration: 12,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+
+        {/* Luxury motion curve — top right */}
+        <svg
+          className="absolute top-[15%] right-[8%] w-40 h-40 md:w-56 md:h-56 text-[rgba(212,175,55,0.12)]"
+          viewBox="0 0 200 200"
+        >
+          <motion.path
+            d="M100,20 Q180,100 100,180"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            animate={{
+              pathLength: [0.7, 1, 0.7],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{
+              duration: 8,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+          />
+        </svg>
+
+        {/* Subtle vertical accent — left side */}
+        <motion.div
+          className="hidden md:block absolute top-[25%] left-[6%] w-[1px] h-32 bg-gradient-to-b from-transparent via-[rgba(212,175,55,0.25)] to-transparent"
+          animate={{
+            height: ["8rem", "14rem", "8rem"],
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{
+            duration: 7,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+
+        {/* Subtle vertical accent — right side */}
+        <motion.div
+          className="hidden md:block absolute bottom-[25%] right-[6%] w-[1px] h-24 bg-gradient-to-b from-transparent via-[rgba(212,175,55,0.2)] to-transparent"
+          animate={{
+            height: ["6rem", "10rem", "6rem"],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 9,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+      </div>
+
+      {/* Layer 3: Text and CTA */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center"
+        >
+          {/* Brand Tagline */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex items-center gap-3 md:gap-4 mb-8 md:mb-10"
+          >
+            <span className="h-[1px] w-5 md:w-8 bg-gradient-to-r from-transparent to-[#D4AF37]" />
+            <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4AF37]">
+              {BRAND_TAGLINE}
+            </span>
+            <span className="h-[1px] w-5 md:w-8 bg-gradient-to-l from-transparent to-[#D4AF37]" />
+          </motion.div>
+
+          {/* Massive Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[clamp(3.2rem,5.8vw,9rem)] font-display font-bold tracking-tight text-white leading-[0.85] mb-3 md:mb-4"
+          >
+            BE <span className="text-gradient-gold">STRONG</span>
+          </motion.h1>
+
+          {/* Supporting Line */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[10px] md:text-xs font-medium tracking-[0.3em] text-white/50 uppercase mb-8 md:mb-10"
+          >
+            GYM A/C &nbsp;|&nbsp; Unisex Fitness Center
+          </motion.p>
+
+          {/* Minimal Description — hidden on mobile */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden md:block text-sm md:text-base text-[#BDBDBD]/60 max-w-lg mx-auto leading-[1.7] font-light mb-12 md:mb-14"
+          >
+            {HERO_SUBHEADING}
+          </motion.p>
+
+          {/* Primary CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center gap-5"
+          >
+            <CTAButton href="/join" variant="solid" className="group">
+              Join Today
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+            </CTAButton>
+
+            <button
+              onClick={handleScrollToPlans}
+              className="text-sm text-[#D4AF37]/70 hover:text-[#D4AF37] transition-colors duration-300 tracking-wide underline underline-offset-4 decoration-[rgba(212,175,55,0.2)] hover:decoration-[#D4AF37]"
+            >
+              View Plans
+            </button>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Elegant Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer z-10"
+        onClick={() => {
+          const plansSection = document.getElementById("plans");
+          if (plansSection) {
+            window.scrollTo({ top: plansSection.offsetTop - 80, behavior: "smooth" });
+          }
+        }}
+      >
+        <span className="text-[10px] uppercase font-medium tracking-[0.25em] text-white/30">
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-4 h-4 text-[#D4AF37]/40" />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+</file>
+
+<file path="components/sections/MembershipSection.tsx">
+"use client";
+
+import SectionHeading from "../ui/SectionHeading";
+import MembershipCard from "../ui/MembershipCard";
+import { MEMBERSHIP_PLANS, PERSONAL_TRAINING_PLANS } from "@/data/siteContent";
+import { motion } from "framer-motion";
+import Image from "next/image";
+
+export default function MembershipSection() {
+  return (
+    <section id="plans" className="relative py-32 md:py-40 bg-[#0A0A0A] overflow-hidden">
+      <div className="absolute inset-0 bg-noise opacity-[0.02]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[rgba(212,175,55,0.02)] rounded-full blur-[180px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeading
+          title="Membership Offers"
+          subtitle="Choose the plan that fits your lifestyle. Full equipment access, expert guidance, and premium facilities — at every tier."
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mt-16">
+          {MEMBERSHIP_PLANS.map((plan, index) => (
+            <MembershipCard key={plan.id} plan={plan} index={index} />
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+          className="mt-32"
+        >
+          <div className="flex flex-col items-center mb-14">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#D4AF37]" />
+              <span className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">
+                Be Strong Fitness
+              </span>
+              <span className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#D4AF37]" />
+            </div>
+            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-white leading-[1.1]">
+              Personal Training
+            </h2>
+            <p className="mt-6 text-sm md:text-base text-[#BDBDBD] max-w-2xl text-center text-balance font-light leading-[1.7]">
+              Accelerate your results with 1-on-1 expert coaching. Get a custom program, nutrition plan, and dedicated support to transform faster.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {PERSONAL_TRAINING_PLANS.map((plan, index) => (
+              <MembershipCard key={plan.id} plan={plan} index={index} />
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
+          className="mt-32 flex flex-col items-center"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#D4AF37]" />
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">
+              Easy Payment
+            </span>
+            <span className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#D4AF37]" />
+          </div>
+          <h3 className="text-2xl font-display font-bold uppercase text-white mb-2 text-center tracking-wide">
+            Scan & Pay Instantly
+          </h3>
+          <p className="text-sm text-[#BDBDBD] mb-10 text-center max-w-sm leading-relaxed">
+            Pay securely via Google Pay, Paytm, PhonePe, or any UPI app by scanning the QR code below.
+          </p>
+
+          <div className="relative bg-[#141414] rounded-2xl p-7 shadow-card-elevated border border-[rgba(212,175,55,0.08)] flex flex-col items-center gap-5">
+            <div className="relative w-52 h-52 rounded-xl overflow-hidden border border-[rgba(212,175,55,0.08)] bg-[#1A1A1A]">
+              <Image
+                src="/images/payment-qr.jpg"
+                alt="Payment QR Code — Scan & Pay"
+                fill
+                sizes="208px"
+                className="object-contain p-3"
+              />
+            </div>
+            <p className="text-white font-display font-semibold text-sm tracking-wide text-center">
+              Scan to Pay via UPI
+            </p>
+            <div className="flex items-center gap-2 text-xs text-[#BDBDBD]">
+              <span>Google Pay</span>
+              <span className="text-[rgba(212,175,55,0.25)]">•</span>
+              <span>Paytm</span>
+              <span className="text-[rgba(212,175,55,0.25)]">•</span>
+              <span>BHIM UPI</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="components/sections/TrainersSection.tsx">
+"use client";
+
+import SectionHeading from "../ui/SectionHeading";
+import TrainerCard from "../ui/TrainerCard";
+import { TRAINERS } from "@/data/siteContent";
+
+export default function TrainersSection() {
+  return (
+    <section id="trainers" className="relative py-32 md:py-40 bg-[#0A0A0A] overflow-hidden">
+      <div className="absolute inset-0 bg-noise opacity-[0.02]" />
+      <div className="absolute bottom-0 left-1/4 w-[700px] h-[500px] bg-[rgba(212,175,55,0.015)] rounded-full blur-[180px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <SectionHeading
+          title="Meet Our Coaches"
+          subtitle="Learn from certified industry specialists who have trained champions and are dedicated to your individual health journey."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-14">
+          {TRAINERS.map((trainer, index) => (
+            <TrainerCard key={trainer.id} trainer={trainer} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+</file>
+
+<file path="components/ui/CTAButton.tsx">
+"use client";
+
+import Link from "next/link";
+import { ReactNode } from "react";
+import { motion } from "framer-motion";
+
+interface CTAButtonProps {
+  children: ReactNode;
+  href?: string;
+  onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
+  variant?: "solid" | "outline";
+  className?: string;
+  isExternal?: boolean;
+}
+
+export default function CTAButton({
+  children,
+  href,
+  onClick,
+  variant = "solid",
+  className = "",
+  isExternal = false,
+}: CTAButtonProps) {
+  const baseStyles =
+    "relative inline-flex items-center justify-center font-display font-semibold tracking-wide text-sm transition-all duration-400 ease-out py-4 px-8 overflow-hidden rounded-lg";
+
+  const variants = {
+    solid:
+      "bg-gradient-to-b from-[#F5E6A3] via-[#D4AF37] to-[#8B6914] text-[#0A0A0A] hover:shadow-[0_8px_24px_-6px_rgba(212,175,55,0.35)] border border-transparent hover:-translate-y-0.5 active:translate-y-0 shadow-luxury-md",
+    outline:
+      "bg-transparent text-[#D4AF37] border border-[rgba(212,175,55,0.4)] hover:bg-[rgba(212,175,55,0.06)] hover:border-[#D4AF37] hover:shadow-gold-ambient",
+  };
+
+  const content = (
+    <>
+      <span className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent opacity-60 pointer-events-none" />
+      <motion.span
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className="relative z-10 flex items-center justify-center gap-2"
+      >
+        {children}
+      </motion.span>
+    </>
+  );
+
+  if (href) {
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClick}
+          className={`${baseStyles} ${variants[variant]} ${className}`}
+        >
+          {content}
+        </a>
+      );
+    }
+    return (
+      <Link
+        href={href}
+        onClick={onClick}
+        className={`${baseStyles} ${variants[variant]} ${className}`}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className={`${baseStyles} ${variants[variant]} ${className}`}
+    >
+      {content}
+    </button>
+  );
+}
+</file>
+
+<file path="components/ui/MembershipCard.tsx">
+"use client";
+
+import { Check } from "lucide-react";
+import { motion } from "framer-motion";
+import CTAButton from "./CTAButton";
+import { MembershipPlan } from "@/data/siteContent";
+
+interface MembershipCardProps {
+  plan: MembershipPlan;
+  index: number;
+}
+
+export default function MembershipCard({ plan, index }: MembershipCardProps) {
+  const isPopular = plan.isPopular;
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as const,
+        delay: index * 0.08,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-40px" }}
+      className={`relative flex flex-col justify-between p-8 md:p-9 rounded-2xl transition-all duration-500 ease-out group ${
+        isPopular
+          ? "bg-gradient-to-b from-[#1A1A1A] to-[#141414] border border-[rgba(212,175,55,0.2)] shadow-gold-elevated hover:shadow-gold-lg hover:-translate-y-1"
+          : "bg-[#141414] border border-[rgba(212,175,55,0.06)] shadow-card hover:border-[rgba(212,175,55,0.16)] hover:shadow-card-elevated hover:-translate-y-1"
+      }`}
+    >
+      {isPopular && (
+        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-b from-[#F5E6A3] via-[#D4AF37] to-[#8B6914] text-[#0A0A0A] text-[10px] font-display font-bold tracking-[0.25em] uppercase px-5 py-2 rounded-full whitespace-nowrap">
+          Best Value
+        </span>
+      )}
+
+      <div>
+        <div className="inline-flex items-center gap-2 mb-6">
+          <span
+            className={`text-[10px] font-semibold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${
+              isPopular
+                ? "bg-[rgba(212,175,55,0.1)] text-[#D4AF37] border-[rgba(212,175,55,0.2)]"
+                : "bg-[#1A1A1A] text-[#BDBDBD] border-[rgba(212,175,55,0.06)]"
+            }`}
+          >
+            {plan.duration}
+          </span>
+        </div>
+
+        <div className="flex items-baseline gap-1 mb-6">
+          <span className="text-4xl font-display font-bold text-white tracking-tight">
+            {plan.price}
+          </span>
+        </div>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-[rgba(212,175,55,0.12)] to-transparent mb-7" />
+
+        <ul className="space-y-3.5 mb-8">
+          {plan.features.map((feature, i) => (
+            <li key={i} className="flex items-start gap-3 text-[13px] text-[#BDBDBD]">
+              <Check className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
+              <span className="leading-relaxed">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-auto pt-2">
+        <CTAButton
+          href="/join"
+          variant={isPopular ? "solid" : "outline"}
+          className="w-full py-3 text-xs"
+        >
+          Join Now
+        </CTAButton>
+      </div>
+    </motion.div>
+  );
+}
+</file>
+
+<file path="components/ui/SectionHeading.tsx">
+"use client";
+
+import { motion } from "framer-motion";
+
+interface SectionHeadingProps {
+  title: string;
+  subtitle?: string;
+  align?: "left" | "center" | "right";
+  badge?: string;
+}
+
+export default function SectionHeading({
+  title,
+  subtitle,
+  align = "center",
+  badge = "Be Strong Fitness",
+}: SectionHeadingProps) {
+  const alignmentClasses = {
+    left: "text-left items-start",
+    center: "text-center items-center",
+    right: "text-right items-end",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
+      className={`flex flex-col mb-20 md:mb-24 ${alignmentClasses[align]}`}
+    >
+      <div className="flex items-center gap-3 mb-5">
+        <span className="h-[1px] w-10 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-60" />
+        <span className="text-[11px] uppercase tracking-[0.35em] text-[#D4AF37] font-semibold">
+          {badge}
+        </span>
+        <span className="h-[1px] w-10 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-60" />
+      </div>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-white leading-[1.08]">
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="mt-6 text-sm md:text-[15px] text-[#BDBDBD] max-w-2xl leading-[1.7] text-balance font-light">
+          {subtitle}
+        </p>
+      )}
+    </motion.div>
+  );
+}
+</file>
+
+<file path="components/ui/TrainerCard.tsx">
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Trainer } from "@/data/siteContent";
+
+interface TrainerCardProps {
+  trainer: Trainer;
+  index: number;
+}
+
+export default function TrainerCard({ trainer, index }: TrainerCardProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.7, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] as const }}
+      whileHover={{ y: -4 }}
+      className="group relative flex flex-col items-center bg-[#141414] border border-[rgba(212,175,55,0.05)] rounded-2xl p-8 transition-all duration-500 ease-out hover:border-[rgba(212,175,55,0.16)] hover:shadow-card-elevated"
+    >
+      <div className="relative w-32 h-32 rounded-full overflow-hidden mb-7 border border-[rgba(212,175,55,0.08)] group-hover:border-[rgba(212,175,55,0.25)] transition-colors duration-500 shadow-card">
+        <Image
+          src={trainer.image}
+          alt={trainer.name}
+          fill
+          sizes="128px"
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+        />
+      </div>
+
+      <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold mb-2">
+        {trainer.specialty}
+      </span>
+      <h3 className="text-lg font-display font-semibold text-white tracking-wide mb-3">
+        {trainer.name}
+      </h3>
+
+      <div className="bg-gradient-to-b from-[#F5E6A3]/10 via-[#D4AF37]/10 to-[#8B6914]/10 text-[#D4AF37] text-[10px] font-semibold tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-5 border border-[rgba(212,175,55,0.15)]">
+        {trainer.certification}
+      </div>
+
+      <p className="text-[13px] text-[#BDBDBD] text-center leading-[1.7] mb-7 max-w-[240px]">
+        {trainer.bio}
+      </p>
+
+      <div className="mt-auto">
+        <a
+          href={trainer.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#1A1A1A] border border-[rgba(212,175,55,0.1)] text-[#BDBDBD] hover:text-[#0A0A0A] hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-400 ease-out"
+          aria-label={`${trainer.name} on Instagram`}
+        >
+          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+          </svg>
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+</file>
+
+<file path="data/siteContent.ts">
+// Site configurations and content definitions
+export const SITE_NAME = "Be Strong";
+export const BRAND_TAGLINE = "UNISEX FITNESS CENTER";
+export const HERO_SUBHEADING = "Welcome to Be Strong Gym A/C, where limits are shattered. Join an elite community, train with industry experts, and experience a state-of-the-art facility designed to push you to the next level.";
+
+// Contact Details (configured with new values)
+export const PHONE_NUMBER = "9063906499";
+export const ADDRESS = "Be Strong Gym A/C, Unisex Fitness Center";
+export const GOOGLE_MAPS_EMBED_URL = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.083117985202!2d79.45644747521611!3d13.652707699579754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d4b000bbc9153%3A0x38bf77aef0bb95f6!2sBe%20Strong%20Gym!5e0!3m2!1sen!2sin!4v1782724787993!5m2!1sen!2sin";
+export const WHATSAPP_NUMBER = "+916302984054";
+export const EMAIL = "contact@bestronggym.com";
+
+export const SOCIAL_LINKS = {
+  instagram: "#",
+  facebook: "#",
+  youtube: "#",
+};
+
+export const WORKING_HOURS = {
+  weekdays: "Monday–Saturday 5:00 AM–10:00 PM",
+  sunday: "Sunday 6:00 AM–8:00 PM",
+};
+
+export interface MembershipPlan {
+  id: string;
+  name: string;
+  price: string;
+  duration: string;
+  features: string[];
+  isPopular?: boolean;
+}
+
+export const MEMBERSHIP_PLANS: MembershipPlan[] = [
+  {
+    id: "monthly",
+    name: "General Access",
+    price: "₹1,999",
+    duration: "1 Month",
+    features: [
+      "Access to all equipment",
+      "Locker facility",
+      "Trainer guidance",
+      "Free fitness assessment",
+    ],
+  },
+  {
+    id: "quarterly",
+    name: "General Access",
+    price: "₹4,999",
+    duration: "3 Months",
+    features: [
+      "Access to all equipment",
+      "Locker facility",
+      "Trainer guidance",
+      "Free fitness assessment",
+      "1 free Personal Training session",
+    ],
+  },
+  {
+    id: "half-yearly",
+    name: "General Access",
+    price: "₹6,999",
+    duration: "6 Months",
+    isPopular: true,
+    features: [
+      "Access to all equipment",
+      "Locker facility",
+      "Trainer guidance",
+      "Free fitness assessment",
+      "Priority lockers",
+      "2 free Personal Training sessions",
+    ],
+  },
+  {
+    id: "annual",
+    name: "General Access",
+    price: "₹9,999",
+    duration: "12 Months",
+    features: [
+      "Access to all equipment",
+      "Locker facility",
+      "Trainer guidance",
+      "Free fitness assessment",
+      "Priority lockers",
+      "Monthly body assessment",
+      "5 free Personal Training sessions",
+    ],
+  },
+];
+
+export const PERSONAL_TRAINING_PLANS: MembershipPlan[] = [
+  {
+    id: "pt-monthly",
+    name: "Personal Training",
+    price: "₹5,999",
+    duration: "1 Month",
+    features: [
+      "1-on-1 expert coaching",
+      "Custom workout program",
+      "Diet & nutrition planning",
+      "Body posture correction",
+      "Progress tracking & support",
+    ],
+  },
+  {
+    id: "pt-quarterly",
+    name: "Personal Training",
+    price: "₹14,999",
+    duration: "3 Months",
+    isPopular: true,
+    features: [
+      "1-on-1 expert coaching",
+      "Custom workout program",
+      "Diet & nutrition planning",
+      "Body posture correction",
+      "Progress tracking & support",
+      "Accelerated transformation plan",
+    ],
+  },
+];
+
+export interface Facility {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+}
+
+export const FACILITIES: Facility[] = [
+  {
+    id: "cardio",
+    title: "Cardio Zone",
+    description: "Premium treadmills, ellipticals, and stationary bikes for peak stamina.",
+    iconName: "Activity",
+  },
+  {
+    id: "weights",
+    title: "Free Weights Area",
+    description: "Extensive selection of dumbbells, barbells, and olympic lifting platforms.",
+    iconName: "Dumbbell",
+  },
+  {
+    id: "strength",
+    title: "Strength Machines",
+    description: "Advanced selectorized and plate-loaded machines for targeted muscle growth.",
+    iconName: "Zap",
+  },
+  {
+    id: "lockers",
+    title: "Locker Rooms",
+    description: "Secure lockers, refreshing showers, and grooming stations.",
+    iconName: "ShieldCheck",
+  },
+  {
+    id: "parking",
+    title: "Parking",
+    description: "Spacious, secure, and free parking for members.",
+    iconName: "MapPin",
+  },
+  {
+    id: "ac",
+    title: "Air Conditioning",
+    description: "Fully climate-controlled spaces to keep you cool during intense sessions.",
+    iconName: "Wind",
+  },
+  {
+    id: "diet",
+    title: "Diet Consultation",
+    description: "Customized nutrition guides created by certified dieticians.",
+    iconName: "Apple",
+  },
+  {
+    id: "security",
+    title: "CCTV & Security",
+    description: "24/7 surveillance and secure access control for peace of mind.",
+    iconName: "Shield",
+  },
+];
+
+export interface Trainer {
+  id: string;
+  name: string;
+  specialty: string;
+  bio: string;
+  certification: string;
+  image: string;
+  instagram: string;
+}
+
+export const TRAINERS: Trainer[] = [
+  {
+    id: "trainer-1",
+    name: "Vikram Singh",
+    specialty: "Strength & Conditioning",
+    bio: "Passionate coach dedicated to building functional strength, endurance, and boosting mental resilience.",
+    certification: "Certified Strength Coach",
+    image: "/images/placeholder.jpg",
+    instagram: "#",
+  },
+  {
+    id: "trainer-2",
+    name: "Rohan Malhotra",
+    specialty: "Fat Loss & HIIT",
+    bio: "Helping clients burn fat, tone up, and transform their metabolic health through dynamic workouts.",
+    certification: "ACE Certified Trainer",
+    image: "/images/placeholder.jpg",
+    instagram: "#",
+  },
+  {
+    id: "trainer-3",
+    name: "Neha Sharma",
+    specialty: "Mobility & Yoga",
+    bio: "Specializing in athletic mobility, correcting posture, and restorative post-workout recovery practices.",
+    certification: "RYT 200 Yoga Specialist",
+    image: "/images/placeholder.jpg",
+    instagram: "#",
+  },
+];
+
+// Transformation Gallery (8 Items using placeholders)
+export interface GalleryItem {
+  id: string;
+  image: string;
+  title: string;
+}
+
+export const GALLERY_ITEMS: GalleryItem[] = Array.from({ length: 8 }).map((_, index) => ({
+  id: `gallery-${index + 1}`,
+  image: "/images/placeholder.jpg",
+  title: `Transformation ${index + 1}`,
+}));
+</file>
+
+<file path="app/globals.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 10, 10, 10;
+    --foreground: 255, 255, 255;
+  }
+
+  body {
+    color: rgb(var(--foreground));
+    background: rgb(var(--background));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background-color: rgba(212, 175, 55, 0.25);
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0A0A0A;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(20, 20, 20, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .glass-panel-hover {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-panel-hover:hover {
+    background: rgba(26, 26, 26, 0.7);
+    border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.06) inset, 0 24px 48px -12px rgba(0, 0, 0, 0.6);
+    transform: translateY(-4px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(180deg, #ffffff 0%, #E5E5E5 60%, #9a9a9a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(180deg, #FDF5C9 0%, #D4AF37 25%, #B8860B 70%, #7A5B14 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-border {
+    position: relative;
+  }
+
+  .gold-border::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gold-border:hover::after {
+    width: 100%;
+  }
+
+  .metallic-bg {
+    background: linear-gradient(180deg, #F5E6A3 0%, #E0C350 20%, #D4AF37 50%, #B8860B 85%, #8B6914 100%);
+  }
+
+  .metallic-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 30%, transparent 50%, rgba(0,0,0,0.2) 100%);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .section-y-spacing {
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+
+  .section-x-spacing {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @media (min-width: 1024px) {
+    .section-x-spacing {
+      padding-left: 48px;
+      padding-right: 48px;
+    }
+  }
+
+  .luxury-lighting {
+    position: relative;
+  }
+
+  .luxury-lighting::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 45% at 50% 0%,
+      rgba(212, 175, 55, 0.05) 0%,
+      transparent 55%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes subtlePulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  .animate-subtle-pulse {
+    animation: subtlePulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+  .stagger-6 { animation-delay: 0.6s; }
+  .stagger-7 { animation-delay: 0.7s; }
+  .stagger-8 { animation-delay: 0.8s; }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  }
+
+  .shadow-card {
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.4), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .shadow-card-hover {
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.12), 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  .shadow-card-elevated {
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.1), 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  }
+}
+</file>
+
+<file path="app/layout.tsx">
+import type { Metadata } from "next";
+import { Inter, Outfit } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Be Strong Gym A/C | Unisex Fitness Center",
+  description: "Be Strong Gym A/C — A premium unisex fitness center offering state-of-the-art equipment, expert personal training, and flexible membership plans. Join today and transform your body!",
+  keywords: ["gym", "fitness", "Be Strong", "Unisex Fitness Center", "personal training", "workout", "strength training", "cardio"],
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${outfit.variable} font-sans antialiased text-white bg-background min-h-screen flex flex-col`}
+      >
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
+        <WhatsAppButton />
+      </body>
+    </html>
+  );
+}
+</file>
+
+<file path="app/page.tsx">
+import HeroSection from "@/components/sections/HeroSection";
+import MembershipSection from "@/components/sections/MembershipSection";
+import FacilitiesSection from "@/components/sections/FacilitiesSection";
+import TrainersSection from "@/components/sections/TrainersSection";
+import GallerySection from "@/components/sections/GallerySection";
+import ContactSection from "@/components/sections/ContactSection";
+
+export default function Home() {
+  return (
+    <>
+      <HeroSection />
+      <MembershipSection />
+      <FacilitiesSection />
+      <TrainersSection />
+      <GallerySection />
+      <ContactSection />
+    </>
+  );
+}
+</file>
+
+<file path=".eslintrc.json">
+{
+  "extends": ["next/core-web-vitals", "next/typescript"]
+}
+</file>
+
+<file path=".gitignore">
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+</file>
+
+<file path="next.config.mjs">
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default nextConfig;
+</file>
+
+<file path="package.json">
+{
+  "name": "be-strong",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "framer-motion": "^12.42.0",
+    "lucide-react": "^1.22.0",
+    "next": "14.2.35",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
+</file>
+
+<file path="postcss.config.mjs">
+/** @type {import('postcss-load-config').Config} */
+const config = {
+  plugins: {
+    tailwindcss: {},
+  },
+};
+
+export default config;
+</file>
+
+<file path="README.md">
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</file>
+
+<file path="tailwind.config.ts">
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+        display: ["var(--font-outfit)", "sans-serif"],
+      },
+      colors: {
+        background: "#0A0A0A",
+        foreground: "#FFFFFF",
+        primarySurface: "#141414",
+        cardBackground: "#1A1A1A",
+        gold: {
+          DEFAULT: "#D4AF37",
+          dark: "#B8860B",
+        },
+        textSecondary: "#BDBDBD",
+        borderGold: "rgba(212,175,55,0.15)",
+      },
+      spacing: {
+        "8": "8px",
+        "16": "16px",
+        "24": "24px",
+        "32": "32px",
+        "48": "48px",
+        "64": "64px",
+        "96": "96px",
+        "128": "128px",
+      },
+      boxShadow: {
+        "luxury": "0 1px 2px 0 rgba(0, 0, 0, 0.4), 0 1px 3px 0 rgba(0, 0, 0, 0.3)",
+        "luxury-md": "0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)",
+        "luxury-lg": "0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)",
+        "luxury-xl": "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3)",
+        "gold-ambient": "0 0 0 1px rgba(212, 175, 55, 0.05), 0 4px 20px -4px rgba(212, 175, 55, 0.08)",
+        "gold-elevated": "0 0 0 1px rgba(212, 175, 55, 0.08), 0 12px 40px -8px rgba(0, 0, 0, 0.6)",
+        "gold-lg": "0 0 0 1px rgba(212, 175, 55, 0.1), 0 24px 56px -12px rgba(0, 0, 0, 0.7)",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+</file>
+
+</files>

@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Member {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  full_name        String
+  phone            String   @unique
+  email            String?
+  photo_url        String?
+  plan             Plan
+  joined_at        DateTime @db.Date
+  expires_at       DateTime @db.Date
+  status           MemberStatus @default(ACTIVE)
+  auth_user_id     String?  @db.Uuid
+  personal_qr_secret String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  attendance Attendance[]
+
+  @@index([phone])
+  @@map("members")
+}
+
+model Staff {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  auth_user_id  String   @unique @db.Uuid
+  full_name     String?
+  role          StaffRole
+  created_at    DateTime @default(now())
+
+  attendance_marked Attendance[] @relation("AttendanceMarkedBy")
+
+  @@map("staff")
+}
+
+model Attendance {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  member_id    String   @db.Uuid
+  checked_in_at DateTime @default(now())
+  method       CheckinMethod
+  marked_by    String?  @db.Uuid
+  created_at   DateTime @default(now())
+
+  member Member @relation(fields: [member_id], references: [id])
+  staff  Staff? @relation("AttendanceMarkedBy", fields: [marked_by], references: [id])
+
+  @@index([member_id])
+  @@index([checked_in_at])
+  @@map("attendance")
+}
+
+model CheckinToken {
+  token              String   @id
+  window_start       DateTime
+  expires_at         DateTime
+  used_by_member_ids String[] @default([]) @db.Uuid
+
+  @@map("checkin_tokens")
+}
+
+model SyncState {
+  id           String   @id @default("default")
+  last_synced_at DateTime @default(now())
+
+  @@map("sync_state")
+}
+
+enum Plan {
+  MONTHLY
+  QUARTERLY
+  ANNUAL
+}
+
+enum MemberStatus {
+  ACTIVE
+  EXPIRED
+  FROZEN
+}
+
+enum CheckinMethod {
+  SELF_SCAN
+  STAFF_SCAN
+}
+
+enum StaffRole {
+  ADMIN
+  FRONT_DESK
+  TRAINER
+}
