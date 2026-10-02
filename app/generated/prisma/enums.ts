@@ -12,6 +12,7 @@
 export const Plan = {
   MONTHLY: 'MONTHLY',
   QUARTERLY: 'QUARTERLY',
+  SEMI_ANNUAL: 'SEMI_ANNUAL',
   ANNUAL: 'ANNUAL'
 } as const
 

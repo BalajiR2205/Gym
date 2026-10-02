@@ -20,19 +20,32 @@ export type MemberModel = runtime.Types.Result.DefaultSelection<Prisma.$MemberPa
 
 export type AggregateMember = {
   _count: MemberCountAggregateOutputType | null
+  _avg: MemberAvgAggregateOutputType | null
+  _sum: MemberSumAggregateOutputType | null
   _min: MemberMinAggregateOutputType | null
   _max: MemberMaxAggregateOutputType | null
 }
 
+export type MemberAvgAggregateOutputType = {
+  member_number: number | null
+}
+
+export type MemberSumAggregateOutputType = {
+  member_number: number | null
+}
+
 export type MemberMinAggregateOutputType = {
   id: string | null
-  full_name: string | null
+  first_name: string | null
+  last_name: string | null
   phone: string | null
   email: string | null
   photo_url: string | null
   plan: $Enums.Plan | null
   joined_at: Date | null
   expires_at: Date | null
+  date_of_birth: Date | null
+  member_number: number | null
   status: $Enums.MemberStatus | null
   auth_user_id: string | null
   personal_qr_secret: string | null
@@ -42,13 +55,16 @@ export type MemberMinAggregateOutputType = {
 
 export type MemberMaxAggregateOutputType = {
   id: string | null
-  full_name: string | null
+  first_name: string | null
+  last_name: string | null
   phone: string | null
   email: string | null
   photo_url: string | null
   plan: $Enums.Plan | null
   joined_at: Date | null
   expires_at: Date | null
+  date_of_birth: Date | null
+  member_number: number | null
   status: $Enums.MemberStatus | null
   auth_user_id: string | null
   personal_qr_secret: string | null
@@ -58,13 +74,16 @@ export type MemberMaxAggregateOutputType = {
 
 export type MemberCountAggregateOutputType = {
   id: number
-  full_name: number
+  first_name: number
+  last_name: number
   phone: number
   email: number
   photo_url: number
   plan: number
   joined_at: number
   expires_at: number
+  date_of_birth: number
+  member_number: number
   status: number
   auth_user_id: number
   personal_qr_secret: number
@@ -74,15 +93,26 @@ export type MemberCountAggregateOutputType = {
 }
 
 
+export type MemberAvgAggregateInputType = {
+  member_number?: true
+}
+
+export type MemberSumAggregateInputType = {
+  member_number?: true
+}
+
 export type MemberMinAggregateInputType = {
   id?: true
-  full_name?: true
+  first_name?: true
+  last_name?: true
   phone?: true
   email?: true
   photo_url?: true
   plan?: true
   joined_at?: true
   expires_at?: true
+  date_of_birth?: true
+  member_number?: true
   status?: true
   auth_user_id?: true
   personal_qr_secret?: true
@@ -92,13 +122,16 @@ export type MemberMinAggregateInputType = {
 
 export type MemberMaxAggregateInputType = {
   id?: true
-  full_name?: true
+  first_name?: true
+  last_name?: true
   phone?: true
   email?: true
   photo_url?: true
   plan?: true
   joined_at?: true
   expires_at?: true
+  date_of_birth?: true
+  member_number?: true
   status?: true
   auth_user_id?: true
   personal_qr_secret?: true
@@ -108,13 +141,16 @@ export type MemberMaxAggregateInputType = {
 
 export type MemberCountAggregateInputType = {
   id?: true
-  full_name?: true
+  first_name?: true
+  last_name?: true
   phone?: true
   email?: true
   photo_url?: true
   plan?: true
   joined_at?: true
   expires_at?: true
+  date_of_birth?: true
+  member_number?: true
   status?: true
   auth_user_id?: true
   personal_qr_secret?: true
@@ -161,6 +197,18 @@ export type MemberAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: MemberAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: MemberSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: MemberMinAggregateInputType
@@ -191,25 +239,32 @@ export type MemberGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: MemberCountAggregateInputType | true
+  _avg?: MemberAvgAggregateInputType
+  _sum?: MemberSumAggregateInputType
   _min?: MemberMinAggregateInputType
   _max?: MemberMaxAggregateInputType
 }
 
 export type MemberGroupByOutputType = {
   id: string
-  full_name: string
+  first_name: string
+  last_name: string
   phone: string
   email: string | null
   photo_url: string | null
   plan: $Enums.Plan
   joined_at: Date
   expires_at: Date
+  date_of_birth: Date | null
+  member_number: number
   status: $Enums.MemberStatus
   auth_user_id: string | null
   personal_qr_secret: string
   created_at: Date
   updated_at: Date
   _count: MemberCountAggregateOutputType | null
+  _avg: MemberAvgAggregateOutputType | null
+  _sum: MemberSumAggregateOutputType | null
   _min: MemberMinAggregateOutputType | null
   _max: MemberMaxAggregateOutputType | null
 }
@@ -234,13 +289,16 @@ export type MemberWhereInput = {
   OR?: Prisma.MemberWhereInput[]
   NOT?: Prisma.MemberWhereInput | Prisma.MemberWhereInput[]
   id?: Prisma.UuidFilter<"Member"> | string
-  full_name?: Prisma.StringFilter<"Member"> | string
+  first_name?: Prisma.StringFilter<"Member"> | string
+  last_name?: Prisma.StringFilter<"Member"> | string
   phone?: Prisma.StringFilter<"Member"> | string
   email?: Prisma.StringNullableFilter<"Member"> | string | null
   photo_url?: Prisma.StringNullableFilter<"Member"> | string | null
   plan?: Prisma.EnumPlanFilter<"Member"> | $Enums.Plan
   joined_at?: Prisma.DateTimeFilter<"Member"> | Date | string
   expires_at?: Prisma.DateTimeFilter<"Member"> | Date | string
+  date_of_birth?: Prisma.DateTimeNullableFilter<"Member"> | Date | string | null
+  member_number?: Prisma.IntFilter<"Member"> | number
   status?: Prisma.EnumMemberStatusFilter<"Member"> | $Enums.MemberStatus
   auth_user_id?: Prisma.UuidNullableFilter<"Member"> | string | null
   personal_qr_secret?: Prisma.StringFilter<"Member"> | string
@@ -251,13 +309,16 @@ export type MemberWhereInput = {
 
 export type MemberOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  full_name?: Prisma.SortOrder
+  first_name?: Prisma.SortOrder
+  last_name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   photo_url?: Prisma.SortOrderInput | Prisma.SortOrder
   plan?: Prisma.SortOrder
   joined_at?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
+  date_of_birth?: Prisma.SortOrderInput | Prisma.SortOrder
+  member_number?: Prisma.SortOrder
   status?: Prisma.SortOrder
   auth_user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   personal_qr_secret?: Prisma.SortOrder
@@ -269,40 +330,48 @@ export type MemberOrderByWithRelationInput = {
 export type MemberWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   phone?: string
+  member_number?: number
   AND?: Prisma.MemberWhereInput | Prisma.MemberWhereInput[]
   OR?: Prisma.MemberWhereInput[]
   NOT?: Prisma.MemberWhereInput | Prisma.MemberWhereInput[]
-  full_name?: Prisma.StringFilter<"Member"> | string
+  first_name?: Prisma.StringFilter<"Member"> | string
+  last_name?: Prisma.StringFilter<"Member"> | string
   email?: Prisma.StringNullableFilter<"Member"> | string | null
   photo_url?: Prisma.StringNullableFilter<"Member"> | string | null
   plan?: Prisma.EnumPlanFilter<"Member"> | $Enums.Plan
   joined_at?: Prisma.DateTimeFilter<"Member"> | Date | string
   expires_at?: Prisma.DateTimeFilter<"Member"> | Date | string
+  date_of_birth?: Prisma.DateTimeNullableFilter<"Member"> | Date | string | null
   status?: Prisma.EnumMemberStatusFilter<"Member"> | $Enums.MemberStatus
   auth_user_id?: Prisma.UuidNullableFilter<"Member"> | string | null
   personal_qr_secret?: Prisma.StringFilter<"Member"> | string
   created_at?: Prisma.DateTimeFilter<"Member"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Member"> | Date | string
   attendance?: Prisma.AttendanceListRelationFilter
-}, "id" | "phone">
+}, "id" | "phone" | "member_number">
 
 export type MemberOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  full_name?: Prisma.SortOrder
+  first_name?: Prisma.SortOrder
+  last_name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   photo_url?: Prisma.SortOrderInput | Prisma.SortOrder
   plan?: Prisma.SortOrder
   joined_at?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
+  date_of_birth?: Prisma.SortOrderInput | Prisma.SortOrder
+  member_number?: Prisma.SortOrder
   status?: Prisma.SortOrder
   auth_user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   personal_qr_secret?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.MemberCountOrderByAggregateInput
+  _avg?: Prisma.MemberAvgOrderByAggregateInput
   _max?: Prisma.MemberMaxOrderByAggregateInput
   _min?: Prisma.MemberMinOrderByAggregateInput
+  _sum?: Prisma.MemberSumOrderByAggregateInput
 }
 
 export type MemberScalarWhereWithAggregatesInput = {
@@ -310,13 +379,16 @@ export type MemberScalarWhereWithAggregatesInput = {
   OR?: Prisma.MemberScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MemberScalarWhereWithAggregatesInput | Prisma.MemberScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Member"> | string
-  full_name?: Prisma.StringWithAggregatesFilter<"Member"> | string
+  first_name?: Prisma.StringWithAggregatesFilter<"Member"> | string
+  last_name?: Prisma.StringWithAggregatesFilter<"Member"> | string
   phone?: Prisma.StringWithAggregatesFilter<"Member"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Member"> | string | null
   photo_url?: Prisma.StringNullableWithAggregatesFilter<"Member"> | string | null
   plan?: Prisma.EnumPlanWithAggregatesFilter<"Member"> | $Enums.Plan
   joined_at?: Prisma.DateTimeWithAggregatesFilter<"Member"> | Date | string
   expires_at?: Prisma.DateTimeWithAggregatesFilter<"Member"> | Date | string
+  date_of_birth?: Prisma.DateTimeNullableWithAggregatesFilter<"Member"> | Date | string | null
+  member_number?: Prisma.IntWithAggregatesFilter<"Member"> | number
   status?: Prisma.EnumMemberStatusWithAggregatesFilter<"Member"> | $Enums.MemberStatus
   auth_user_id?: Prisma.UuidNullableWithAggregatesFilter<"Member"> | string | null
   personal_qr_secret?: Prisma.StringWithAggregatesFilter<"Member"> | string
@@ -326,13 +398,16 @@ export type MemberScalarWhereWithAggregatesInput = {
 
 export type MemberCreateInput = {
   id?: string
-  full_name: string
+  first_name: string
+  last_name: string
   phone: string
   email?: string | null
   photo_url?: string | null
   plan: $Enums.Plan
   joined_at: Date | string
   expires_at: Date | string
+  date_of_birth?: Date | string | null
+  member_number?: number
   status?: $Enums.MemberStatus
   auth_user_id?: string | null
   personal_qr_secret: string
@@ -343,13 +418,16 @@ export type MemberCreateInput = {
 
 export type MemberUncheckedCreateInput = {
   id?: string
-  full_name: string
+  first_name: string
+  last_name: string
   phone: string
   email?: string | null
   photo_url?: string | null
   plan: $Enums.Plan
   joined_at: Date | string
   expires_at: Date | string
+  date_of_birth?: Date | string | null
+  member_number?: number
   status?: $Enums.MemberStatus
   auth_user_id?: string | null
   personal_qr_secret: string
@@ -360,13 +438,15 @@ export type MemberUncheckedCreateInput = {
 
 export type MemberUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus
   auth_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personal_qr_secret?: Prisma.StringFieldUpdateOperationsInput | string
@@ -377,13 +457,16 @@ export type MemberUpdateInput = {
 
 export type MemberUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  member_number?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus
   auth_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personal_qr_secret?: Prisma.StringFieldUpdateOperationsInput | string
@@ -394,13 +477,16 @@ export type MemberUncheckedUpdateInput = {
 
 export type MemberCreateManyInput = {
   id?: string
-  full_name: string
+  first_name: string
+  last_name: string
   phone: string
   email?: string | null
   photo_url?: string | null
   plan: $Enums.Plan
   joined_at: Date | string
   expires_at: Date | string
+  date_of_birth?: Date | string | null
+  member_number?: number
   status?: $Enums.MemberStatus
   auth_user_id?: string | null
   personal_qr_secret: string
@@ -410,13 +496,15 @@ export type MemberCreateManyInput = {
 
 export type MemberUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus
   auth_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personal_qr_secret?: Prisma.StringFieldUpdateOperationsInput | string
@@ -426,13 +514,16 @@ export type MemberUpdateManyMutationInput = {
 
 export type MemberUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  member_number?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus
   auth_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personal_qr_secret?: Prisma.StringFieldUpdateOperationsInput | string
@@ -442,13 +533,16 @@ export type MemberUncheckedUpdateManyInput = {
 
 export type MemberCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  full_name?: Prisma.SortOrder
+  first_name?: Prisma.SortOrder
+  last_name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   photo_url?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   joined_at?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
+  date_of_birth?: Prisma.SortOrder
+  member_number?: Prisma.SortOrder
   status?: Prisma.SortOrder
   auth_user_id?: Prisma.SortOrder
   personal_qr_secret?: Prisma.SortOrder
@@ -456,15 +550,22 @@ export type MemberCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
 }
 
+export type MemberAvgOrderByAggregateInput = {
+  member_number?: Prisma.SortOrder
+}
+
 export type MemberMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  full_name?: Prisma.SortOrder
+  first_name?: Prisma.SortOrder
+  last_name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   photo_url?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   joined_at?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
+  date_of_birth?: Prisma.SortOrder
+  member_number?: Prisma.SortOrder
   status?: Prisma.SortOrder
   auth_user_id?: Prisma.SortOrder
   personal_qr_secret?: Prisma.SortOrder
@@ -474,18 +575,25 @@ export type MemberMaxOrderByAggregateInput = {
 
 export type MemberMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  full_name?: Prisma.SortOrder
+  first_name?: Prisma.SortOrder
+  last_name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   photo_url?: Prisma.SortOrder
   plan?: Prisma.SortOrder
   joined_at?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
+  date_of_birth?: Prisma.SortOrder
+  member_number?: Prisma.SortOrder
   status?: Prisma.SortOrder
   auth_user_id?: Prisma.SortOrder
   personal_qr_secret?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type MemberSumOrderByAggregateInput = {
+  member_number?: Prisma.SortOrder
 }
 
 export type MemberScalarRelationFilter = {
@@ -509,8 +617,20 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type EnumMemberStatusFieldUpdateOperationsInput = {
   set?: $Enums.MemberStatus
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type MemberCreateNestedOneWithoutAttendanceInput = {
@@ -529,13 +649,16 @@ export type MemberUpdateOneRequiredWithoutAttendanceNestedInput = {
 
 export type MemberCreateWithoutAttendanceInput = {
   id?: string
-  full_name: string
+  first_name: string
+  last_name: string
   phone: string
   email?: string | null
   photo_url?: string | null
   plan: $Enums.Plan
   joined_at: Date | string
   expires_at: Date | string
+  date_of_birth?: Date | string | null
+  member_number?: number
   status?: $Enums.MemberStatus
   auth_user_id?: string | null
   personal_qr_secret: string
@@ -545,13 +668,16 @@ export type MemberCreateWithoutAttendanceInput = {
 
 export type MemberUncheckedCreateWithoutAttendanceInput = {
   id?: string
-  full_name: string
+  first_name: string
+  last_name: string
   phone: string
   email?: string | null
   photo_url?: string | null
   plan: $Enums.Plan
   joined_at: Date | string
   expires_at: Date | string
+  date_of_birth?: Date | string | null
+  member_number?: number
   status?: $Enums.MemberStatus
   auth_user_id?: string | null
   personal_qr_secret: string
@@ -577,13 +703,15 @@ export type MemberUpdateToOneWithWhereWithoutAttendanceInput = {
 
 export type MemberUpdateWithoutAttendanceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus
   auth_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personal_qr_secret?: Prisma.StringFieldUpdateOperationsInput | string
@@ -593,13 +721,16 @@ export type MemberUpdateWithoutAttendanceInput = {
 
 export type MemberUncheckedUpdateWithoutAttendanceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  member_number?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumMemberStatusFieldUpdateOperationsInput | $Enums.MemberStatus
   auth_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   personal_qr_secret?: Prisma.StringFieldUpdateOperationsInput | string
@@ -640,13 +771,16 @@ export type MemberCountOutputTypeCountAttendanceArgs<ExtArgs extends runtime.Typ
 
 export type MemberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  full_name?: boolean
+  first_name?: boolean
+  last_name?: boolean
   phone?: boolean
   email?: boolean
   photo_url?: boolean
   plan?: boolean
   joined_at?: boolean
   expires_at?: boolean
+  date_of_birth?: boolean
+  member_number?: boolean
   status?: boolean
   auth_user_id?: boolean
   personal_qr_secret?: boolean
@@ -658,13 +792,16 @@ export type MemberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type MemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  full_name?: boolean
+  first_name?: boolean
+  last_name?: boolean
   phone?: boolean
   email?: boolean
   photo_url?: boolean
   plan?: boolean
   joined_at?: boolean
   expires_at?: boolean
+  date_of_birth?: boolean
+  member_number?: boolean
   status?: boolean
   auth_user_id?: boolean
   personal_qr_secret?: boolean
@@ -674,13 +811,16 @@ export type MemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type MemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  full_name?: boolean
+  first_name?: boolean
+  last_name?: boolean
   phone?: boolean
   email?: boolean
   photo_url?: boolean
   plan?: boolean
   joined_at?: boolean
   expires_at?: boolean
+  date_of_birth?: boolean
+  member_number?: boolean
   status?: boolean
   auth_user_id?: boolean
   personal_qr_secret?: boolean
@@ -690,13 +830,16 @@ export type MemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type MemberSelectScalar = {
   id?: boolean
-  full_name?: boolean
+  first_name?: boolean
+  last_name?: boolean
   phone?: boolean
   email?: boolean
   photo_url?: boolean
   plan?: boolean
   joined_at?: boolean
   expires_at?: boolean
+  date_of_birth?: boolean
+  member_number?: boolean
   status?: boolean
   auth_user_id?: boolean
   personal_qr_secret?: boolean
@@ -704,7 +847,7 @@ export type MemberSelectScalar = {
   updated_at?: boolean
 }
 
-export type MemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "phone" | "email" | "photo_url" | "plan" | "joined_at" | "expires_at" | "status" | "auth_user_id" | "personal_qr_secret" | "created_at" | "updated_at", ExtArgs["result"]["member"]>
+export type MemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "phone" | "email" | "photo_url" | "plan" | "joined_at" | "expires_at" | "date_of_birth" | "member_number" | "status" | "auth_user_id" | "personal_qr_secret" | "created_at" | "updated_at", ExtArgs["result"]["member"]>
 export type MemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attendance?: boolean | Prisma.Member$attendanceArgs<ExtArgs>
   _count?: boolean | Prisma.MemberCountOutputTypeDefaultArgs<ExtArgs>
@@ -719,13 +862,16 @@ export type $MemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    full_name: string
+    first_name: string
+    last_name: string
     phone: string
     email: string | null
     photo_url: string | null
     plan: $Enums.Plan
     joined_at: Date
     expires_at: Date
+    date_of_birth: Date | null
+    member_number: number
     status: $Enums.MemberStatus
     auth_user_id: string | null
     personal_qr_secret: string
@@ -1156,13 +1302,16 @@ export interface Prisma__MemberClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface MemberFieldRefs {
   readonly id: Prisma.FieldRef<"Member", 'String'>
-  readonly full_name: Prisma.FieldRef<"Member", 'String'>
+  readonly first_name: Prisma.FieldRef<"Member", 'String'>
+  readonly last_name: Prisma.FieldRef<"Member", 'String'>
   readonly phone: Prisma.FieldRef<"Member", 'String'>
   readonly email: Prisma.FieldRef<"Member", 'String'>
   readonly photo_url: Prisma.FieldRef<"Member", 'String'>
   readonly plan: Prisma.FieldRef<"Member", 'Plan'>
   readonly joined_at: Prisma.FieldRef<"Member", 'DateTime'>
   readonly expires_at: Prisma.FieldRef<"Member", 'DateTime'>
+  readonly date_of_birth: Prisma.FieldRef<"Member", 'DateTime'>
+  readonly member_number: Prisma.FieldRef<"Member", 'Int'>
   readonly status: Prisma.FieldRef<"Member", 'MemberStatus'>
   readonly auth_user_id: Prisma.FieldRef<"Member", 'String'>
   readonly personal_qr_secret: Prisma.FieldRef<"Member", 'String'>

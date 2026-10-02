@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type Member = {
   id: string;
+  member_code?: string;
   full_name: string;
   phone: string;
   status: string;
@@ -124,7 +125,7 @@ function CheckinContent() {
             Welcome, {member.full_name}!
           </h2>
           <p className="text-xs text-neutral-400 font-mono mb-6">
-            ID: {member.phone || member.id}
+            ID: {member.member_code || member.phone || member.id}
           </p>
 
           <div className="bg-[#141414] border border-[rgba(212,175,55,0.15)] rounded-xl p-5 mb-6 text-left space-y-3">
@@ -168,14 +169,14 @@ function CheckinContent() {
               Reception Check-In
             </h2>
             <p className="text-xs text-[#BDBDBD] max-w-xs mx-auto">
-              Enter your Unique Member ID or registered Phone Number to record your workout entry.
+              Enter your Member ID or registered Phone Number to record your workout entry.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-[#D4AF37] mb-2">
-                Unique Member ID / Phone
+                Member ID / Phone
               </label>
               <input
                 type="text"
@@ -183,7 +184,7 @@ function CheckinContent() {
                 onChange={(e) => setIdentifier(e.target.value)}
                 required
                 autoFocus
-                placeholder="e.g. BST-101 or 9876543210"
+                placeholder="e.g. GYM-0042 or 9876543210"
                 className="w-full bg-[#141414] border border-[rgba(212,175,55,0.2)] focus:border-[#D4AF37] rounded-xl px-4 py-3.5 text-white placeholder:text-neutral-600 focus:outline-none focus:ring-1 focus:ring-[#D4AF37] text-sm transition-all"
               />
             </div>

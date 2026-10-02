@@ -3,8 +3,10 @@ import { errorResponse } from "@/lib/api/errors";
 import { parsePlan, parseStatus, serializeMember } from "@/lib/api/serialize";
 import { requireManagementStaff } from "@/lib/auth/staff";
 import { generatePersonalQrSecret } from "@/lib/checkin/validation";
+import { parseMemberCode } from "@/lib/members/code";
+import { computeExpiryDate } from "@/lib/members/plan";
 import { prisma } from "@/lib/prisma";
-import type { MemberStatus, Plan } from "@/app/generated/prisma/client";
+import type { MemberStatus } from "@/app/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -21,9 +23,11 @@ export async function GET(request: Request) {
     const where: {
       status?: MemberStatus;
       OR?: Array<{
-        full_name?: { contains: string; mode: "insensitive" };
+        first_name?: { contains: string; mode: "insensitive" };
+        last_name?: { contains: string; mode: "insensitive" };
         phone?: { contains: string };
         email?: { contains: string; mode: "insensitive" };
+        member_number?: number;
       }>;
     } = {};
 
@@ -32,10 +36,13 @@ export async function GET(request: Request) {
     }
 
     if (search) {
+      const parsedSearchCode = parseMemberCode(search);
       where.OR = [
-        { full_name: { contains: search, mode: "insensitive" } },
+        { first_name: { contains: search, mode: "insensitive" } },
+        { last_name: { contains: search, mode: "insensitive" } },
         { phone: { contains: search } },
         { email: { contains: search, mode: "insensitive" } },
+        ...(parsedSearchCode !== null ? [{ member_number: parsedSearchCode }] : []),
       ];
     }
 
@@ -69,50 +76,64 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const {
-      full_name,
+      first_name,
+      last_name,
       phone,
       email,
       photo_url,
       plan,
       joined_at,
       expires_at,
+      date_of_birth,
       status,
     } = body as {
-      full_name?: string;
+      first_name?: string;
+      last_name?: string;
       phone?: string;
       email?: string | null;
       photo_url?: string | null;
       plan?: string;
       joined_at?: string;
       expires_at?: string;
+      date_of_birth?: string | null;
       status?: string;
     };
 
-    if (!full_name || !phone || !plan || !joined_at || !expires_at) {
+    if (!first_name || !phone || !plan) {
       return NextResponse.json(
         {
-          error:
-            "full_name, phone, plan, joined_at, and expires_at are required",
+          error: "first_name, phone, and plan are required",
         },
         { status: 400 }
       );
     }
 
+    const joinedDate = joined_at ? new Date(joined_at) : new Date();
+    const parsedPlan = parsePlan(plan);
+    const sanitizedEmail = email?.trim() ? email.trim() : null;
+    const sanitizedDob = date_of_birth?.trim() ? new Date(date_of_birth.trim()) : null;
+    const expiryDate = expires_at ? new Date(expires_at) : computeExpiryDate(joinedDate, parsedPlan);
+
     const member = await prisma.member.create({
       data: {
-        full_name,
-        phone,
-        email: email ?? null,
+        first_name: first_name.trim(),
+        last_name: (last_name ?? "").trim(),
+        phone: phone.trim(),
+        email: sanitizedEmail,
         photo_url: photo_url ?? null,
-        plan: parsePlan(plan) as Plan,
-        joined_at: new Date(joined_at),
-        expires_at: new Date(expires_at),
+        plan: parsedPlan,
+        joined_at: joinedDate,
+        expires_at: expiryDate,
+        date_of_birth: sanitizedDob,
         status: status ? parseStatus(status) : "ACTIVE",
         personal_qr_secret: generatePersonalQrSecret(),
       },
     });
 
-    return NextResponse.json({ member: serializeMember(member) }, { status: 201 });
+    return NextResponse.json(
+      { member: serializeMember(member) },
+      { status: 201 }
+    );
   } catch (error) {
     return errorResponse(error);
   }

@@ -150,7 +150,7 @@ export async function syncToGoogleSheets() {
         values: attendance.map((a) => [
           a.id,
           a.member_id,
-          a.member.full_name,
+          `${a.member.first_name}${a.member.last_name ? ` ${a.member.last_name}` : ""}`,
           a.member.phone,
           a.checked_in_at.toISOString(),
           a.method.toLowerCase(),

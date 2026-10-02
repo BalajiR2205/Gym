@@ -4,19 +4,26 @@ import { useCallback, useEffect, useState } from "react";
 
 type Member = {
   id: string;
+  first_name: string;
+  last_name: string;
   full_name: string;
   phone: string;
   email: string | null;
   plan: string;
   joined_at: string;
   expires_at: string;
+  date_of_birth: string | null;
+  member_number: number;
+  member_code: string;
   status: string;
 };
 
 const emptyForm = {
-  full_name: "",
+  first_name: "",
+  last_name: "",
   phone: "",
   email: "",
+  date_of_birth: "",
   plan: "monthly",
   joined_at: new Date().toISOString().slice(0, 10),
   expires_at: "",
@@ -37,6 +44,11 @@ export default function MembersPageClient() {
     null
   );
   const [error, setError] = useState("");
+  const [successInfo, setSuccessInfo] = useState<{
+    memberCode: string;
+    memberId: string;
+    name: string;
+  } | null>(null);
 
   const fetchMembers = useCallback(async () => {
     setLoading(true);
@@ -62,14 +74,18 @@ export default function MembersPageClient() {
     setForm(emptyForm);
     setShowForm(true);
     setError("");
+    setSuccessInfo(null);
   }
 
   function openEdit(member: Member) {
     setEditingId(member.id);
+    const nameParts = member.full_name.split(" ");
     setForm({
-      full_name: member.full_name,
+      first_name: member.first_name || nameParts[0] || "",
+      last_name: member.last_name || nameParts.slice(1).join(" ") || "",
       phone: member.phone,
       email: member.email ?? "",
+      date_of_birth: member.date_of_birth ?? "",
       plan: member.plan,
       joined_at: member.joined_at,
       expires_at: member.expires_at,
@@ -77,11 +93,13 @@ export default function MembersPageClient() {
     });
     setShowForm(true);
     setError("");
+    setSuccessInfo(null);
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    setSuccessInfo(null);
 
     const url = editingId ? `/api/members/${editingId}` : "/api/members";
     const method = editingId ? "PATCH" : "POST";
@@ -98,15 +116,24 @@ export default function MembersPageClient() {
       return;
     }
 
+    if (!editingId && res.status === 201) {
+      const memberCode = data.member?.member_code;
+      const memberId = data.member?.id;
+      const memberName = data.member?.full_name;
+      if (memberCode && memberId && memberName) {
+        setSuccessInfo({ memberCode, memberId, name: memberName });
+      }
+    }
+
     setShowForm(false);
     fetchMembers();
   }
 
-  async function showQr(member: Member) {
-    const res = await fetch(`/api/members/${member.id}/qr`);
+  async function showQr(memberId: string, memberName: string) {
+    const res = await fetch(`/api/members/${memberId}/qr`);
     const data = await res.json();
     if (res.ok) {
-      setQrModal({ memberId: member.id, name: member.full_name, url: data.qr_image_data_url });
+      setQrModal({ memberId, name: memberName, url: data.qr_image_data_url });
     }
   }
 
@@ -120,6 +147,34 @@ export default function MembersPageClient() {
 
   return (
     <div>
+      {successInfo && (
+        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-emerald-400 font-semibold text-sm">
+              Member created: {successInfo.memberCode}
+            </p>
+            <p className="text-textSecondary text-xs mt-0.5">
+              {successInfo.name}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => showQr(successInfo.memberId, successInfo.name)}
+              className="text-sm bg-gold text-black font-semibold px-3 py-1.5 rounded-lg hover:bg-gold-dark transition-colors"
+            >
+              View QR
+            </button>
+            <button
+              type="button"
+              onClick={() => setSuccessInfo(null)}
+              className="text-sm border border-borderGold px-3 py-1.5 rounded-lg hover:bg-white/5 transition-colors"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <h1 className="font-display text-3xl text-gradient-gold">Members</h1>
         <button
@@ -178,7 +233,14 @@ export default function MembersPageClient() {
                   key={m.id}
                   className="border-b border-borderGold/50 hover:bg-white/5"
                 >
-                  <td className="p-4 font-medium">{m.full_name}</td>
+                  <td className="p-4 font-medium">
+                    <div>{m.full_name}</div>
+                    {m.member_code && (
+                      <div className="text-xs text-textSecondary font-mono mt-0.5">
+                        {m.member_code}
+                      </div>
+                    )}
+                  </td>
                   <td className="p-4">{m.phone}</td>
                   <td className="p-4 capitalize">{m.plan}</td>
                   <td className="p-4">{m.expires_at}</td>
@@ -206,7 +268,7 @@ export default function MembersPageClient() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => showQr(m)}
+                        onClick={() => showQr(m.id, m.full_name)}
                         className="text-gold hover:underline text-xs"
                       >
                         QR
@@ -259,7 +321,8 @@ export default function MembersPageClient() {
             </h2>
             <form onSubmit={handleSubmit} className="space-y-3">
               {[
-                ["full_name", "Full name", "text"],
+                ["first_name", "First name", "text"],
+                ["last_name", "Last name", "text"],
                 ["phone", "Phone", "tel"],
                 ["email", "Email", "email"],
               ].map(([key, label, type]) => (
@@ -270,7 +333,7 @@ export default function MembersPageClient() {
                   <input
                     type={type}
                     required={key !== "email"}
-                    value={form[key as keyof typeof form]}
+                    value={form[key as keyof typeof form] as string}
                     onChange={(e) =>
                       setForm({ ...form, [key]: e.target.value })
                     }
@@ -278,6 +341,19 @@ export default function MembersPageClient() {
                   />
                 </div>
               ))}
+              <div>
+                <label className="block text-sm text-textSecondary mb-1">
+                  Date of birth
+                </label>
+                <input
+                  type="date"
+                  value={form.date_of_birth}
+                  onChange={(e) =>
+                    setForm({ ...form, date_of_birth: e.target.value })
+                  }
+                  className="w-full bg-cardBackground border border-borderGold rounded-lg px-3 py-2 text-white focus:outline-none"
+                />
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm text-textSecondary mb-1">
@@ -289,8 +365,9 @@ export default function MembersPageClient() {
                     className="w-full bg-cardBackground border border-borderGold rounded-lg px-3 py-2 text-white"
                   >
                     <option value="monthly">Monthly</option>
-                    <option value="quarterly">Quarterly</option>
-                    <option value="annual">Annual</option>
+                    <option value="quarterly">3 Months (Quarterly)</option>
+                    <option value="semi_annual">6 Months (Semi-Annual)</option>
+                    <option value="annual">1 Year (Annual)</option>
                   </select>
                 </div>
                 <div>
@@ -325,20 +402,21 @@ export default function MembersPageClient() {
                     className="w-full bg-cardBackground border border-borderGold rounded-lg px-3 py-2 text-white"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm text-textSecondary mb-1">
-                    Expires
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={form.expires_at}
-                    onChange={(e) =>
-                      setForm({ ...form, expires_at: e.target.value })
-                    }
-                    className="w-full bg-cardBackground border border-borderGold rounded-lg px-3 py-2 text-white"
-                  />
-                </div>
+                {editingId && (
+                  <div>
+                    <label className="block text-sm text-textSecondary mb-1">
+                      Expires
+                    </label>
+                    <input
+                      type="date"
+                      value={form.expires_at}
+                      onChange={(e) =>
+                        setForm({ ...form, expires_at: e.target.value })
+                      }
+                      className="w-full bg-cardBackground border border-borderGold rounded-lg px-3 py-2 text-white"
+                    />
+                  </div>
+                )}
               </div>
               {error && <p className="text-red-400 text-sm">{error}</p>}
               <div className="flex gap-3 pt-2">

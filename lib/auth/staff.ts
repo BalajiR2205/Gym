@@ -65,6 +65,14 @@ export async function requireManagementStaff(): Promise<StaffSession> {
   return session;
 }
 
+export async function requireAdminStaff(): Promise<StaffSession> {
+  const session = await requireStaffSession();
+  if (session.staff.role !== "ADMIN") {
+    throw new ApiError(403, "Insufficient permissions", "FORBIDDEN");
+  }
+  return session;
+}
+
 export async function requireSyncAuth(
   request: Request
 ): Promise<StaffSession | "cron"> {

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { errorResponse } from "@/lib/api/errors";
 import { serializeMember } from "@/lib/api/serialize";
+import { parseMemberCode } from "@/lib/members/code";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -21,22 +22,34 @@ export async function GET(request: Request) {
       );
     }
 
-    // Attempt lookup by Phone, ID (if UUID), or Email
-    const isUuid =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-        identifier
-      );
+    // Attempt lookup by Member Code first
+    const parsedCode = parseMemberCode(identifier);
+    let member: Awaited<ReturnType<typeof prisma.member.findFirst>> | null = null;
 
-    const member = await prisma.member.findFirst({
-      where: {
-        OR: [
-          ...(isUuid ? [{ id: identifier }] : []),
-          { phone: identifier },
-          { phone: { endsWith: identifier.slice(-10) } },
-          { email: { equals: identifier, mode: "insensitive" as const } },
-        ],
-      },
-    });
+    if (parsedCode !== null) {
+      member = await prisma.member.findUnique({
+        where: { member_number: parsedCode },
+      });
+    }
+
+    // Attempt lookup by Phone, ID (if UUID), or Email
+    if (!member) {
+      const isUuid =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+          identifier
+        );
+
+      member = await prisma.member.findFirst({
+        where: {
+          OR: [
+            ...(isUuid ? [{ id: identifier }] : []),
+            { phone: identifier },
+            { phone: { endsWith: identifier.slice(-10) } },
+            { email: { equals: identifier, mode: "insensitive" as const } },
+          ],
+        },
+      });
+    }
 
     if (!member) {
       return NextResponse.json(

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { errorResponse } from "@/lib/api/errors";
 import { serializeMember } from "@/lib/api/serialize";
 import {
   assertMemberCanCheckIn,
 } from "@/lib/checkin/validation";
+import { parseMemberCode } from "@/lib/members/code";
 import { prisma } from "@/lib/prisma";
 
 import { appendAttendanceToGoogleSheets } from "@/lib/google/sheets";
@@ -51,40 +51,42 @@ export async function POST(request: Request) {
       );
     }
 
-    // Resolve member by UUID, phone, or email
-    const isUuid =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-        searchKey
-      );
+    // Resolve member by short code, UUID, phone, or email
+    const parsedCode = parseMemberCode(searchKey);
+    let member: Awaited<ReturnType<typeof prisma.member.findFirst>> | null = null;
 
-    let member = await prisma.member.findFirst({
-      where: {
-        OR: [
-          ...(isUuid ? [{ id: searchKey }] : []),
-          { phone: searchKey },
-          { phone: { endsWith: searchKey.slice(-10) } },
-          { email: { equals: searchKey, mode: "insensitive" as const } },
-        ],
-      },
-    });
+    if (parsedCode !== null) {
+      member = await prisma.member.findUnique({
+        where: { member_number: parsedCode },
+      });
+    }
 
-    // If not found in DB, auto-create a member profile for this Unique ID
     if (!member) {
-      const today = new Date();
-      const nextYear = new Date(today);
-      nextYear.setFullYear(today.getFullYear() + 1);
+      const isUuid =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+          searchKey
+        );
 
-      member = await prisma.member.create({
-        data: {
-          full_name: `Member (${searchKey})`,
-          phone: searchKey,
-          plan: "MONTHLY_1",
-          joined_at: today,
-          expires_at: nextYear,
-          status: "ACTIVE",
-          personal_qr_secret: Math.random().toString(36).substring(2, 15),
+      member = await prisma.member.findFirst({
+        where: {
+          OR: [
+            ...(isUuid ? [{ id: searchKey }] : []),
+            { phone: searchKey },
+            { phone: { endsWith: searchKey.slice(-10) } },
+            { email: { equals: searchKey, mode: "insensitive" as const } },
+          ],
         },
       });
+    }
+
+    if (!member) {
+      return NextResponse.json(
+        {
+          error: "Member ID not recognized. Please check with the front desk.",
+          code: "MEMBER_NOT_FOUND",
+        },
+        { status: 404 }
+      );
     }
 
     if (checkinToken.used_by_member_ids.includes(member.id)) {
@@ -100,13 +102,13 @@ export async function POST(request: Request) {
     // Cooldown check (catch gracefully)
     try {
       await assertMemberCanCheckIn(member);
-    } catch (validationErr: any) {
+    } catch (validationErr) {
       return NextResponse.json(
         {
-          error: validationErr.message || "Check-in limit reached",
-          code: validationErr.code || "CHECKIN_FAILED",
+          error: (validationErr as Error)?.message || "Check-in limit reached",
+          code: (validationErr as { code?: string })?.code || "CHECKIN_FAILED",
         },
-        { status: validationErr.status || 400 }
+        { status: (validationErr as { status?: number })?.status || 400 }
       );
     }
 
@@ -129,7 +131,7 @@ export async function POST(request: Request) {
     appendAttendanceToGoogleSheets({
       id: attendance.id,
       member_id: member.phone || member.id,
-      member_name: member.full_name,
+      member_name: `${member.first_name}${member.last_name ? ` ${member.last_name}` : ""}`,
       member_phone: member.phone,
       checked_in_at: attendance.checked_in_at,
       method: "RECEPTION_QR",
@@ -146,10 +148,10 @@ export async function POST(request: Request) {
         method: "self_scan",
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("[Checkin API Error]:", error);
     return NextResponse.json(
-      { error: error?.message || "Internal server error" },
+      { error: (error as Error)?.message || "Internal server error" },
       { status: 500 }
     );
   }

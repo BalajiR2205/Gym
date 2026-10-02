@@ -12,13 +12,16 @@ datasource db {
 
 model Member {
   id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  full_name        String
+  first_name       String
+  last_name        String
   phone            String   @unique
   email            String?
   photo_url        String?
   plan             Plan
   joined_at        DateTime @db.Date
   expires_at       DateTime @db.Date
+  date_of_birth    DateTime? @db.Date
+  member_number    Int      @unique @default(autoincrement())
   status           MemberStatus @default(ACTIVE)
   auth_user_id     String?  @db.Uuid
   personal_qr_secret String
@@ -28,6 +31,7 @@ model Member {
   attendance Attendance[]
 
   @@index([phone])
+  @@index([member_number])
   @@map("members")
 }
 
@@ -78,6 +82,7 @@ model SyncState {
 enum Plan {
   MONTHLY
   QUARTERLY
+  SEMI_ANNUAL
   ANNUAL
 }
 

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { errorResponse } from "@/lib/api/errors";
 import { serializeMethod } from "@/lib/api/serialize";
 import { requireManagementStaff } from "@/lib/auth/staff";
+import { parseMemberCode } from "@/lib/members/code";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -19,10 +20,30 @@ export async function GET(request: Request) {
 
     const where: {
       member_id?: string;
+      member?: { OR?: Array<Record<string, unknown>> };
       checked_in_at?: { gte?: Date; lte?: Date };
     } = {};
 
-    if (memberId) where.member_id = memberId;
+    if (memberId) {
+      const isUuid =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+          memberId
+        );
+      if (isUuid) {
+        where.member_id = memberId;
+      } else {
+        const parsedCode = parseMemberCode(memberId);
+        const memberOr: Array<Record<string, unknown>> = [
+          { phone: { contains: memberId } },
+          { first_name: { contains: memberId, mode: "insensitive" } },
+          { last_name: { contains: memberId, mode: "insensitive" } },
+        ];
+        if (parsedCode !== null) {
+          memberOr.push({ member_number: parsedCode });
+        }
+        where.member = { OR: memberOr };
+      }
+    }
     if (from || to) {
       where.checked_in_at = {};
       if (from) where.checked_in_at.gte = new Date(from);
@@ -38,7 +59,7 @@ export async function GET(request: Request) {
         where,
         include: {
           member: {
-            select: { id: true, full_name: true, phone: true },
+            select: { id: true, first_name: true, last_name: true, phone: true },
           },
           staff: {
             select: { id: true, full_name: true },
@@ -55,7 +76,7 @@ export async function GET(request: Request) {
       attendance: records.map((a) => ({
         id: a.id,
         member_id: a.member_id,
-        member_name: a.member.full_name,
+        member_name: `${a.member.first_name} ${a.member.last_name}`.trim(),
         member_phone: a.member.phone,
         checked_in_at: a.checked_in_at.toISOString(),
         method: serializeMethod(a.method),

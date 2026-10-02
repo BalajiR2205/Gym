@@ -22,6 +22,11 @@ const navItems = [
     label: "Entrance QR",
     roles: ["ADMIN", "FRONT_DESK", "TRAINER"],
   },
+  {
+    href: "/admin/staff",
+    label: "Staff",
+    roles: ["ADMIN"],
+  },
 ];
 
 export default function AdminNav({
