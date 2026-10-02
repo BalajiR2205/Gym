@@ -4,7 +4,6 @@ import SectionHeading from "../ui/SectionHeading";
 import MembershipCard from "../ui/MembershipCard";
 import { MEMBERSHIP_PLANS, PERSONAL_TRAINING_PLANS } from "@/data/siteContent";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 export default function MembershipSection() {
   return (
@@ -51,50 +50,6 @@ export default function MembershipSection() {
             {PERSONAL_TRAINING_PLANS.map((plan, index) => (
               <MembershipCard key={plan.id} plan={plan} index={index} />
             ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
-          className="mt-32 flex flex-col items-center"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#D4AF37]" />
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">
-              Easy Payment
-            </span>
-            <span className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#D4AF37]" />
-          </div>
-          <h3 className="text-2xl font-display font-bold uppercase text-white mb-2 text-center tracking-wide">
-            Scan & Pay Instantly
-          </h3>
-          <p className="text-sm text-[#BDBDBD] mb-10 text-center max-w-sm leading-relaxed">
-            Pay securely via Google Pay, Paytm, PhonePe, or any UPI app by scanning the QR code below.
-          </p>
-
-          <div className="relative bg-[#141414] rounded-2xl p-7 shadow-card-elevated border border-[rgba(212,175,55,0.08)] flex flex-col items-center gap-5">
-            <div className="relative w-52 h-52 rounded-xl overflow-hidden border border-[rgba(212,175,55,0.08)] bg-[#1A1A1A]">
-              <Image
-                src="/images/payment-qr.jpg"
-                alt="Payment QR Code — Scan & Pay"
-                fill
-                sizes="208px"
-                className="object-contain p-3"
-              />
-            </div>
-            <p className="text-white font-display font-semibold text-sm tracking-wide text-center">
-              Scan to Pay via UPI
-            </p>
-            <div className="flex items-center gap-2 text-xs text-[#BDBDBD]">
-              <span>Google Pay</span>
-              <span className="text-[rgba(212,175,55,0.25)]">•</span>
-              <span>Paytm</span>
-              <span className="text-[rgba(212,175,55,0.25)]">•</span>
-              <span>BHIM UPI</span>
-            </div>
           </div>
         </motion.div>
       </div>
