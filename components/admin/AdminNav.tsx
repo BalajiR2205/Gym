@@ -53,7 +53,7 @@ export default function AdminNav({
       <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Link href="/admin/members" className="font-display text-xl text-gold">
-            Be Strong Admin
+            &lt;GYM NAME&gt; Admin
           </Link>
           <nav className="flex flex-wrap gap-1">
             {visibleItems.map((item) => (

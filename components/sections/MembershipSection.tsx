@@ -34,7 +34,7 @@ export default function MembershipSection() {
             <div className="flex items-center gap-3 mb-4">
               <span className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#D4AF37]" />
               <span className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">
-                Be Strong Fitness
+                &lt;GYM NAME&gt; Fitness
               </span>
               <span className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#D4AF37]" />
             </div>

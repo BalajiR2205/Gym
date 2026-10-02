@@ -16,9 +16,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Be Strong Gym A/C | Unisex Fitness Center",
-  description: "Be Strong Gym A/C — A premium unisex fitness center offering state-of-the-art equipment, expert personal training, and flexible membership plans. Join today and transform your body!",
-  keywords: ["gym", "fitness", "Be Strong", "Unisex Fitness Center", "personal training", "workout", "strength training", "cardio"],
+  title: "<GYM NAME> Gym A/C | Unisex Fitness Center",
+  description: "<GYM NAME> Gym A/C — A premium unisex fitness center offering state-of-the-art equipment, expert personal training, and flexible membership plans. Join today and transform your body!",
+  keywords: ["gym", "fitness", "<GYM NAME>", "Unisex Fitness Center", "personal training", "workout", "strength training", "cardio"],
 };
 
 export default function RootLayout({

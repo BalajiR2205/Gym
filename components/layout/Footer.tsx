@@ -69,15 +69,15 @@ export default function Footer() {
             className="flex items-center gap-2.5 text-white group mb-5"
           >
             <Dumbbell className="w-6 h-6 text-[#D4AF37] group-hover:rotate-45 transition-transform duration-500 ease-out" />
-            <span className="font-display font-bold text-lg tracking-tight">
-              BE <span className="text-gradient-gold">STRONG</span>
+            <span className="font-display font-bold text-lg tracking-tight text-gradient-gold">
+              &lt;GYM NAME&gt;
             </span>
           </Link>
           <p className="text-[11px] text-[#BDBDBD]/60 mb-5 font-semibold tracking-[0.2em] uppercase">
             {BRAND_TAGLINE}
           </p>
           <p className="text-sm text-[#BDBDBD] leading-[1.8] max-w-xs">
-            Elevate your body, push past your limits, and sculpt your ultimate form. Be Strong is your home for peak physical and mental output.
+            Elevate your body, push past your limits, and sculpt your ultimate form. &lt;GYM NAME&gt; is your home for peak physical and mental output.
           </p>
         </div>
 

@@ -1,11 +1,11 @@
 // Site configurations and content definitions
-export const SITE_NAME = "Be Strong";
+export const SITE_NAME = "<GYM NAME>";
 export const BRAND_TAGLINE = "UNISEX FITNESS CENTER";
-export const HERO_SUBHEADING = "Welcome to Be Strong Gym A/C, where limits are shattered. Join an elite community, train with industry experts, and experience a state-of-the-art facility designed to push you to the next level.";
+export const HERO_SUBHEADING = "Welcome to <GYM NAME> Gym A/C, where limits are shattered. Join an elite community, train with industry experts, and experience a state-of-the-art facility designed to push you to the next level.";
 
 // Contact Details (configured with new values)
 export const PHONE_NUMBER = "9063906499";
-export const ADDRESS = "Be Strong Gym A/C, Unisex Fitness Center";
+export const ADDRESS = "<GYM NAME> Gym A/C, Unisex Fitness Center";
 export const GOOGLE_MAPS_EMBED_URL = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.083117985202!2d79.45644747521611!3d13.652707699579754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d4b000bbc9153%3A0x38bf77aef0bb95f6!2sBe%20Strong%20Gym!5e0!3m2!1sen!2sin!4v1782724787993!5m2!1sen!2sin";
 export const WHATSAPP_NUMBER = "+916302984054";
 export const EMAIL = "contact@bestronggym.com";

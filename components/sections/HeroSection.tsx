@@ -26,7 +26,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 overflow-hidden">
         <iframe
           src="https://www.youtube-nocookie.com/embed/uNN62f55EV0?autoplay=1&mute=1&loop=1&playlist=uNN62f55EV0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=0&disablekb=1&iv_load_policy=3"
-          title="Be Strong Gym Background Video"
+          title="<GYM NAME> Gym Background Video"
           allow="autoplay; encrypted-media"
           allowFullScreen
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full scale-[1.35] opacity-50 pointer-events-none"

@@ -13,7 +13,7 @@ export default function SectionHeading({
   title,
   subtitle,
   align = "center",
-  badge = "Be Strong Fitness",
+  badge = "<GYM NAME> Fitness",
 }: SectionHeadingProps) {
   const alignmentClasses = {
     left: "text-left items-start",

@@ -89,7 +89,7 @@ export default function ContactSection() {
 
           <div className="relative w-full min-h-[400px] lg:min-h-full rounded-2xl overflow-hidden border border-[rgba(212,175,55,0.05)] shadow-gold-elevated bg-[#141414]">
               <iframe
-                title="Be Strong Gym Location Map"
+                title="<GYM NAME> Gym Location Map"
                 src={GOOGLE_MAPS_EMBED_URL}
                 width="100%"
                 height="100%"

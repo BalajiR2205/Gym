@@ -71,8 +71,8 @@ export default function Navbar() {
           >
             <Dumbbell className="w-6 h-6 text-[#D4AF37] group-hover:rotate-45 transition-transform duration-500 ease-out" />
             <div className="flex flex-col">
-              <span className="font-display font-bold text-lg tracking-tight leading-none">
-                BE <span className="text-gradient-gold">STRONG</span>
+              <span className="font-display font-bold text-lg tracking-tight leading-none text-gradient-gold">
+                &lt;GYM NAME&gt;
               </span>
               <span className="text-[9px] tracking-[0.3em] text-[#BDBDBD]/50 uppercase leading-none mt-1">
                 GYM A/C

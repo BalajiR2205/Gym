@@ -51,7 +51,7 @@ export default function EntranceDisplayPage() {
     <div className="fixed inset-0 bg-background flex flex-col items-center justify-center">
       <div className="text-center mb-8">
         <h1 className="font-display text-4xl md:text-5xl text-gradient-gold mb-2">
-          Be Strong Gym
+          &lt;GYM NAME&gt; Gym
         </h1>
         <p className="text-textSecondary text-lg">Scan to check in</p>
       </div>
