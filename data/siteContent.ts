@@ -217,15 +217,20 @@ export const TRAINERS: Trainer[] = [
   },
 ];
 
-// Transformation Gallery (8 Items using placeholders)
+// Transformation Gallery (8 Items with realistic editorial photography)
 export interface GalleryItem {
   id: string;
   image: string;
   title: string;
 }
 
-export const GALLERY_ITEMS: GalleryItem[] = Array.from({ length: 8 }).map((_, index) => ({
-  id: `gallery-${index + 1}`,
-  image: "/images/placeholder.jpg",
-  title: `Transformation ${index + 1}`,
-}));
+export const GALLERY_ITEMS: GalleryItem[] = [
+  { id: "gallery-1", image: "/images/gallery/gallery-1.jpg", title: "Dedication & Prep" },
+  { id: "gallery-2", image: "/images/gallery/gallery-2.jpg", title: "Consistent Form" },
+  { id: "gallery-3", image: "/images/gallery/gallery-3.jpg", title: "Heavy Barbell Strength" },
+  { id: "gallery-4", image: "/images/gallery/gallery-4.jpg", title: "Precision Technique" },
+  { id: "gallery-5", image: "/images/gallery/gallery-5.jpg", title: "Personal Milestones" },
+  { id: "gallery-6", image: "/images/gallery/gallery-6.jpg", title: "Community High-Fives" },
+  { id: "gallery-7", image: "/images/gallery/gallery-7.jpg", title: "Battle Rope Transformation" },
+  { id: "gallery-8", image: "/images/gallery/gallery-8.jpg", title: "Daily Progress Tracking" },
+];

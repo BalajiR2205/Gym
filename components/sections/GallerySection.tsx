@@ -166,13 +166,13 @@ export default function GallerySection() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="relative aspect-video max-w-full w-[820px] h-[520px] max-h-[75vh] rounded-3xl overflow-hidden border-2 border-white shadow-2xl bg-white">
+            <div className="relative aspect-[4/5] max-w-full w-[540px] h-[675px] max-h-[82vh] rounded-3xl overflow-hidden border-2 border-white shadow-2xl bg-white">
               <Image
                 src={selectedImage}
                 alt="Enlarged gallery photo view"
                 fill
                 priority
-                sizes="(max-width: 768px) 90vw, 820px"
+                sizes="(max-width: 768px) 90vw, 540px"
                 className="object-cover"
               />
             </div>
