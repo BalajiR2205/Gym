@@ -5,7 +5,12 @@ import { PrismaClient } from "@/app/generated/prisma/client";
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL!;
+  const rawUrl = process.env.DATABASE_URL || "";
+  // Ensure localhost is resolved to IPv4 127.0.0.1 to prevent IPv6 ::1 ECONNREFUSED on macOS
+  const connectionString = rawUrl
+    .replace("@localhost:", "@127.0.0.1:")
+    .replace("//localhost:", "//127.0.0.1:");
+
   const pool = new Pool({
     connectionString,
     max: 10,

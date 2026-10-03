@@ -32,9 +32,33 @@ export async function POST(request: Request) {
       );
     }
 
-    const checkinToken = await prisma.checkinToken.findUnique({
-      where: { token },
-    });
+    let checkinToken = null;
+    try {
+      checkinToken = await prisma.checkinToken.findUnique({
+        where: { token },
+      });
+
+      // If token is client-generated fallback from reception QR (starts with bst_)
+      if (!checkinToken && token.startsWith("bst_")) {
+        const now = new Date();
+        checkinToken = await prisma.checkinToken.create({
+          data: {
+            token,
+            window_start: now,
+            expires_at: new Date(now.getTime() + 120_000),
+          },
+        });
+      }
+    } catch (dbErr) {
+      console.error("[Database Connection Error in checkin]:", dbErr);
+      return NextResponse.json(
+        {
+          error: "Database connection failed. Please ensure the local database server (npx prisma dev) is running.",
+          code: "DATABASE_UNAVAILABLE",
+        },
+        { status: 503 }
+      );
+    }
 
     if (!checkinToken) {
       return NextResponse.json(
@@ -150,8 +174,14 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("[Checkin API Error]:", error);
+    const rawMsg = (error as Error)?.message || "";
+    const cleanMsg =
+      rawMsg.includes("invocation") || rawMsg.includes("ECONNREFUSED")
+        ? "Database service unavailable. Please check that the local database server (npx prisma dev) is running."
+        : rawMsg || "Internal server error";
+
     return NextResponse.json(
-      { error: (error as Error)?.message || "Internal server error" },
+      { error: cleanMsg },
       { status: 500 }
     );
   }
