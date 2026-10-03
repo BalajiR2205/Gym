@@ -10,7 +10,9 @@
     "lint": "next lint",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:dev": "prisma dev"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
