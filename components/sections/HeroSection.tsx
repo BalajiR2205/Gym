@@ -35,13 +35,13 @@ export default function HeroSection() {
       className="relative min-h-[92vh] w-full bg-[#F0EEE9] pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden flex items-center"
     >
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
           {/* Left Column: Bold Editorial Typography & CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-6 flex flex-col items-start"
+            className="lg:col-span-7 flex flex-col items-start"
           >
             {/* Micro-label pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CAD3C1] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
@@ -52,14 +52,16 @@ export default function HeroSection() {
             </div>
 
             {/* Oversized Expressive Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold text-[#171717] tracking-tight leading-[1.04] mb-6">
-              YOUR{" "}
-              <span className="inline-block relative">
-                <span className="relative z-10">COMEBACK</span>
-                <span className="absolute -bottom-1.5 left-0 w-full h-4 bg-[#F0D8CC] -z-0 rounded-full rotate-[-1deg]" />
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-display font-extrabold text-[#171717] tracking-tight leading-[1.08] mb-6">
+              <span className="whitespace-nowrap">
+                YOUR{" "}
+                <span className="inline-block relative">
+                  <span className="relative z-10">COMEBACK</span>
+                  <span className="absolute -bottom-1 left-0 w-full h-3.5 bg-[#F0D8CC] -z-0 rounded-full rotate-[-1deg]" />
+                </span>
               </span>
               <br />
-              STARTS HERE.
+              <span className="whitespace-nowrap">STARTS HERE.</span>
             </h1>
 
             {/* Subtitle */}
@@ -105,7 +107,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-6 relative w-full"
+            className="lg:col-span-5 relative w-full"
           >
             {/* Background Decorative Offset Block (Pinterest aesthetic) */}
             <div className="absolute -inset-3.5 bg-[#CAD3C1] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
