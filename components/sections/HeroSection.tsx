@@ -55,7 +55,7 @@ export default function HeroSection() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold text-[#171717] tracking-tight leading-[1.04] mb-6">
               YOUR{" "}
               <span className="inline-block relative">
-                <span className="relative z-10">STRONG</span>
+                <span className="relative z-10">COMEBACK</span>
                 <span className="absolute -bottom-1.5 left-0 w-full h-4 bg-[#F0D8CC] -z-0 rounded-full rotate-[-1deg]" />
               </span>
               <br />
