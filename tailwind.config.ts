@@ -11,6 +11,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
         display: ["var(--font-outfit)", "sans-serif"],
+        cursive: ["var(--font-caveat)", "Caveat", "cursive"],
       },
       colors: {
         cream: {
@@ -91,11 +92,6 @@ const config: Config = {
         "gold-ambient": "0 0 0 1px rgba(212, 175, 55, 0.05), 0 4px 20px -4px rgba(212, 175, 55, 0.08)",
         "gold-elevated": "0 0 0 1px rgba(212, 175, 55, 0.08), 0 12px 40px -8px rgba(0, 0, 0, 0.6)",
         "gold-lg": "0 0 0 1px rgba(212, 175, 55, 0.1), 0 24px 56px -12px rgba(0, 0, 0, 0.7)",
-      },
-      fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-        display: ["var(--font-outfit)", "sans-serif"],
-        cursive: ["var(--font-caveat)", "Caveat", "cursive"],
       },
     },
   },
