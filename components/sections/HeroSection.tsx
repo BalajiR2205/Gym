@@ -46,7 +46,12 @@ export default function HeroSection() {
             {/* Micro-label pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CAD3C1] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#171717]" />
-              <span>01 / START HERE</span>
+              <span>
+                01 / START{" "}
+                <span className="font-cursive font-bold text-sm tracking-normal normal-case inline-block -rotate-1">
+                  here
+                </span>
+              </span>
               <span className="text-[#171717]/40">•</span>
               <span>UNISEX FITNESS CENTRE</span>
             </div>

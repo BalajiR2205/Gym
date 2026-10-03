@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Caveat } from "next/font/google";
 import "./globals.css";
 import SiteChrome from "@/components/layout/SiteChrome";
 
@@ -12,6 +12,12 @@ const inter = Inter({
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -29,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${outfit.variable} font-sans antialiased text-[#171717] bg-[#F0EEE9] min-h-screen flex flex-col`}
+        className={`${inter.variable} ${outfit.variable} ${caveat.variable} font-sans antialiased text-[#171717] bg-[#F0EEE9] min-h-screen flex flex-col`}
       >
         <SiteChrome>{children}</SiteChrome>
       </body>
