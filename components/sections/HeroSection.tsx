@@ -35,13 +35,13 @@ export default function HeroSection() {
       className="relative min-h-[92vh] w-full bg-[#F0EEE9] pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden flex items-center"
     >
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Bold Editorial Typography & CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-7 flex flex-col items-start"
+            className="lg:col-span-6 flex flex-col items-start"
           >
             {/* Micro-label pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CAD3C1] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
@@ -105,13 +105,13 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-5 relative"
+            className="lg:col-span-6 relative w-full"
           >
             {/* Background Decorative Offset Block (Pinterest aesthetic) */}
-            <div className="absolute -inset-3 bg-[#CAD3C1] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
+            <div className="absolute -inset-3.5 bg-[#CAD3C1] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
 
             {/* Main Rounded Video Card */}
-            <div className="relative aspect-[4/3] sm:aspect-[16/12] w-full rounded-[30px] overflow-hidden border-2 border-[#171717]/10 bg-[#171717] shadow-editorial-lg select-none">
+            <div className="relative aspect-[16/9] w-full rounded-[30px] overflow-hidden border-2 border-[#171717]/10 bg-[#171717] shadow-editorial-lg select-none">
               {/* Autoplaying muted looping background video */}
               <video
                 src="/videos/hero-gym.mp4"
