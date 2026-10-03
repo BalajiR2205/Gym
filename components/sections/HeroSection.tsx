@@ -11,11 +11,10 @@ export default function HeroSection() {
   const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
-    // Keep high-resolution poster visible while YouTube player initializes in the background
-    // This completely eliminates the black flash and YouTube's pause/forward/backward loading HUD
+    // Quick fallback to ensure smooth fade-in of the video
     const timer = setTimeout(() => {
       setIsVideoReady(true);
-    }, 1800);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -114,19 +113,21 @@ export default function HeroSection() {
             {/* Main Rounded Video Card */}
             <div className="relative aspect-[4/3] sm:aspect-[16/12] w-full rounded-[30px] overflow-hidden border-2 border-[#171717]/10 bg-[#171717] shadow-editorial-lg select-none">
               {/* Autoplaying muted looping background video */}
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/uNN62f55EV0?autoplay=1&mute=1&loop=1&playlist=uNN62f55EV0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3"
-                title="Gym Facility Video Preview"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full scale-[1.35] pointer-events-none"
-                style={{ border: "none" }}
+              <video
+                src="/videos/hero-gym.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                onLoadedData={() => setIsVideoReady(true)}
+                className="absolute inset-0 w-full h-full object-cover"
               />
 
-              {/* Click-Shield & Vignette Overlay: Absorbs clicks/taps so YouTube HUD never shows */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15 z-10 pointer-events-auto" />
+              {/* Vignette Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/15 z-10 pointer-events-none" />
 
-              {/* Instant Poster Layer: Prevents black loading screen & YouTube player icons on page load */}
+              {/* Instant Poster Layer: Fades out smoothly when video is loaded */}
               <div
                 className={`absolute inset-0 z-20 transition-opacity duration-700 pointer-events-none ${
                   isVideoReady ? "opacity-0" : "opacity-100"
