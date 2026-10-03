@@ -29,6 +29,8 @@ model Member {
   updated_at       DateTime @updatedAt
 
   attendance Attendance[]
+  sessions   MemberSession[]
+  otps       LoginOtp[]
 
   @@index([phone])
   @@index([member_number])
@@ -77,6 +79,64 @@ model SyncState {
   last_synced_at DateTime @default(now())
 
   @@map("sync_state")
+}
+
+model AdminSession {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_token_hash String    @unique
+  username           String
+  role               StaffRole @default(ADMIN)
+  created_at         DateTime  @default(now())
+  expires_at         DateTime
+  last_used_at       DateTime  @default(now())
+
+  @@index([session_token_hash])
+  @@index([expires_at])
+  @@map("admin_sessions")
+}
+
+model MemberSession {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_token_hash String    @unique
+  member_id          String    @db.Uuid
+  created_at         DateTime  @default(now())
+  expires_at         DateTime
+  last_used_at       DateTime  @default(now())
+
+  member             Member    @relation(fields: [member_id], references: [id], onDelete: Cascade)
+
+  @@index([session_token_hash])
+  @@index([member_id])
+  @@index([expires_at])
+  @@map("member_sessions")
+}
+
+model LoginOtp {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  member_id     String    @db.Uuid
+  otp_hash      String
+  purpose       String    @default("MEMBER_LOGIN")
+  expires_at    DateTime
+  attempt_count Int       @default(0)
+  max_attempts  Int       @default(5)
+  used_at       DateTime?
+  last_sent_at  DateTime  @default(now())
+  created_at    DateTime  @default(now())
+
+  member        Member    @relation(fields: [member_id], references: [id], onDelete: Cascade)
+
+  @@index([member_id])
+  @@index([expires_at])
+  @@map("login_otps")
+}
+
+model RateLimitAttempt {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key        String
+  created_at DateTime @default(now())
+
+  @@index([key, created_at])
+  @@map("rate_limit_attempts")
 }
 
 enum Plan {

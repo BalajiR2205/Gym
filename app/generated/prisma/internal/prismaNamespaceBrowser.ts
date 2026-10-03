@@ -55,7 +55,11 @@ export const ModelName = {
   Staff: 'Staff',
   Attendance: 'Attendance',
   CheckinToken: 'CheckinToken',
-  SyncState: 'SyncState'
+  SyncState: 'SyncState',
+  AdminSession: 'AdminSession',
+  MemberSession: 'MemberSession',
+  LoginOtp: 'LoginOtp',
+  RateLimitAttempt: 'RateLimitAttempt'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -135,6 +139,56 @@ export const SyncStateScalarFieldEnum = {
 } as const
 
 export type SyncStateScalarFieldEnum = (typeof SyncStateScalarFieldEnum)[keyof typeof SyncStateScalarFieldEnum]
+
+
+export const AdminSessionScalarFieldEnum = {
+  id: 'id',
+  session_token_hash: 'session_token_hash',
+  username: 'username',
+  role: 'role',
+  created_at: 'created_at',
+  expires_at: 'expires_at',
+  last_used_at: 'last_used_at'
+} as const
+
+export type AdminSessionScalarFieldEnum = (typeof AdminSessionScalarFieldEnum)[keyof typeof AdminSessionScalarFieldEnum]
+
+
+export const MemberSessionScalarFieldEnum = {
+  id: 'id',
+  session_token_hash: 'session_token_hash',
+  member_id: 'member_id',
+  created_at: 'created_at',
+  expires_at: 'expires_at',
+  last_used_at: 'last_used_at'
+} as const
+
+export type MemberSessionScalarFieldEnum = (typeof MemberSessionScalarFieldEnum)[keyof typeof MemberSessionScalarFieldEnum]
+
+
+export const LoginOtpScalarFieldEnum = {
+  id: 'id',
+  member_id: 'member_id',
+  otp_hash: 'otp_hash',
+  purpose: 'purpose',
+  expires_at: 'expires_at',
+  attempt_count: 'attempt_count',
+  max_attempts: 'max_attempts',
+  used_at: 'used_at',
+  last_sent_at: 'last_sent_at',
+  created_at: 'created_at'
+} as const
+
+export type LoginOtpScalarFieldEnum = (typeof LoginOtpScalarFieldEnum)[keyof typeof LoginOtpScalarFieldEnum]
+
+
+export const RateLimitAttemptScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  created_at: 'created_at'
+} as const
+
+export type RateLimitAttemptScalarFieldEnum = (typeof RateLimitAttemptScalarFieldEnum)[keyof typeof RateLimitAttemptScalarFieldEnum]
 
 
 export const SortOrder = {

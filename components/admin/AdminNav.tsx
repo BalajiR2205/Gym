@@ -44,8 +44,13 @@ export default function AdminNav({
   );
 
   async function handleLogout() {
-    await supabase.auth.signOut();
-    window.location.href = "/admin/login";
+    try {
+      await fetch("/api/auth/admin/logout", { method: "POST" });
+    } catch {
+      // Fallback
+    }
+    await supabase.auth.signOut().catch(() => {});
+    window.location.href = "/login/admin";
   }
 
   return (

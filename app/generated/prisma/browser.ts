@@ -42,3 +42,23 @@ export type CheckinToken = Prisma.CheckinTokenModel
  * 
  */
 export type SyncState = Prisma.SyncStateModel
+/**
+ * Model AdminSession
+ * 
+ */
+export type AdminSession = Prisma.AdminSessionModel
+/**
+ * Model MemberSession
+ * 
+ */
+export type MemberSession = Prisma.MemberSessionModel
+/**
+ * Model LoginOtp
+ * 
+ */
+export type LoginOtp = Prisma.LoginOtpModel
+/**
+ * Model RateLimitAttempt
+ * 
+ */
+export type RateLimitAttempt = Prisma.RateLimitAttemptModel

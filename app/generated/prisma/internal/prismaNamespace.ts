@@ -388,7 +388,11 @@ export const ModelName = {
   Staff: 'Staff',
   Attendance: 'Attendance',
   CheckinToken: 'CheckinToken',
-  SyncState: 'SyncState'
+  SyncState: 'SyncState',
+  AdminSession: 'AdminSession',
+  MemberSession: 'MemberSession',
+  LoginOtp: 'LoginOtp',
+  RateLimitAttempt: 'RateLimitAttempt'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "member" | "staff" | "attendance" | "checkinToken" | "syncState"
+    modelProps: "member" | "staff" | "attendance" | "checkinToken" | "syncState" | "adminSession" | "memberSession" | "loginOtp" | "rateLimitAttempt"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +782,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AdminSession: {
+      payload: Prisma.$AdminSessionPayload<ExtArgs>
+      fields: Prisma.AdminSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdminSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdminSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.AdminSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdminSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
+        }
+        findMany: {
+          args: Prisma.AdminSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>[]
+        }
+        create: {
+          args: Prisma.AdminSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
+        }
+        createMany: {
+          args: Prisma.AdminSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdminSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.AdminSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
+        }
+        update: {
+          args: Prisma.AdminSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdminSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdminSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdminSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdminSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.AdminSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminSession>
+        }
+        groupBy: {
+          args: Prisma.AdminSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdminSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminSessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    MemberSession: {
+      payload: Prisma.$MemberSessionPayload<ExtArgs>
+      fields: Prisma.MemberSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MemberSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MemberSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.MemberSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MemberSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>
+        }
+        findMany: {
+          args: Prisma.MemberSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>[]
+        }
+        create: {
+          args: Prisma.MemberSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>
+        }
+        createMany: {
+          args: Prisma.MemberSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MemberSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.MemberSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>
+        }
+        update: {
+          args: Prisma.MemberSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.MemberSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MemberSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MemberSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.MemberSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MemberSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.MemberSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMemberSession>
+        }
+        groupBy: {
+          args: Prisma.MemberSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MemberSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MemberSessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    LoginOtp: {
+      payload: Prisma.$LoginOtpPayload<ExtArgs>
+      fields: Prisma.LoginOtpFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LoginOtpFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LoginOtpFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>
+        }
+        findFirst: {
+          args: Prisma.LoginOtpFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LoginOtpFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>
+        }
+        findMany: {
+          args: Prisma.LoginOtpFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>[]
+        }
+        create: {
+          args: Prisma.LoginOtpCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>
+        }
+        createMany: {
+          args: Prisma.LoginOtpCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LoginOtpCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>[]
+        }
+        delete: {
+          args: Prisma.LoginOtpDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>
+        }
+        update: {
+          args: Prisma.LoginOtpUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>
+        }
+        deleteMany: {
+          args: Prisma.LoginOtpDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LoginOtpUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LoginOtpUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>[]
+        }
+        upsert: {
+          args: Prisma.LoginOtpUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LoginOtpPayload>
+        }
+        aggregate: {
+          args: Prisma.LoginOtpAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLoginOtp>
+        }
+        groupBy: {
+          args: Prisma.LoginOtpGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoginOtpGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LoginOtpCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LoginOtpCountAggregateOutputType> | number
+        }
+      }
+    }
+    RateLimitAttempt: {
+      payload: Prisma.$RateLimitAttemptPayload<ExtArgs>
+      fields: Prisma.RateLimitAttemptFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RateLimitAttemptFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RateLimitAttemptFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>
+        }
+        findFirst: {
+          args: Prisma.RateLimitAttemptFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RateLimitAttemptFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>
+        }
+        findMany: {
+          args: Prisma.RateLimitAttemptFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>[]
+        }
+        create: {
+          args: Prisma.RateLimitAttemptCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>
+        }
+        createMany: {
+          args: Prisma.RateLimitAttemptCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RateLimitAttemptCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>[]
+        }
+        delete: {
+          args: Prisma.RateLimitAttemptDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>
+        }
+        update: {
+          args: Prisma.RateLimitAttemptUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>
+        }
+        deleteMany: {
+          args: Prisma.RateLimitAttemptDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RateLimitAttemptUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RateLimitAttemptUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>[]
+        }
+        upsert: {
+          args: Prisma.RateLimitAttemptUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RateLimitAttemptPayload>
+        }
+        aggregate: {
+          args: Prisma.RateLimitAttemptAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRateLimitAttempt>
+        }
+        groupBy: {
+          args: Prisma.RateLimitAttemptGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitAttemptGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RateLimitAttemptCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RateLimitAttemptCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -878,6 +1178,56 @@ export const SyncStateScalarFieldEnum = {
 } as const
 
 export type SyncStateScalarFieldEnum = (typeof SyncStateScalarFieldEnum)[keyof typeof SyncStateScalarFieldEnum]
+
+
+export const AdminSessionScalarFieldEnum = {
+  id: 'id',
+  session_token_hash: 'session_token_hash',
+  username: 'username',
+  role: 'role',
+  created_at: 'created_at',
+  expires_at: 'expires_at',
+  last_used_at: 'last_used_at'
+} as const
+
+export type AdminSessionScalarFieldEnum = (typeof AdminSessionScalarFieldEnum)[keyof typeof AdminSessionScalarFieldEnum]
+
+
+export const MemberSessionScalarFieldEnum = {
+  id: 'id',
+  session_token_hash: 'session_token_hash',
+  member_id: 'member_id',
+  created_at: 'created_at',
+  expires_at: 'expires_at',
+  last_used_at: 'last_used_at'
+} as const
+
+export type MemberSessionScalarFieldEnum = (typeof MemberSessionScalarFieldEnum)[keyof typeof MemberSessionScalarFieldEnum]
+
+
+export const LoginOtpScalarFieldEnum = {
+  id: 'id',
+  member_id: 'member_id',
+  otp_hash: 'otp_hash',
+  purpose: 'purpose',
+  expires_at: 'expires_at',
+  attempt_count: 'attempt_count',
+  max_attempts: 'max_attempts',
+  used_at: 'used_at',
+  last_sent_at: 'last_sent_at',
+  created_at: 'created_at'
+} as const
+
+export type LoginOtpScalarFieldEnum = (typeof LoginOtpScalarFieldEnum)[keyof typeof LoginOtpScalarFieldEnum]
+
+
+export const RateLimitAttemptScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  created_at: 'created_at'
+} as const
+
+export type RateLimitAttemptScalarFieldEnum = (typeof RateLimitAttemptScalarFieldEnum)[keyof typeof RateLimitAttemptScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1136,6 +1486,10 @@ export type GlobalOmitConfig = {
   attendance?: Prisma.AttendanceOmit
   checkinToken?: Prisma.CheckinTokenOmit
   syncState?: Prisma.SyncStateOmit
+  adminSession?: Prisma.AdminSessionOmit
+  memberSession?: Prisma.MemberSessionOmit
+  loginOtp?: Prisma.LoginOtpOmit
+  rateLimitAttempt?: Prisma.RateLimitAttemptOmit
 }
 
 /* Types for Logging */

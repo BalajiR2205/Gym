@@ -1,34 +1,47 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createMiddlewareClient } from "@/lib/supabase/middleware";
-
-const PUBLIC_ADMIN_PATHS = ["/admin/login"];
+import { ADMIN_COOKIE_NAME, MEMBER_COOKIE_NAME } from "@/lib/auth/constants";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (!pathname.startsWith("/admin")) {
+  // 1. Redirect legacy /admin/login to new /login/admin
+  if (pathname === "/admin/login") {
+    const loginAdminUrl = request.nextUrl.clone();
+    loginAdminUrl.pathname = "/login/admin";
+    return NextResponse.redirect(loginAdminUrl);
+  }
+
+  // 2. Protect Admin routes (/admin/*)
+  if (pathname.startsWith("/admin")) {
+    const adminToken = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+
+    if (!adminToken) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/login/admin";
+      loginUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
     return NextResponse.next();
   }
 
-  if (PUBLIC_ADMIN_PATHS.some((p) => pathname.startsWith(p))) {
+  // 3. Protect Member routes (/member/* or /member)
+  if (pathname === "/member" || pathname.startsWith("/member/")) {
+    const memberToken = request.cookies.get(MEMBER_COOKIE_NAME)?.value;
+
+    if (!memberToken) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/login/member";
+      loginUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
     return NextResponse.next();
   }
 
-  const { supabase, supabaseResponse } = createMiddlewareClient(request);
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    const loginUrl = request.nextUrl.clone();
-    loginUrl.pathname = "/admin/login";
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  return supabaseResponse;
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/member", "/member/:path*"],
 };

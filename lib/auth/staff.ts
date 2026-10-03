@@ -1,6 +1,7 @@
 import type { StaffRole } from "@/app/generated/prisma/client";
 import { ApiError } from "@/lib/api/errors";
 import { prisma } from "@/lib/prisma";
+import { getAdminSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
 const CHECKIN_ROLES: StaffRole[] = ["ADMIN", "FRONT_DESK"];
@@ -17,28 +18,50 @@ export type StaffSession = {
 };
 
 export async function getStaffSession(): Promise<StaffSession | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // 1. Primary: Check database-backed AdminSession
+  const adminSession = await getAdminSession();
+  if (adminSession) {
+    return {
+      userId: adminSession.id,
+      staff: {
+        id: adminSession.id,
+        auth_user_id: adminSession.id,
+        full_name:
+          adminSession.username === "master"
+            ? "Master Admin"
+            : adminSession.username,
+        role: adminSession.role,
+      },
+    };
+  }
 
-  if (!user) return null;
+  // 2. Fallback: Legacy Supabase Staff user (if configured)
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const staff = await prisma.staff.findUnique({
-    where: { auth_user_id: user.id },
-  });
+    if (!user) return null;
 
-  if (!staff) return null;
+    const staff = await prisma.staff.findUnique({
+      where: { auth_user_id: user.id },
+    });
 
-  return {
-    userId: user.id,
-    staff: {
-      id: staff.id,
-      auth_user_id: staff.auth_user_id,
-      full_name: staff.full_name,
-      role: staff.role,
-    },
-  };
+    if (!staff) return null;
+
+    return {
+      userId: user.id,
+      staff: {
+        id: staff.id,
+        auth_user_id: staff.auth_user_id,
+        full_name: staff.full_name,
+        role: staff.role,
+      },
+    };
+  } catch {
+    return null;
+  }
 }
 
 export async function requireStaffSession(): Promise<StaffSession> {
