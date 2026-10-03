@@ -1,11 +1,24 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Dumbbell } from "lucide-react";
 import CTAButton from "../ui/CTAButton";
 import { HERO_SUBHEADING } from "@/data/siteContent";
 
 export default function HeroSection() {
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
+  useEffect(() => {
+    // Keep high-resolution poster visible while YouTube player initializes in the background
+    // This completely eliminates the black flash and YouTube's pause/forward/backward loading HUD
+    const timer = setTimeout(() => {
+      setIsVideoReady(true);
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleScrollToPlans = (e?: React.MouseEvent<HTMLElement>) => {
     if (e) e.preventDefault();
     const plansSection = document.getElementById("plans");
@@ -99,29 +112,46 @@ export default function HeroSection() {
             <div className="absolute -inset-3 bg-[#B8D8C5] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
 
             {/* Main Rounded Video Card */}
-            <div className="relative aspect-[4/3] sm:aspect-[16/12] w-full rounded-[30px] overflow-hidden border-2 border-[#171717]/10 bg-[#FFF9F0] shadow-editorial-lg">
+            <div className="relative aspect-[4/3] sm:aspect-[16/12] w-full rounded-[30px] overflow-hidden border-2 border-[#171717]/10 bg-[#171717] shadow-editorial-lg select-none">
               {/* Autoplaying muted looping background video */}
               <iframe
-                src="https://www.youtube-nocookie.com/embed/uNN62f55EV0?autoplay=1&mute=1&loop=1&playlist=uNN62f55EV0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=0&disablekb=1&iv_load_policy=3"
+                src="https://www.youtube-nocookie.com/embed/uNN62f55EV0?autoplay=1&mute=1&loop=1&playlist=uNN62f55EV0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3"
                 title="Gym Facility Video Preview"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full scale-[1.3] pointer-events-none"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[56.25vw] min-w-full min-h-full scale-[1.35] pointer-events-none"
                 style={{ border: "none" }}
               />
 
-              {/* Light editorial card vignette (no heavy black overlay) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
+              {/* Click-Shield & Vignette Overlay: Absorbs clicks/taps so YouTube HUD never shows */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15 z-10 pointer-events-auto" />
+
+              {/* Instant Poster Layer: Prevents black loading screen & YouTube player icons on page load */}
+              <div
+                className={`absolute inset-0 z-20 transition-opacity duration-700 pointer-events-none ${
+                  isVideoReady ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                <Image
+                  src="/images/hero-bg.png"
+                  alt="Gym Training Facility"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-black/25" />
+              </div>
 
               {/* Floating Editorial Badges */}
-              <div className="absolute top-4 left-4 z-20">
+              <div className="absolute top-4 left-4 z-30 pointer-events-none">
                 <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md text-[#171717] text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   Live Gym Vibe
                 </span>
               </div>
 
-              <div className="absolute bottom-4 right-4 z-20">
+              <div className="absolute bottom-4 right-4 z-30 pointer-events-none">
                 <span className="inline-flex items-center gap-1 bg-[#F4D98A] text-[#171717] text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
                   Premium Equipment ↗
                 </span>
