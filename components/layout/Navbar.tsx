@@ -84,17 +84,24 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="text-xs font-bold tracking-[0.08em] uppercase text-[#5F5F5A] hover:text-[#171717] transition-colors py-1 relative group"
-              >
-                <span>{item.label}</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#171717] transition-all duration-300 group-hover:w-full rounded-full" />
-              </a>
+          <nav className="hidden lg:flex items-center">
+            {NAV_ITEMS.map((item, index) => (
+              <div key={item.label} className="flex items-center">
+                <a
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="text-xs font-bold tracking-[0.1em] uppercase text-[#5F5F5A] hover:text-[#171717] transition-colors py-1 px-3.5 xl:px-5 relative group"
+                >
+                  <span>{item.label}</span>
+                  <span className="absolute bottom-0 left-3.5 right-3.5 xl:left-5 xl:right-5 h-0.5 bg-[#171717] scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-full" />
+                </a>
+                {index < NAV_ITEMS.length - 1 && (
+                  <span
+                    className="w-[1px] h-3 bg-[#171717]/25 select-none"
+                    aria-hidden="true"
+                  />
+                )}
+              </div>
             ))}
           </nav>
 
