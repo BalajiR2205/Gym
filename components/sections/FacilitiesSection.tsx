@@ -11,6 +11,7 @@ import {
   Apple,
   Shield,
   LucideIcon,
+  Sparkles,
 } from "lucide-react";
 import SectionHeading from "../ui/SectionHeading";
 import { FACILITIES } from "@/data/siteContent";
@@ -26,61 +27,147 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Shield,
 };
 
+// Pastel colors & collage grid spans mapping per facility
+const FACILITY_CONFIG: Record<
+  string,
+  {
+    bg: string;
+    border: string;
+    span: string;
+    tag: string;
+  }
+> = {
+  cardio: {
+    bg: "bg-[#A9D4E8]", // Powder Blue
+    border: "border-black/5",
+    span: "col-span-1 md:col-span-2 lg:col-span-7",
+    tag: "ENDURANCE & HEART",
+  },
+  weights: {
+    bg: "bg-[#B8D8C5]", // Sage
+    border: "border-black/5",
+    span: "col-span-1 md:col-span-2 lg:col-span-5",
+    tag: "OLYMPIC & DUMBBELLS",
+  },
+  ac: {
+    bg: "bg-[#C9E8D8]", // Mint
+    border: "border-black/5",
+    span: "col-span-1 md:col-span-1 lg:col-span-4",
+    tag: "CLIMATE CONTROL",
+  },
+  strength: {
+    bg: "bg-[#FFF9F0]", // Warm Ivory
+    border: "border-black/10",
+    span: "col-span-1 md:col-span-1 lg:col-span-4",
+    tag: "TARGETED GEAR",
+  },
+  parking: {
+    bg: "bg-[#F4D98A]", // Butter Yellow
+    border: "border-black/5",
+    span: "col-span-1 md:col-span-1 lg:col-span-4",
+    tag: "SECURE SPACES",
+  },
+  lockers: {
+    bg: "bg-[#D7C9E8]", // Lavender
+    border: "border-black/5",
+    span: "col-span-1 md:col-span-1 lg:col-span-4",
+    tag: "FRESH & CLEAN",
+  },
+  diet: {
+    bg: "bg-[#F8C7A8]", // Peach
+    border: "border-black/5",
+    span: "col-span-1 md:col-span-1 lg:col-span-4",
+    tag: "NUTRITION",
+  },
+  security: {
+    bg: "bg-white", // Clean White
+    border: "border-black/10",
+    span: "col-span-1 md:col-span-1 lg:col-span-4",
+    tag: "PEACE OF MIND",
+  },
+};
+
 export default function FacilitiesSection() {
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.06,
+        staggerChildren: 0.05,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 16 },
+    hidden: { opacity: 0, y: 18 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 
   return (
-    <section id="facilities" className="relative py-24 md:py-28 bg-[#0A0A0A] overflow-hidden">
-      <div className="absolute inset-0 bg-noise opacity-[0.02]" />
-      <div className="absolute top-0 right-0 w-[600px] h-[400px] bg-[rgba(212,175,55,0.015)] rounded-full blur-[160px] pointer-events-none" />
-
+    <section id="facilities" className="relative py-24 md:py-32 bg-[#F7F4EE] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
-          title="Our Facilities"
-          subtitle="Explore the state-of-the-art features and client-first amenities crafted to support your fitness progress and keep you safe."
+          badge="03 / FACILITIES"
+          badgeColor="sage"
+          title="Everything You Need to Train Better."
+          subtitle="Designed with intention. From high-grade lifting platforms to climate-controlled training floors and refreshing amenities."
         />
 
+        {/* Asymmetric Pinterest-Inspired Collage Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.05 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 mt-12"
         >
-          {FACILITIES.map((facility) => {
+          {FACILITIES.map((facility, index) => {
             const IconComponent = ICON_MAP[facility.iconName] || Dumbbell;
+            const config = FACILITY_CONFIG[facility.id] || {
+              bg: "bg-white",
+              border: "border-black/10",
+              span: "col-span-1 md:col-span-1 lg:col-span-4",
+              tag: "FACILITY",
+            };
 
             return (
               <motion.div
                 key={facility.id}
                 variants={itemVariants}
-                className="group relative bg-[#141414] border border-[rgba(212,175,55,0.05)] rounded-2xl p-7 transition-all duration-500 ease-out hover:border-[rgba(212,175,55,0.18)] hover:shadow-card-elevated"
+                whileHover={{ y: -4 }}
+                className={`group relative ${config.bg} ${config.border} ${config.span} border rounded-3xl p-7 sm:p-8 flex flex-col justify-between transition-all duration-300 shadow-[0_2px_10px_rgba(23,23,23,0.03)] hover:shadow-[0_8px_24px_rgba(23,23,23,0.07)]`}
               >
-                <div className="w-11 h-11 rounded-xl bg-[#1A1A1A] border border-[rgba(212,175,55,0.08)] flex items-center justify-center text-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-[#0A0A0A] group-hover:border-[#D4AF37] transition-all duration-500 mb-5">
-                  <IconComponent className="w-5 h-5 stroke-[1.5]" />
+                {/* Card Top: Pill Tag & Number */}
+                <div className="flex items-center justify-between gap-2 mb-6">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] px-3 py-1 rounded-full bg-white/80 text-[#171717] shadow-sm">
+                    {config.tag}
+                  </span>
+                  <span className="text-xs font-mono text-[#171717]/50 font-bold">
+                    0{index + 1}
+                  </span>
                 </div>
-                <h3 className="text-[15px] font-display font-semibold tracking-wide text-white mb-2 group-hover:text-[#D4AF37] transition-colors duration-300">
-                  {facility.title}
-                </h3>
-                <p className="text-[13px] text-[#BDBDBD] leading-[1.6]">
-                  {facility.description}
-                </p>
+
+                {/* Card Center: Icon & Title */}
+                <div className="mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-white text-[#171717] flex items-center justify-center shadow-sm mb-4 transition-transform duration-300 group-hover:scale-105">
+                    <IconComponent className="w-5 h-5 stroke-[2]" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-display font-extrabold text-[#171717] tracking-tight mb-2">
+                    {facility.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#171717]/80 leading-relaxed font-normal">
+                    {facility.description}
+                  </p>
+                </div>
+
+                {/* Subtle bottom accent */}
+                <div className="mt-4 pt-3 border-t border-black/5 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#171717]/60">
+                  <span>Available All Hours</span>
+                  <Sparkles className="w-3 h-3 text-[#171717]/40" />
+                </div>
               </motion.div>
             );
           })}

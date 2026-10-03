@@ -16,9 +16,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "<GYM NAME> Gym A/C | Unisex Fitness Center",
-  description: "<GYM NAME> Gym A/C — A premium unisex fitness center offering state-of-the-art equipment, expert personal training, and flexible membership plans. Join today and transform your body!",
-  keywords: ["gym", "fitness", "<GYM NAME>", "Unisex Fitness Center", "personal training", "workout", "strength training", "cardio"],
+  title: "<GYM NAME> Gym A/C | Modern Unisex Fitness Center",
+  description: "<GYM NAME> Gym A/C — An editorial, modern unisex fitness center offering state-of-the-art equipment, expert personal coaching, and flexible memberships.",
+  keywords: ["gym", "fitness", "<GYM NAME>", "Unisex Fitness Center", "personal training", "workout", "strength training", "cardio", "wellness"],
 };
 
 export default function RootLayout({
@@ -27,9 +27,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${outfit.variable} font-sans antialiased text-white bg-background min-h-screen flex flex-col`}
+        className={`${inter.variable} ${outfit.variable} font-sans antialiased text-[#171717] bg-[#F7F4EE] min-h-screen flex flex-col`}
       >
         <SiteChrome>{children}</SiteChrome>
       </body>

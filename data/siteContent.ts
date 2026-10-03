@@ -1,7 +1,7 @@
 // Site configurations and content definitions
 export const SITE_NAME = "<GYM NAME>";
 export const BRAND_TAGLINE = "UNISEX FITNESS CENTER";
-export const HERO_SUBHEADING = "Welcome to <GYM NAME> Gym A/C, where limits are shattered. Join an elite community, train with industry experts, and experience a state-of-the-art facility designed to push you to the next level.";
+export const HERO_SUBHEADING = "A modern A/C fitness centre built around strength, consistency and better movement. Train with dedicated coaches, state-of-the-art equipment, and an uplifting community.";
 
 // Contact Details (configured with new values)
 export const PHONE_NUMBER = "9063906499";

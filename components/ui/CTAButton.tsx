@@ -8,7 +8,7 @@ interface CTAButtonProps {
   children: ReactNode;
   href?: string;
   onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
-  variant?: "solid" | "outline";
+  variant?: "solid" | "outline" | "coral";
   className?: string;
   isExternal?: boolean;
 }
@@ -22,26 +22,25 @@ export default function CTAButton({
   isExternal = false,
 }: CTAButtonProps) {
   const baseStyles =
-    "relative inline-flex items-center justify-center font-display font-semibold tracking-wide text-sm transition-all duration-400 ease-out py-4 px-8 overflow-hidden rounded-lg";
+    "relative inline-flex items-center justify-center font-display font-bold tracking-wide text-xs sm:text-sm uppercase transition-all duration-300 ease-out py-3.5 px-7 rounded-full overflow-hidden";
 
   const variants = {
     solid:
-      "bg-gradient-to-b from-[#F5E6A3] via-[#D4AF37] to-[#8B6914] text-[#0A0A0A] hover:shadow-[0_8px_24px_-6px_rgba(212,175,55,0.35)] border border-transparent hover:-translate-y-0.5 active:translate-y-0 shadow-luxury-md",
+      "bg-[#171717] text-white hover:bg-[#2B2B28] active:bg-[#101010] shadow-[0_4px_14px_rgba(23,23,23,0.15)] hover:shadow-[0_6px_20px_rgba(23,23,23,0.22)] hover:-translate-y-0.5 active:translate-y-0",
     outline:
-      "bg-transparent text-[#D4AF37] border border-[rgba(212,175,55,0.4)] hover:bg-[rgba(212,175,55,0.06)] hover:border-[#D4AF37] hover:shadow-gold-ambient",
+      "bg-transparent text-[#171717] border-2 border-[#171717] hover:bg-[#171717] hover:text-white hover:-translate-y-0.5 active:translate-y-0",
+    coral:
+      "bg-[#F28B78] text-[#171717] hover:bg-[#EE7862] shadow-[0_4px_14px_rgba(242,139,120,0.35)] hover:-translate-y-0.5 active:translate-y-0",
   };
 
   const content = (
-    <>
-      <span className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent opacity-60 pointer-events-none" />
-      <motion.span
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
-        className="relative z-10 flex items-center justify-center gap-2"
-      >
-        {children}
-      </motion.span>
-    </>
+    <motion.span
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.98 }}
+      className="relative z-10 flex items-center justify-center gap-2"
+    >
+      {children}
+    </motion.span>
   );
 
   if (href) {

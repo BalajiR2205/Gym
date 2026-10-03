@@ -4,52 +4,112 @@ import SectionHeading from "../ui/SectionHeading";
 import MembershipCard from "../ui/MembershipCard";
 import { MEMBERSHIP_PLANS, PERSONAL_TRAINING_PLANS } from "@/data/siteContent";
 import { motion } from "framer-motion";
+import { Sparkles, Target, Apple, Activity, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function MembershipSection() {
   return (
-    <section id="plans" className="relative py-32 md:py-40 bg-[#0A0A0A] overflow-hidden">
-      <div className="absolute inset-0 bg-noise opacity-[0.02]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[rgba(212,175,55,0.02)] rounded-full blur-[180px] pointer-events-none" />
-
+    <section id="plans" className="relative py-24 md:py-32 bg-[#FFF9F0] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Section Heading */}
         <SectionHeading
-          title="Membership Offers"
-          subtitle="Choose the plan that fits your lifestyle. Full equipment access, expert guidance, and premium facilities — at every tier."
+          badge="02 / MEMBERSHIPS"
+          badgeColor="peach"
+          title="Simple, Flexible Plans."
+          subtitle="All memberships include complete floor access, modern climate control, clean lockers, and complimentary trainer guidance."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mt-16">
+        {/* 4 Pastel Membership Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mt-12">
           {MEMBERSHIP_PLANS.map((plan, index) => (
             <MembershipCard key={plan.id} plan={plan} index={index} />
           ))}
         </div>
 
+        {/* Personal Training Editorial Feature Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-          className="mt-32"
+          className="mt-20 md:mt-28"
         >
-          <div className="flex flex-col items-center mb-14">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#D4AF37]" />
-              <span className="text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">
-                &lt;GYM NAME&gt; Fitness
-              </span>
-              <span className="h-[1px] w-8 bg-gradient-to-l from-transparent to-[#D4AF37]" />
-            </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-white leading-[1.1]">
-              Personal Training
-            </h2>
-            <p className="mt-6 text-sm md:text-base text-[#BDBDBD] max-w-2xl text-center text-balance font-light leading-[1.7]">
-              Accelerate your results with 1-on-1 expert coaching. Get a custom program, nutrition plan, and dedicated support to transform faster.
-            </p>
-          </div>
+          <div className="bg-[#B8D8C5] rounded-[32px] p-8 sm:p-12 border border-black/5 shadow-editorial-md">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              {/* Left Column: Editorial Info */}
+              <div className="lg:col-span-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 text-[#171717] text-xs font-bold uppercase tracking-wider mb-4">
+                  <Sparkles className="w-3.5 h-3.5 text-[#F28B78]" />
+                  <span>1-on-1 Coaching</span>
+                </div>
+                <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-[#171717] tracking-tight mb-4">
+                  Train With Purpose.
+                </h3>
+                <p className="text-sm sm:text-base text-[#171717]/80 leading-relaxed mb-6 font-normal">
+                  Accelerate your progress with individualized coaching tailored to your schedule, lifestyle, and fitness aspirations.
+                </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {PERSONAL_TRAINING_PLANS.map((plan, index) => (
-              <MembershipCard key={plan.id} plan={plan} index={index} />
-            ))}
+                <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm font-semibold text-[#171717]">
+                  <div className="flex items-center gap-2">
+                    <Target className="w-4 h-4 text-[#171717]" />
+                    <span>Custom Workout Plan</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Apple className="w-4 h-4 text-[#171717]" />
+                    <span>Diet & Nutrition</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Activity className="w-4 h-4 text-[#171717]" />
+                    <span>Form Correction</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#171717]" />
+                    <span>Progress Tracking</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Personal Training Pricing Cards */}
+              <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {PERSONAL_TRAINING_PLANS.map((plan) => (
+                  <div
+                    key={plan.id}
+                    className="bg-white rounded-2xl p-6 border border-black/8 shadow-sm flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-xs font-bold uppercase tracking-wider text-[#171717]/70">
+                          {plan.duration}
+                        </span>
+                        {plan.isPopular && (
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-[#F28B78] text-[#171717] px-2.5 py-0.5 rounded-full">
+                            Popular
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-3xl font-display font-black text-[#171717] mb-4">
+                        {plan.price}
+                      </div>
+                      <ul className="space-y-2 mb-6">
+                        {plan.features.slice(0, 3).map((f, i) => (
+                          <li key={i} className="text-xs text-[#5F5F5A] flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#171717]" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Link
+                      href={`/join?plan=${encodeURIComponent(plan.id)}`}
+                      className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 rounded-full bg-[#171717] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#2A2A28] transition-colors"
+                    >
+                      <span>Book Coaching</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>

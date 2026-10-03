@@ -7,13 +7,25 @@ interface SectionHeadingProps {
   subtitle?: string;
   align?: "left" | "center" | "right";
   badge?: string;
+  badgeColor?: "mint" | "peach" | "sage" | "blue" | "yellow" | "coral" | "charcoal";
 }
+
+const BADGE_COLORS = {
+  mint: "bg-[#C9E8D8] text-[#171717]",
+  peach: "bg-[#F8C7A8] text-[#171717]",
+  sage: "bg-[#B8D8C5] text-[#171717]",
+  blue: "bg-[#A9D4E8] text-[#171717]",
+  yellow: "bg-[#F4D98A] text-[#171717]",
+  coral: "bg-[#F28B78] text-[#171717]",
+  charcoal: "bg-[#171717] text-white",
+};
 
 export default function SectionHeading({
   title,
   subtitle,
   align = "center",
   badge = "<GYM NAME> Fitness",
+  badgeColor = "charcoal",
 }: SectionHeadingProps) {
   const alignmentClasses = {
     left: "text-left items-start",
@@ -23,24 +35,28 @@ export default function SectionHeading({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-      className={`flex flex-col mb-20 md:mb-24 ${alignmentClasses[align]}`}
+      className={`flex flex-col mb-14 md:mb-18 ${alignmentClasses[align]}`}
     >
-      <div className="flex items-center gap-3 mb-5">
-        <span className="h-[1px] w-10 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-60" />
-        <span className="text-[11px] uppercase tracking-[0.35em] text-[#D4AF37] font-semibold">
-          {badge}
-        </span>
-        <span className="h-[1px] w-10 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-60" />
-      </div>
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-white leading-[1.08]">
+      {badge && (
+        <div className="inline-flex items-center gap-2 mb-4">
+          <span
+            className={`text-[11px] uppercase tracking-[0.16em] font-bold px-3.5 py-1.5 rounded-full ${
+              BADGE_COLORS[badgeColor] || BADGE_COLORS.charcoal
+            }`}
+          >
+            {badge}
+          </span>
+        </div>
+      )}
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-[#171717] leading-[1.12]">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-6 text-sm md:text-[15px] text-[#BDBDBD] max-w-2xl leading-[1.7] text-balance font-light">
+        <p className="mt-4 text-base md:text-lg text-[#5F5F5A] max-w-2xl leading-relaxed text-balance font-normal">
           {subtitle}
         </p>
       )}

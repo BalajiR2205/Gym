@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import CTAButton from "./CTAButton";
 import { MembershipPlan } from "@/data/siteContent";
@@ -10,16 +10,78 @@ interface MembershipCardProps {
   index: number;
 }
 
+// Editorial pastel color map per plan as requested
+const PLAN_THEMES: Record<
+  string,
+  {
+    bg: string;
+    badgeBg: string;
+    badgeText: string;
+    buttonVariant: "solid" | "outline" | "coral";
+    border: string;
+  }
+> = {
+  monthly: {
+    bg: "bg-[#F8C7A8]", // Peach
+    badgeBg: "bg-white/80",
+    badgeText: "text-[#171717]",
+    buttonVariant: "solid",
+    border: "border-black/5",
+  },
+  quarterly: {
+    bg: "bg-[#C9E8D8]", // Mint
+    badgeBg: "bg-white/80",
+    badgeText: "text-[#171717]",
+    buttonVariant: "solid",
+    border: "border-black/5",
+  },
+  "half-yearly": {
+    bg: "bg-[#A9D4E8]", // Powder Blue
+    badgeBg: "bg-[#171717]",
+    badgeText: "text-white",
+    buttonVariant: "solid",
+    border: "border-black/10",
+  },
+  annual: {
+    bg: "bg-[#F4D98A]", // Butter Yellow
+    badgeBg: "bg-white/80",
+    badgeText: "text-[#171717]",
+    buttonVariant: "solid",
+    border: "border-black/5",
+  },
+  "pt-monthly": {
+    bg: "bg-[#B8D8C5]", // Sage
+    badgeBg: "bg-white/80",
+    badgeText: "text-[#171717]",
+    buttonVariant: "solid",
+    border: "border-black/5",
+  },
+  "pt-quarterly": {
+    bg: "bg-[#D7C9E8]", // Lavender
+    badgeBg: "bg-[#171717]",
+    badgeText: "text-white",
+    buttonVariant: "solid",
+    border: "border-black/10",
+  },
+};
+
 export default function MembershipCard({ plan, index }: MembershipCardProps) {
   const isPopular = plan.isPopular;
+  const theme = PLAN_THEMES[plan.id] || {
+    bg: "bg-[#FFF9F0]",
+    badgeBg: "bg-black/5",
+    badgeText: "text-[#171717]",
+    buttonVariant: "solid" as const,
+    border: "border-black/5",
+  };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.7,
+        duration: 0.6,
         ease: [0.22, 1, 0.36, 1] as const,
         delay: index * 0.08,
       },
@@ -32,44 +94,50 @@ export default function MembershipCard({ plan, index }: MembershipCardProps) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.05 }}
-      className={`relative flex flex-col justify-between p-8 md:p-9 rounded-2xl transition-all duration-500 ease-out group ${
-        isPopular
-          ? "bg-gradient-to-b from-[#1A1A1A] to-[#141414] border border-[rgba(212,175,55,0.2)] shadow-gold-elevated hover:shadow-gold-lg hover:-translate-y-1"
-          : "bg-[#141414] border border-[rgba(212,175,55,0.06)] shadow-card hover:border-[rgba(212,175,55,0.16)] hover:shadow-card-elevated hover:-translate-y-1"
-      }`}
+      whileHover={{ y: -6 }}
+      className={`relative flex flex-col justify-between p-7 sm:p-8 rounded-3xl ${theme.bg} ${theme.border} border text-[#171717] shadow-[0_4px_16px_rgba(23,23,23,0.04)] hover:shadow-[0_12px_28px_rgba(23,23,23,0.08)] transition-all duration-400 ease-out group`}
     >
       {isPopular && (
-        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-b from-[#F5E6A3] via-[#D4AF37] to-[#8B6914] text-[#0A0A0A] text-[10px] font-display font-bold tracking-[0.25em] uppercase px-5 py-2 rounded-full whitespace-nowrap">
-          Best Value
-        </span>
+        <div className="absolute -top-3.5 right-6 inline-flex items-center gap-1.5 bg-[#171717] text-white text-[10px] font-display font-bold tracking-[0.16em] uppercase px-4 py-1.5 rounded-full shadow-md">
+          <Sparkles className="w-3 h-3 text-[#F4D98A]" />
+          <span>Member Favourite</span>
+        </div>
       )}
 
       <div>
-        <div className="inline-flex items-center gap-2 mb-6">
+        {/* Plan Header */}
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#171717]/70">
+            {plan.name}
+          </span>
           <span
-            className={`text-[10px] font-semibold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${
-              isPopular
-                ? "bg-[rgba(212,175,55,0.1)] text-[#D4AF37] border-[rgba(212,175,55,0.2)]"
-                : "bg-[#1A1A1A] text-[#BDBDBD] border-[rgba(212,175,55,0.06)]"
-            }`}
+            className={`text-[11px] font-bold uppercase tracking-[0.1em] px-3 py-1 rounded-full ${theme.badgeBg} ${theme.badgeText}`}
           >
             {plan.duration}
           </span>
         </div>
 
-        <div className="flex items-baseline gap-1 mb-6">
-          <span className="text-4xl font-display font-bold text-white tracking-tight">
+        {/* Pricing */}
+        <div className="flex items-baseline gap-1.5 mb-6">
+          <span className="text-4xl sm:text-5xl font-display font-black text-[#171717] tracking-tight">
             {plan.price}
+          </span>
+          <span className="text-xs font-semibold text-[#171717]/60">
+            / {plan.duration.toLowerCase()}
           </span>
         </div>
 
-        <div className="h-px bg-gradient-to-r from-transparent via-[rgba(212,175,55,0.12)] to-transparent mb-7" />
+        {/* Divider */}
+        <div className="h-px bg-[#171717]/10 mb-6" />
 
-        <ul className="space-y-3.5 mb-8">
+        {/* Features */}
+        <ul className="space-y-3 mb-8">
           {plan.features.map((feature, i) => (
-            <li key={i} className="flex items-start gap-3 text-[13px] text-[#BDBDBD]">
-              <Check className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
-              <span className="leading-relaxed">{feature}</span>
+            <li key={i} className="flex items-start gap-2.5 text-xs sm:text-[13px] text-[#171717]/85 font-medium">
+              <div className="w-4 h-4 rounded-full bg-[#171717] text-white flex items-center justify-center shrink-0 mt-0.5">
+                <Check className="w-2.5 h-2.5 stroke-[3]" />
+              </div>
+              <span className="leading-snug">{feature}</span>
             </li>
           ))}
         </ul>
@@ -77,11 +145,11 @@ export default function MembershipCard({ plan, index }: MembershipCardProps) {
 
       <div className="mt-auto pt-2">
         <CTAButton
-          href="/join"
-          variant={isPopular ? "solid" : "outline"}
-          className="w-full py-3 text-xs"
+          href={`/join?plan=${encodeURIComponent(plan.id)}`}
+          variant={theme.buttonVariant}
+          className="w-full py-3.5 text-xs"
         >
-          Join Now
+          Choose {plan.duration}
         </CTAButton>
       </div>
     </motion.div>
