@@ -85,7 +85,7 @@ export default function GallerySection() {
   };
 
   return (
-    <section id="gallery" className="relative py-24 md:py-32 bg-[#F7F4EE] overflow-hidden">
+    <section id="gallery" className="relative py-24 md:py-32 bg-[#F0EEE9] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
           badge="05 / PROGRESS"

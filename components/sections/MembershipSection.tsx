@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function MembershipSection() {
   return (
-    <section id="plans" className="relative py-24 md:py-32 bg-[#FFF9F0] overflow-hidden">
+    <section id="plans" className="relative py-24 md:py-32 bg-[#F8F6F2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Heading */}
         <SectionHeading
@@ -34,12 +34,12 @@ export default function MembershipSection() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
           className="mt-20 md:mt-28"
         >
-          <div className="bg-[#B8D8C5] rounded-[32px] p-8 sm:p-12 border border-black/5 shadow-editorial-md">
+          <div className="bg-[#CAD3C1] rounded-[32px] p-8 sm:p-12 border border-black/5 shadow-editorial-md">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               {/* Left Column: Editorial Info */}
               <div className="lg:col-span-6">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 text-[#171717] text-xs font-bold uppercase tracking-wider mb-4">
-                  <Sparkles className="w-3.5 h-3.5 text-[#F28B78]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#EBD8DB]" />
                   <span>1-on-1 Coaching</span>
                 </div>
                 <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-[#171717] tracking-tight mb-4">
@@ -82,7 +82,7 @@ export default function MembershipSection() {
                           {plan.duration}
                         </span>
                         {plan.isPopular && (
-                          <span className="text-[10px] font-bold uppercase tracking-wider bg-[#F28B78] text-[#171717] px-2.5 py-0.5 rounded-full">
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-[#EBD8DB] text-[#171717] px-2.5 py-0.5 rounded-full">
                             Popular
                           </span>
                         )}

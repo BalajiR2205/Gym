@@ -21,7 +21,7 @@ export default function ContactSection() {
       icon: MapPin,
       label: "Our Location",
       value: ADDRESS,
-      bg: "bg-[#C9E8D8]", // Mint
+      bg: "bg-[#CAD3C1]", // Almost Aqua
     },
     {
       icon: Clock,
@@ -32,24 +32,24 @@ export default function ContactSection() {
           <p>{WORKING_HOURS.sunday}</p>
         </div>
       ),
-      bg: "bg-[#F4D98A]", // Butter Yellow
+      bg: "bg-[#F6EBC8]", // Lemon Icing
     },
     {
       icon: Phone,
       label: "Call Us",
       value: PHONE_NUMBER,
-      bg: "bg-[#A9D4E8]", // Blue
+      bg: "bg-[#D3E4F1]", // Ice Melt
     },
     {
       icon: Mail,
       label: "Email Support",
       value: EMAIL,
-      bg: "bg-[#F8C7A8]", // Peach
+      bg: "bg-[#F0D8CC]", // Peach Dust
     },
   ];
 
   return (
-    <section id="contact" className="relative py-24 md:py-32 bg-[#FFF9F0] overflow-hidden">
+    <section id="contact" className="relative py-24 md:py-32 bg-[#F8F6F2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
           badge="06 / VISIT US"
@@ -67,7 +67,7 @@ export default function ContactSection() {
                   key={idx}
                   className="bg-white border border-[#171717]/8 rounded-3xl p-6 shadow-sm flex flex-col justify-between"
                 >
-                  <div className="w-10 h-10 rounded-2xl bg-[#F7F4EE] border border-black/5 flex items-center justify-center text-[#171717] mb-4">
+                  <div className="w-10 h-10 rounded-2xl bg-[#F0EEE9] border border-black/5 flex items-center justify-center text-[#171717] mb-4">
                     <item.icon className="w-4 h-4 stroke-[2]" />
                   </div>
                   <div>

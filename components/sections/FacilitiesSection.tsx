@@ -38,49 +38,49 @@ const FACILITY_CONFIG: Record<
   }
 > = {
   cardio: {
-    bg: "bg-[#A9D4E8]", // Powder Blue
+    bg: "bg-[#D3E4F1]", // PANTONE 13-4306 Ice Melt
     border: "border-black/5",
     span: "col-span-1 md:col-span-2 lg:col-span-7",
     tag: "ENDURANCE & HEART",
   },
   weights: {
-    bg: "bg-[#B8D8C5]", // Sage
+    bg: "bg-[#CAD3C1]", // PANTONE 13-6006 Almost Aqua
     border: "border-black/5",
     span: "col-span-1 md:col-span-2 lg:col-span-5",
     tag: "OLYMPIC & DUMBBELLS",
   },
   ac: {
-    bg: "bg-[#C9E8D8]", // Mint
+    bg: "bg-[#CAD3C1]", // PANTONE 13-6006 Almost Aqua
     border: "border-black/5",
     span: "col-span-1 md:col-span-1 lg:col-span-4",
     tag: "CLIMATE CONTROL",
   },
   strength: {
-    bg: "bg-[#FFF9F0]", // Warm Ivory
+    bg: "bg-[#F8F6F2]", // Warm Cloud Neutral
     border: "border-black/10",
     span: "col-span-1 md:col-span-1 lg:col-span-4",
     tag: "TARGETED GEAR",
   },
   parking: {
-    bg: "bg-[#F4D98A]", // Butter Yellow
+    bg: "bg-[#F6EBC8]", // PANTONE 11-0515 Lemon Icing
     border: "border-black/5",
     span: "col-span-1 md:col-span-1 lg:col-span-4",
     tag: "SECURE SPACES",
   },
   lockers: {
-    bg: "bg-[#D7C9E8]", // Lavender
+    bg: "bg-[#DBD2DB]", // PANTONE 13-3802 Orchid Tint
     border: "border-black/5",
     span: "col-span-1 md:col-span-1 lg:col-span-4",
     tag: "FRESH & CLEAN",
   },
   diet: {
-    bg: "bg-[#F8C7A8]", // Peach
+    bg: "bg-[#F0D8CC]", // PANTONE 12-1107 Peach Dust
     border: "border-black/5",
     span: "col-span-1 md:col-span-1 lg:col-span-4",
     tag: "NUTRITION",
   },
   security: {
-    bg: "bg-white", // Clean White
+    bg: "bg-[#EBD8DB]", // PANTONE 11-1400 Raindrops on Roses
     border: "border-black/10",
     span: "col-span-1 md:col-span-1 lg:col-span-4",
     tag: "PEACE OF MIND",
@@ -107,7 +107,7 @@ export default function FacilitiesSection() {
   };
 
   return (
-    <section id="facilities" className="relative py-24 md:py-32 bg-[#F7F4EE] overflow-hidden">
+    <section id="facilities" className="relative py-24 md:py-32 bg-[#F0EEE9] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
           badge="03 / FACILITIES"

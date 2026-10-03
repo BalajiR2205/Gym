@@ -30,7 +30,7 @@ export default function CTAButton({
     outline:
       "bg-transparent text-[#171717] border-2 border-[#171717] hover:bg-[#171717] hover:text-white hover:-translate-y-0.5 active:translate-y-0",
     coral:
-      "bg-[#F28B78] text-[#171717] hover:bg-[#EE7862] shadow-[0_4px_14px_rgba(242,139,120,0.35)] hover:-translate-y-0.5 active:translate-y-0",
+      "bg-[#EBD8DB] text-[#171717] hover:bg-[#DFC7CB] shadow-[0_4px_14px_rgba(235,216,219,0.4)] hover:-translate-y-0.5 active:translate-y-0",
   };
 
   const content = (

@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --background: 247, 244, 238;
+    --background: 240, 238, 233;
     --foreground: 23, 23, 23;
   }
 
   body {
     color: #171717;
-    background-color: #F7F4EE;
+    background-color: #F0EEE9;
     font-feature-settings: "rlig" 1, "calt" 1;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -19,11 +19,11 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: #F7F4EE;
+    background-color: #F0EEE9;
   }
 
   ::selection {
-    background-color: #F8C7A8;
+    background-color: #EBD8DB;
     color: #171717;
   }
 
@@ -32,11 +32,11 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #F7F4EE;
+    background: #F0EEE9;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #D4CFBE;
+    background: #D5D5D8;
     border-radius: 9999px;
   }
 
@@ -60,39 +60,45 @@
     box-shadow: 0 4px 16px -2px rgba(23, 23, 23, 0.06), 0 16px 32px -6px rgba(23, 23, 23, 0.08);
   }
 
-  /* Pastel surfaces */
+  /* Pantone Pastel surfaces */
   .pastel-peach {
-    background-color: #F8C7A8;
+    background-color: #F0D8CC; /* PANTONE 12-1107 Peach Dust */
     color: #171717;
   }
 
   .pastel-mint {
-    background-color: #C9E8D8;
+    background-color: #CAD3C1; /* PANTONE 13-6006 Almost Aqua */
     color: #171717;
   }
 
   .pastel-sage {
-    background-color: #B8D8C5;
+    background-color: #CAD3C1; /* PANTONE 13-6006 Almost Aqua */
     color: #171717;
   }
 
   .pastel-blue {
-    background-color: #A9D4E8;
+    background-color: #D3E4F1; /* PANTONE 13-4306 Ice Melt */
     color: #171717;
   }
 
   .pastel-yellow {
-    background-color: #F4D98A;
+    background-color: #F6EBC8; /* PANTONE 11-0515 Lemon Icing */
     color: #171717;
   }
 
   .pastel-lavender {
-    background-color: #D7C9E8;
+    background-color: #DBD2DB; /* PANTONE 13-3802 Orchid Tint */
     color: #171717;
   }
 
-  .pastel-coral {
-    background-color: #F28B78;
+  .pastel-coral,
+  .pastel-pink {
+    background-color: #EBD8DB; /* PANTONE 11-1400 Raindrops on Roses */
+    color: #171717;
+  }
+
+  .pastel-nimbus {
+    background-color: #D5D5D8; /* PANTONE 13-4108 Nimbus Cloud */
     color: #171717;
   }
 

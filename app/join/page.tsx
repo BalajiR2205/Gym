@@ -86,7 +86,7 @@ export default function JoinNowPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F4EE] pt-28 pb-20 flex items-center justify-center relative px-6 overflow-hidden">
+    <div className="min-h-screen bg-[#F0EEE9] pt-28 pb-20 flex items-center justify-center relative px-6 overflow-hidden">
       <div className="w-full max-w-2xl relative z-10">
         <Link
           href="/"
@@ -110,7 +110,7 @@ export default function JoinNowPage() {
                 <div className="w-12 h-12 bg-[#171717] text-white rounded-2xl flex items-center justify-center mb-4 shadow-sm">
                   <Dumbbell className="w-6 h-6" />
                 </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C9E8D8] text-[#171717] text-[11px] font-bold uppercase tracking-wider mb-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#CAD3C1] text-[#171717] text-[11px] font-bold uppercase tracking-wider mb-2">
                   Membership Sign-Up
                 </div>
                 <h1 className="text-3xl sm:text-4xl font-display font-extrabold tracking-tight text-[#171717] mb-2">
@@ -134,7 +134,7 @@ export default function JoinNowPage() {
                       value={formData.fullName}
                       onChange={handleChange}
                       placeholder="John Doe"
-                      className={`bg-[#F7F4EE] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
+                      className={`bg-[#F0EEE9] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
                         errors.fullName
                           ? "border-red-500 focus:border-red-500"
                           : "border-[#171717]/10 focus:border-[#171717]"
@@ -156,7 +156,7 @@ export default function JoinNowPage() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+91 90000 00000"
-                      className={`bg-[#F7F4EE] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
+                      className={`bg-[#F0EEE9] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
                         errors.phone
                           ? "border-red-500 focus:border-red-500"
                           : "border-[#171717]/10 focus:border-[#171717]"
@@ -180,7 +180,7 @@ export default function JoinNowPage() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="johndoe@example.com"
-                      className={`bg-[#F7F4EE] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
+                      className={`bg-[#F0EEE9] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
                         errors.email
                           ? "border-red-500 focus:border-red-500"
                           : "border-[#171717]/10 focus:border-[#171717]"
@@ -204,7 +204,7 @@ export default function JoinNowPage() {
                       placeholder="25"
                       min="12"
                       max="100"
-                      className={`bg-[#F7F4EE] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
+                      className={`bg-[#F0EEE9] border rounded-xl px-4 py-3 text-sm text-[#171717] placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white transition-all ${
                         errors.age
                           ? "border-red-500 focus:border-red-500"
                           : "border-[#171717]/10 focus:border-[#171717]"
@@ -226,7 +226,7 @@ export default function JoinNowPage() {
                       name="gender"
                       value={formData.gender}
                       onChange={handleChange}
-                      className="bg-[#F7F4EE] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm focus:outline-none focus:bg-white focus:border-[#171717] transition-all"
+                      className="bg-[#F0EEE9] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm focus:outline-none focus:bg-white focus:border-[#171717] transition-all"
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -243,7 +243,7 @@ export default function JoinNowPage() {
                       name="plan"
                       value={formData.plan}
                       onChange={handleChange}
-                      className="bg-[#F7F4EE] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm focus:outline-none focus:bg-white focus:border-[#171717] transition-all"
+                      className="bg-[#F0EEE9] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm focus:outline-none focus:bg-white focus:border-[#171717] transition-all"
                     >
                       <option value="Monthly">Monthly (General Access)</option>
                       <option value="Quarterly">Quarterly (General Access)</option>
@@ -262,7 +262,7 @@ export default function JoinNowPage() {
                       name="referral"
                       value={formData.referral}
                       onChange={handleChange}
-                      className="bg-[#F7F4EE] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm focus:outline-none focus:bg-white focus:border-[#171717] transition-all"
+                      className="bg-[#F0EEE9] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm focus:outline-none focus:bg-white focus:border-[#171717] transition-all"
                     >
                       <option value="Walk-in">Walk-in</option>
                       <option value="Friend">Friend / Member</option>
@@ -284,7 +284,7 @@ export default function JoinNowPage() {
                     onChange={handleChange}
                     rows={3}
                     placeholder="List any medical concerns, surgeries, or injuries our coaches should be aware of..."
-                    className="bg-[#F7F4EE] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white focus:border-[#171717] transition-all resize-none"
+                    className="bg-[#F0EEE9] border border-[#171717]/10 text-[#171717] rounded-xl px-4 py-3 text-sm placeholder:text-[#5F5F5A]/50 focus:outline-none focus:bg-white focus:border-[#171717] transition-all resize-none"
                   />
                 </div>
 
@@ -303,7 +303,7 @@ export default function JoinNowPage() {
               transition={{ type: "spring", stiffness: 180, damping: 18 }}
               className="bg-white border border-[#171717]/10 rounded-3xl p-8 md:p-12 text-center shadow-editorial-lg flex flex-col items-center"
             >
-              <div className="w-16 h-16 bg-[#C9E8D8] text-[#171717] rounded-full flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-[#CAD3C1] text-[#171717] rounded-full flex items-center justify-center mb-6">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
 
@@ -314,7 +314,7 @@ export default function JoinNowPage() {
                 Your application for the <span className="font-bold text-[#171717]">{formData.plan}</span> has been logged. Our front desk team will contact you shortly.
               </p>
 
-              <div className="w-full max-w-md bg-[#FFF9F0] border border-[#171717]/8 rounded-2xl p-6 mb-8 text-left space-y-3">
+              <div className="w-full max-w-md bg-[#F8F6F2] border border-[#171717]/8 rounded-2xl p-6 mb-8 text-left space-y-3">
                 <h4 className="text-[11px] uppercase font-bold tracking-wider text-[#171717] border-b border-black/5 pb-2 mb-2">
                   Registration Summary
                 </h4>

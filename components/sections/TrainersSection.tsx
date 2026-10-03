@@ -6,7 +6,7 @@ import { TRAINERS } from "@/data/siteContent";
 
 export default function TrainersSection() {
   return (
-    <section id="trainers" className="relative py-24 md:py-32 bg-[#FFF9F0] overflow-hidden">
+    <section id="trainers" className="relative py-24 md:py-32 bg-[#F8F6F2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
           badge="04 / COACHING"

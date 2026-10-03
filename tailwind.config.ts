@@ -14,13 +14,13 @@ const config: Config = {
       },
       colors: {
         cream: {
-          DEFAULT: "#F7F4EE",
-          50: "#FFFDF9",
-          100: "#FFF9F0",
-          200: "#F7F4EE",
-          300: "#EFECE3",
-          400: "#E3DFD5",
-          500: "#D4CFBE",
+          DEFAULT: "#F0EEE9", // PANTONE 11-4201 Cloud Dancer
+          50: "#FAF9F6",
+          100: "#F8F6F2",
+          200: "#F0EEE9", // Cloud Dancer
+          300: "#E5E2DC",
+          400: "#DCD8D0",
+          500: "#CAC4B8",
         },
         charcoal: {
           DEFAULT: "#171717",
@@ -30,25 +30,37 @@ const config: Config = {
           800: "#1E1E1C",
           900: "#171717",
         },
-        pastel: {
-          sage: "#B8D8C5",
-          "sage-light": "#DCECE3",
-          mint: "#C9E8D8",
-          "mint-light": "#E5F5ED",
-          peach: "#F8C7A8",
-          "peach-light": "#FDE6D7",
-          coral: "#F28B78",
-          "coral-light": "#FCD8D1",
-          blue: "#A9D4E8",
-          "blue-light": "#D8ECF5",
-          yellow: "#F4D98A",
-          "yellow-light": "#FBF0C9",
-          lavender: "#D7C9E8",
-          "lavender-light": "#EFE8F6",
+        pantone: {
+          cloudDancer: "#F0EEE9", // PANTONE 11-4201 Cloud Dancer (Main Background)
+          lemonIcing: "#F6EBC8", // PANTONE 11-0515 Lemon Icing
+          nimbusCloud: "#D5D5D8", // PANTONE 13-4108 Nimbus Cloud
+          raindropsOnRoses: "#EBD8DB", // PANTONE 11-1400 Raindrops on Roses
+          iceMelt: "#D3E4F1", // PANTONE 13-4306 Ice Melt
+          peachDust: "#F0D8CC", // PANTONE 12-1107 Peach Dust
+          almostAqua: "#CAD3C1", // PANTONE 13-6006 Almost Aqua
+          orchidTint: "#DBD2DB", // PANTONE 13-3802 Orchid Tint
         },
-        background: "#F7F4EE",
+        pastel: {
+          sage: "#CAD3C1", // PANTONE 13-6006 Almost Aqua
+          "sage-light": "#E2E7DC",
+          mint: "#CAD3C1", // PANTONE 13-6006 Almost Aqua
+          "mint-light": "#E2E7DC",
+          peach: "#F0D8CC", // PANTONE 12-1107 Peach Dust
+          "peach-light": "#F8EAE3",
+          coral: "#EBD8DB", // PANTONE 11-1400 Raindrops on Roses
+          "coral-light": "#F5ECEE",
+          pink: "#EBD8DB", // PANTONE 11-1400 Raindrops on Roses
+          blue: "#D3E4F1", // PANTONE 13-4306 Ice Melt
+          "blue-light": "#E9F1F8",
+          yellow: "#F6EBC8", // PANTONE 11-0515 Lemon Icing
+          "yellow-light": "#FAF4E1",
+          lavender: "#DBD2DB", // PANTONE 13-3802 Orchid Tint
+          "lavender-light": "#EDE7ED",
+          nimbus: "#D5D5D8", // PANTONE 13-4108 Nimbus Cloud
+        },
+        background: "#F0EEE9", // PANTONE 11-4201 Cloud Dancer
         foreground: "#171717",
-        primarySurface: "#FFF9F0",
+        primarySurface: "#F8F6F2",
         cardBackground: "#FFFFFF",
         gold: {
           DEFAULT: "#D4AF37",

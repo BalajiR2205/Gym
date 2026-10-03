@@ -11,12 +11,12 @@ interface SectionHeadingProps {
 }
 
 const BADGE_COLORS = {
-  mint: "bg-[#C9E8D8] text-[#171717]",
-  peach: "bg-[#F8C7A8] text-[#171717]",
-  sage: "bg-[#B8D8C5] text-[#171717]",
-  blue: "bg-[#A9D4E8] text-[#171717]",
-  yellow: "bg-[#F4D98A] text-[#171717]",
-  coral: "bg-[#F28B78] text-[#171717]",
+  mint: "bg-[#CAD3C1] text-[#171717]", // PANTONE 13-6006 Almost Aqua
+  peach: "bg-[#F0D8CC] text-[#171717]", // PANTONE 12-1107 Peach Dust
+  sage: "bg-[#CAD3C1] text-[#171717]", // PANTONE 13-6006 Almost Aqua
+  blue: "bg-[#D3E4F1] text-[#171717]", // PANTONE 13-4306 Ice Melt
+  yellow: "bg-[#F6EBC8] text-[#171717]", // PANTONE 11-0515 Lemon Icing
+  coral: "bg-[#EBD8DB] text-[#171717]", // PANTONE 11-1400 Raindrops on Roses
   charcoal: "bg-[#171717] text-white",
 };
 

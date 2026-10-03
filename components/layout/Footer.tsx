@@ -66,7 +66,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#171717] text-[#F7F4EE] pt-20 pb-12 overflow-hidden">
+    <footer className="relative bg-[#171717] text-[#F0EEE9] pt-20 pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         {/* Brand Column */}
         <div>
@@ -82,10 +82,10 @@ export default function Footer() {
               {SITE_NAME}
             </span>
           </Link>
-          <p className="text-[11px] text-[#A9D4E8] mb-4 font-bold tracking-[0.2em] uppercase">
+          <p className="text-[11px] text-[#D3E4F1] mb-4 font-bold tracking-[0.2em] uppercase">
             {BRAND_TAGLINE}
           </p>
-          <p className="text-sm text-[#F7F4EE]/70 leading-relaxed max-w-xs font-normal">
+          <p className="text-sm text-[#F0EEE9]/70 leading-relaxed max-w-xs font-normal">
             A modern, supportive fitness centre designed to elevate your everyday movement, strength, and overall wellbeing.
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function Footer() {
                 <a
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-sm text-[#F7F4EE]/70 hover:text-white transition-colors"
+                  className="text-sm text-[#F0EEE9]/70 hover:text-white transition-colors"
                 >
                   {link.label}
                 </a>
@@ -122,17 +122,17 @@ export default function Footer() {
           <h4 className="text-white font-display font-bold uppercase tracking-[0.16em] text-xs mb-6">
             Get in Touch
           </h4>
-          <ul className="space-y-3.5 text-sm text-[#F7F4EE]/70">
+          <ul className="space-y-3.5 text-sm text-[#F0EEE9]/70">
             <li className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-[#F4D98A] shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-[#F6EBC8] shrink-0 mt-0.5" />
               <span className="leading-snug">{ADDRESS}</span>
             </li>
             <li className="flex items-center gap-3">
-              <Phone className="w-4 h-4 text-[#F4D98A] shrink-0" />
+              <Phone className="w-4 h-4 text-[#F6EBC8] shrink-0" />
               <span>{PHONE_NUMBER}</span>
             </li>
             <li className="flex items-center gap-3">
-              <Mail className="w-4 h-4 text-[#F4D98A] shrink-0" />
+              <Mail className="w-4 h-4 text-[#F6EBC8] shrink-0" />
               <span>{EMAIL}</span>
             </li>
           </ul>
@@ -143,9 +143,9 @@ export default function Footer() {
           <h4 className="text-white font-display font-bold uppercase tracking-[0.16em] text-xs mb-6">
             Hours & Community
           </h4>
-          <div className="space-y-3 mb-6 text-sm text-[#F7F4EE]/70">
+          <div className="space-y-3 mb-6 text-sm text-[#F0EEE9]/70">
             <div className="flex items-start gap-3">
-              <Clock className="w-4 h-4 text-[#F4D98A] shrink-0 mt-0.5" />
+              <Clock className="w-4 h-4 text-[#F6EBC8] shrink-0 mt-0.5" />
               <div>
                 <p>{WORKING_HOURS.weekdays}</p>
                 <p>{WORKING_HOURS.sunday}</p>
@@ -168,7 +168,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#F7F4EE]/50 font-medium">
+      <div className="max-w-7xl mx-auto px-6 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#F0EEE9]/50 font-medium">
         <p>© {new Date().getFullYear()} {SITE_NAME}. All Rights Reserved.</p>
         <p>Unisex Fitness Centre & Coaching</p>
       </div>

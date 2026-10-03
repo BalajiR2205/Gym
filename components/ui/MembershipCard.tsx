@@ -22,42 +22,42 @@ const PLAN_THEMES: Record<
   }
 > = {
   monthly: {
-    bg: "bg-[#F8C7A8]", // Peach
+    bg: "bg-[#F0D8CC]", // PANTONE 12-1107 Peach Dust
     badgeBg: "bg-white/80",
     badgeText: "text-[#171717]",
     buttonVariant: "solid",
     border: "border-black/5",
   },
   quarterly: {
-    bg: "bg-[#C9E8D8]", // Mint
+    bg: "bg-[#CAD3C1]", // PANTONE 13-6006 Almost Aqua
     badgeBg: "bg-white/80",
     badgeText: "text-[#171717]",
     buttonVariant: "solid",
     border: "border-black/5",
   },
   "half-yearly": {
-    bg: "bg-[#A9D4E8]", // Powder Blue
+    bg: "bg-[#D3E4F1]", // PANTONE 13-4306 Ice Melt
     badgeBg: "bg-[#171717]",
     badgeText: "text-white",
     buttonVariant: "solid",
     border: "border-black/10",
   },
   annual: {
-    bg: "bg-[#F4D98A]", // Butter Yellow
+    bg: "bg-[#F6EBC8]", // PANTONE 11-0515 Lemon Icing
     badgeBg: "bg-white/80",
     badgeText: "text-[#171717]",
     buttonVariant: "solid",
     border: "border-black/5",
   },
   "pt-monthly": {
-    bg: "bg-[#B8D8C5]", // Sage
+    bg: "bg-[#EBD8DB]", // PANTONE 11-1400 Raindrops on Roses
     badgeBg: "bg-white/80",
     badgeText: "text-[#171717]",
     buttonVariant: "solid",
     border: "border-black/5",
   },
   "pt-quarterly": {
-    bg: "bg-[#D7C9E8]", // Lavender
+    bg: "bg-[#DBD2DB]", // PANTONE 13-3802 Orchid Tint
     badgeBg: "bg-[#171717]",
     badgeText: "text-white",
     buttonVariant: "solid",
@@ -68,7 +68,7 @@ const PLAN_THEMES: Record<
 export default function MembershipCard({ plan, index }: MembershipCardProps) {
   const isPopular = plan.isPopular;
   const theme = PLAN_THEMES[plan.id] || {
-    bg: "bg-[#FFF9F0]",
+    bg: "bg-[#F8F6F2]",
     badgeBg: "bg-black/5",
     badgeText: "text-[#171717]",
     buttonVariant: "solid" as const,
@@ -99,7 +99,7 @@ export default function MembershipCard({ plan, index }: MembershipCardProps) {
     >
       {isPopular && (
         <div className="absolute -top-3.5 right-6 inline-flex items-center gap-1.5 bg-[#171717] text-white text-[10px] font-display font-bold tracking-[0.16em] uppercase px-4 py-1.5 rounded-full shadow-md">
-          <Sparkles className="w-3 h-3 text-[#F4D98A]" />
+          <Sparkles className="w-3 h-3 text-[#F6EBC8]" />
           <span>Member Favourite</span>
         </div>
       )}

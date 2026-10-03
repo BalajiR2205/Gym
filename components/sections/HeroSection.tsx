@@ -33,7 +33,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-[92vh] w-full bg-[#F7F4EE] pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden flex items-center"
+      className="relative min-h-[92vh] w-full bg-[#F0EEE9] pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden flex items-center"
     >
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
@@ -45,7 +45,7 @@ export default function HeroSection() {
             className="lg:col-span-7 flex flex-col items-start"
           >
             {/* Micro-label pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C9E8D8] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CAD3C1] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#171717]" />
               <span>01 / START HERE</span>
               <span className="text-[#171717]/40">•</span>
@@ -57,7 +57,7 @@ export default function HeroSection() {
               YOUR{" "}
               <span className="inline-block relative">
                 <span className="relative z-10">STRONG</span>
-                <span className="absolute -bottom-1.5 left-0 w-full h-4 bg-[#F8C7A8] -z-0 rounded-full rotate-[-1deg]" />
+                <span className="absolute -bottom-1.5 left-0 w-full h-4 bg-[#F0D8CC] -z-0 rounded-full rotate-[-1deg]" />
               </span>
               <br />
               STARTS HERE.
@@ -87,7 +87,7 @@ export default function HeroSection() {
             {/* Micro Highlights Pill Bar */}
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-6 border-t border-[#171717]/10 text-xs font-bold uppercase tracking-wider text-[#5F5F5A]">
               <span className="inline-flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#F28B78]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#EBD8DB]" />
                 Full A/C Facility
               </span>
               <span className="inline-flex items-center gap-1.5">
@@ -95,7 +95,7 @@ export default function HeroSection() {
                 Certified Trainers
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#B8D8C5]" />
+                <span className="w-2 h-2 rounded-full bg-[#CAD3C1]" />
                 Personal Coaching
               </span>
             </div>
@@ -109,7 +109,7 @@ export default function HeroSection() {
             className="lg:col-span-5 relative"
           >
             {/* Background Decorative Offset Block (Pinterest aesthetic) */}
-            <div className="absolute -inset-3 bg-[#B8D8C5] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
+            <div className="absolute -inset-3 bg-[#CAD3C1] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
 
             {/* Main Rounded Video Card */}
             <div className="relative aspect-[4/3] sm:aspect-[16/12] w-full rounded-[30px] overflow-hidden border-2 border-[#171717]/10 bg-[#171717] shadow-editorial-lg select-none">
@@ -152,7 +152,7 @@ export default function HeroSection() {
               </div>
 
               <div className="absolute bottom-4 right-4 z-30 pointer-events-none">
-                <span className="inline-flex items-center gap-1 bg-[#F4D98A] text-[#171717] text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
+                <span className="inline-flex items-center gap-1 bg-[#F6EBC8] text-[#171717] text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
                   Premium Equipment ↗
                 </span>
               </div>
@@ -162,7 +162,7 @@ export default function HeroSection() {
             <motion.div
               initial={{ rotate: -6 }}
               whileHover={{ rotate: 0, scale: 1.05 }}
-              className="absolute -bottom-5 -left-4 z-30 bg-[#F28B78] text-[#171717] text-[11px] font-extrabold uppercase tracking-widest px-4 py-2 rounded-2xl shadow-md border border-black/10"
+              className="absolute -bottom-5 -left-4 z-30 bg-[#EBD8DB] text-[#171717] text-[11px] font-extrabold uppercase tracking-widest px-4 py-2 rounded-2xl shadow-md border border-black/10"
             >
               TRAIN • MOVE • GROW
             </motion.div>

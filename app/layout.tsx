@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${outfit.variable} font-sans antialiased text-[#171717] bg-[#F7F4EE] min-h-screen flex flex-col`}
+        className={`${inter.variable} ${outfit.variable} font-sans antialiased text-[#171717] bg-[#F0EEE9] min-h-screen flex flex-col`}
       >
         <SiteChrome>{children}</SiteChrome>
       </body>

@@ -59,7 +59,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#F7F4EE]/90 backdrop-blur-xl border-b border-[#171717]/8 py-3.5 shadow-[0_2px_12px_rgba(23,23,23,0.03)]"
+            ? "bg-[#F0EEE9]/90 backdrop-blur-xl border-b border-[#171717]/8 py-3.5 shadow-[0_2px_12px_rgba(23,23,23,0.03)]"
             : "bg-transparent py-5"
         }`}
       >
@@ -124,7 +124,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
-            className="fixed top-[70px] left-0 w-full bg-[#FFF9F0] border-b border-[#171717]/10 z-40 lg:hidden py-8 px-6 shadow-xl"
+            className="fixed top-[70px] left-0 w-full bg-[#F8F6F2] border-b border-[#171717]/10 z-40 lg:hidden py-8 px-6 shadow-xl"
           >
             <nav className="flex flex-col gap-4 items-center text-center">
               {NAV_ITEMS.map((item) => (
@@ -132,7 +132,7 @@ export default function Navbar() {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-base font-bold text-[#171717] hover:text-[#F28B78] transition-colors py-2 uppercase tracking-wider"
+                  className="text-base font-bold text-[#171717] hover:text-[#171717]/70 transition-colors py-2 uppercase tracking-wider"
                 >
                   {item.label}
                 </a>

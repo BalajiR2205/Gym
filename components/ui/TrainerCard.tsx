@@ -11,9 +11,9 @@ interface TrainerCardProps {
 }
 
 const TRAINER_ACCENTS = [
-  { bg: "bg-[#B8D8C5]", border: "border-[#B8D8C5]", text: "text-[#171717]" },
-  { bg: "bg-[#F8C7A8]", border: "border-[#F8C7A8]", text: "text-[#171717]" },
-  { bg: "bg-[#A9D4E8]", border: "border-[#A9D4E8]", text: "text-[#171717]" },
+  { bg: "bg-[#CAD3C1]", border: "border-[#CAD3C1]", text: "text-[#171717]" }, // Almost Aqua
+  { bg: "bg-[#F0D8CC]", border: "border-[#F0D8CC]", text: "text-[#171717]" }, // Peach Dust
+  { bg: "bg-[#D3E4F1]", border: "border-[#D3E4F1]", text: "text-[#171717]" }, // Ice Melt
 ];
 
 export default function TrainerCard({ trainer, index }: TrainerCardProps) {
@@ -39,7 +39,7 @@ export default function TrainerCard({ trainer, index }: TrainerCardProps) {
       </div>
 
       {/* Trainer Portrait Frame */}
-      <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-[#FFF9F0] border-2 ${accent.border}`}>
+      <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-[#F8F6F2] border-2 ${accent.border}`}>
         <Image
           src={trainer.image}
           alt={trainer.name}
@@ -56,7 +56,7 @@ export default function TrainerCard({ trainer, index }: TrainerCardProps) {
           {trainer.name}
         </h3>
         <div className="inline-flex items-center gap-1.5 text-xs text-[#5F5F5A] font-semibold">
-          <Award className="w-3.5 h-3.5 text-[#F28B78]" />
+          <Award className="w-3.5 h-3.5 text-[#EBD8DB]" />
           <span>{trainer.certification}</span>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function TrainerCard({ trainer, index }: TrainerCardProps) {
           href={trainer.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#171717] hover:text-[#F28B78] transition-colors py-1 px-2.5 rounded-full hover:bg-black/5"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#171717] hover:text-[#171717]/70 transition-colors py-1 px-2.5 rounded-full hover:bg-black/5"
           aria-label={`${trainer.name} on Instagram`}
         >
           <span>Connect</span>

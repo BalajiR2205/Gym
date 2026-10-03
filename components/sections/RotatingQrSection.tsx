@@ -91,7 +91,7 @@ export default function RotatingQrSection() {
   };
 
   return (
-    <section id="qr-code" className="relative py-20 md:py-28 bg-[#F7F4EE] border-t border-[#171717]/8 overflow-hidden">
+    <section id="qr-code" className="relative py-20 md:py-28 bg-[#F0EEE9] border-t border-[#171717]/8 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
         <SectionHeading
           badge="07 / MEMBER ACCESS"
@@ -144,7 +144,7 @@ export default function RotatingQrSection() {
 
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="w-8 h-8 rounded-full bg-[#F7F4EE] hover:bg-[#EFECE3] flex items-center justify-center text-[#171717] transition-colors"
+                    className="w-8 h-8 rounded-full bg-[#F0EEE9] hover:bg-[#E4E2DC] flex items-center justify-center text-[#171717] transition-colors"
                     aria-label="Close QR display"
                   >
                     <X className="w-4 h-4" />
@@ -177,7 +177,7 @@ export default function RotatingQrSection() {
                 </div>
 
                 {/* Token string badge */}
-                <div className="mt-5 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF9F0] border border-[#171717]/8 text-[11px] font-mono font-bold text-[#171717]">
+                <div className="mt-5 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F8F6F2] border border-[#171717]/8 text-[11px] font-mono font-bold text-[#171717]">
                   <span>TOKEN: {tokenString || "SYNCING..."}</span>
                 </div>
 
@@ -193,7 +193,7 @@ export default function RotatingQrSection() {
                     </span>
                   </div>
 
-                  <div className="w-full h-1.5 bg-[#F7F4EE] rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-[#F0EEE9] rounded-full overflow-hidden">
                     <motion.div
                       key={tokenString}
                       initial={{ width: "100%" }}
