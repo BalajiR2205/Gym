@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { StaffRole } from "@/app/generated/prisma/client";
-import { createClient } from "@/lib/supabase/client";
 
 const navItems = [
   { href: "/admin/members", label: "Members", roles: ["ADMIN", "FRONT_DESK"] },
@@ -37,7 +36,6 @@ export default function AdminNav({
   role: StaffRole;
 }) {
   const pathname = usePathname();
-  const supabase = createClient();
 
   const visibleItems = navItems.filter((item) =>
     item.roles.includes(role)
@@ -49,7 +47,6 @@ export default function AdminNav({
     } catch {
       // Fallback
     }
-    await supabase.auth.signOut().catch(() => {});
     window.location.href = "/login/admin";
   }
 
