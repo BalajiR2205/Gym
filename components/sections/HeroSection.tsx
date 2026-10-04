@@ -66,7 +66,12 @@ export default function HeroSection() {
                 </span>
               </span>
               <br />
-              <span className="whitespace-nowrap">STARTS HERE.</span>
+              <span className="whitespace-nowrap">
+                STARTS{" "}
+                <span className="font-cursive font-bold text-[1.15em] tracking-normal normal-case inline-block -rotate-1">
+                  here.
+                </span>
+              </span>
             </h1>
 
             {/* Subtitle */}
@@ -136,9 +141,8 @@ export default function HeroSection() {
 
               {/* Instant Poster Layer: Fades out smoothly when video is loaded */}
               <div
-                className={`absolute inset-0 z-20 transition-opacity duration-700 pointer-events-none ${
-                  isVideoReady ? "opacity-0" : "opacity-100"
-                }`}
+                className={`absolute inset-0 z-20 transition-opacity duration-700 pointer-events-none ${isVideoReady ? "opacity-0" : "opacity-100"
+                  }`}
               >
                 <Image
                   src="/images/hero-bg.png"
