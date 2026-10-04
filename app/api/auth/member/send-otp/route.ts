@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 
     if (!memberId || typeof memberId !== "string" || !memberId.trim()) {
       return NextResponse.json(
-        { error: "Please enter your Member ID." },
+        { error: "Please enter your Email or phone number." },
         { status: 400 }
       );
     }

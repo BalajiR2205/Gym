@@ -41,7 +41,7 @@ export async function requestMemberOtp(
   if (!identifier || typeof identifier !== "string" || !identifier.trim()) {
     return {
       success: false,
-      error: "Please enter your Member ID or registered phone number.",
+      error: "Please enter your Email or phone number.",
       status: 400,
       message: "",
     };

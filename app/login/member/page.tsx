@@ -193,7 +193,7 @@ export default function MemberLoginPage() {
                   Member Login
                 </h1>
                 <p className="text-xs sm:text-sm text-[#5F5F5A] max-w-xs mx-auto mt-1 leading-relaxed">
-                  Enter your Member ID or registered phone number to receive a one-time login code.
+                  Enter your email address or phone number to receive a one-time login code.
                 </p>
               </div>
 
@@ -203,7 +203,7 @@ export default function MemberLoginPage() {
                     htmlFor="member-id-input"
                     className="block text-[11px] font-display font-bold uppercase tracking-wider text-[#171717] mb-2"
                   >
-                    Member ID / Phone
+                    Email or Phone Number
                   </label>
                   <input
                     id="member-id-input"
@@ -212,9 +212,13 @@ export default function MemberLoginPage() {
                     autoFocus
                     value={memberId}
                     onChange={(e) => setMemberId(e.target.value)}
-                    placeholder="e.g. GYM-0001 or 9876543210"
+                    placeholder="e.g. alex@example.com or 9876543210"
+                    autoComplete="email tel"
                     className="w-full bg-[#F8F6F2] border border-[#171717]/15 focus:border-[#171717] rounded-2xl px-5 py-3.5 text-[#171717] placeholder:text-[#5F5F5A]/50 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#171717]/10 transition-all shadow-sm"
                   />
+                  <p className="text-[11px] text-[#5F5F5A] mt-1.5 px-1">
+                    You can also enter your Member ID (e.g. GYM-0001).
+                  </p>
                 </div>
 
                 {error && (
@@ -341,7 +345,7 @@ export default function MemberLoginPage() {
                     }}
                     className="text-[#5F5F5A] hover:text-[#171717] transition-colors font-medium"
                   >
-                    Change Member ID
+                    Change Email / Phone
                   </button>
 
                   <button
