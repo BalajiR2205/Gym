@@ -21,9 +21,9 @@ export default function AdminShell({
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white">
+    <div className="min-h-screen bg-[#F0EEE9] text-[#171717]">
       <AdminNav staffName={staffName} role={role} />
-      <div className="max-w-7xl mx-auto px-4 py-8">{children}</div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">{children}</main>
     </div>
   );
 }
