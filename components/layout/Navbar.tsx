@@ -105,8 +105,14 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right Action Button */}
+          {/* Right Action Buttons */}
           <div className="hidden lg:flex items-center gap-3">
+            <Link
+              href="/login"
+              className="text-xs font-bold tracking-[0.12em] uppercase text-[#171717] hover:text-[#171717]/70 py-2.5 px-3.5 transition-colors"
+            >
+              Log In
+            </Link>
             <CTAButton href="/join" className="py-2.5 px-6 text-xs">
               Join Now
             </CTAButton>
@@ -144,7 +150,14 @@ export default function Navbar() {
                   {item.label}
                 </a>
               ))}
-              <div className="w-full pt-4 border-t border-[#171717]/8 flex flex-col items-center">
+              <div className="w-full pt-4 border-t border-[#171717]/8 flex flex-col gap-3 items-center">
+                <Link
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full max-w-xs py-3 rounded-full border border-[#171717]/20 text-center font-bold text-xs uppercase tracking-[0.15em] text-[#171717] hover:bg-black/5 transition-colors"
+                >
+                  Log In
+                </Link>
                 <CTAButton
                   href="/join"
                   onClick={() => setIsOpen(false)}

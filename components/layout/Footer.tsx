@@ -103,15 +103,25 @@ export default function Footer() {
               { label: "Meet Coaches", href: "#trainers" },
               { label: "Member Stories", href: "#gallery" },
               { label: "Location & Visit", href: "#contact" },
+              { label: "Portal Login", href: "/login" },
             ].map((link) => (
               <li key={link.label}>
-                <a
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-sm text-[#F0EEE9]/70 hover:text-white transition-colors"
-                >
-                  {link.label}
-                </a>
+                {link.href.startsWith("#") ? (
+                  <a
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="text-sm text-[#F0EEE9]/70 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="text-sm text-[#F0EEE9]/70 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
