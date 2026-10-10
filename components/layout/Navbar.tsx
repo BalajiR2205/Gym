@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import CTAButton from "../ui/CTAButton";
 import AmbientToggle from "../ui/AmbientToggle";
 import { SITE_NAME } from "@/data/siteContent";
+import { useAmbientMode } from "@/lib/hooks/useAmbientMode";
 
 const NAV_ITEMS = [
   { label: "Membership", href: "#plans" },
@@ -21,6 +22,7 @@ const NAV_ITEMS = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { isAmbient } = useAmbientMode();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -69,16 +71,30 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={(e) => handleNavClick(e, "#home")}
-            className="flex items-center gap-2.5 text-[#171717] group shrink-0"
+            className={`flex items-center gap-2.5 group shrink-0 transition-colors duration-300 ${
+              isAmbient && !scrolled ? "text-white" : "text-[#171717]"
+            }`}
           >
-            <div className="w-9 h-9 rounded-xl bg-[#171717] text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+            <div
+              className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105 ${
+                isAmbient && !scrolled ? "bg-white text-[#171717]" : "bg-[#171717] text-white"
+              }`}
+            >
               <Dumbbell className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight leading-none text-[#171717] whitespace-nowrap">
+              <span
+                className={`font-display font-extrabold text-lg sm:text-xl tracking-tight leading-none whitespace-nowrap transition-colors duration-300 ${
+                  isAmbient && !scrolled ? "text-white" : "text-[#171717]"
+                }`}
+              >
                 {SITE_NAME}
               </span>
-              <span className="text-[9px] tracking-[0.25em] text-[#5F5F5A] font-bold uppercase leading-none mt-1 whitespace-nowrap">
+              <span
+                className={`text-[9px] tracking-[0.25em] font-bold uppercase leading-none mt-1 whitespace-nowrap transition-colors duration-300 ${
+                  isAmbient && !scrolled ? "text-white/70" : "text-[#5F5F5A]"
+                }`}
+              >
                 FITNESS CENTRE
               </span>
             </div>
@@ -91,14 +107,24 @@ export default function Navbar() {
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-xs font-bold tracking-[0.08em] uppercase text-[#5F5F5A] hover:text-[#171717] transition-colors py-1.5 px-2 xl:px-4 relative group whitespace-nowrap"
+                  className={`text-xs font-bold tracking-[0.08em] uppercase transition-colors py-1.5 px-2 xl:px-4 relative group whitespace-nowrap ${
+                    isAmbient && !scrolled
+                      ? "text-white/85 hover:text-white"
+                      : "text-[#5F5F5A] hover:text-[#171717]"
+                  }`}
                 >
                   <span>{item.label}</span>
-                  <span className="absolute bottom-0 left-2 right-2 xl:left-4 xl:right-4 h-0.5 bg-[#171717] scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-full" />
+                  <span
+                    className={`absolute bottom-0 left-2 right-2 xl:left-4 xl:right-4 h-0.5 scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-full ${
+                      isAmbient && !scrolled ? "bg-white" : "bg-[#171717]"
+                    }`}
+                  />
                 </a>
                 {index < NAV_ITEMS.length - 1 && (
                   <span
-                    className="w-[1px] h-3 bg-[#171717]/25 select-none"
+                    className={`w-[1px] h-3 select-none transition-colors duration-300 ${
+                      isAmbient && !scrolled ? "bg-white/20" : "bg-[#171717]/25"
+                    }`}
                     aria-hidden="true"
                   />
                 )}
@@ -110,16 +136,29 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             <Link
               href="/login"
-              className="text-xs font-bold tracking-[0.12em] uppercase text-[#171717] hover:text-[#171717]/70 py-2.5 px-2.5 xl:px-3.5 transition-colors whitespace-nowrap"
+              className={`text-xs font-bold tracking-[0.12em] uppercase py-2.5 px-2.5 xl:px-3.5 transition-colors whitespace-nowrap ${
+                isAmbient && !scrolled ? "text-white hover:text-white/80" : "text-[#171717] hover:text-[#171717]/70"
+              }`}
             >
               Log In
             </Link>
-            <CTAButton href="/join" className="py-2.5 px-5 xl:px-6 text-xs whitespace-nowrap shrink-0">
+            <CTAButton
+              href="/join"
+              className={`py-2.5 px-5 xl:px-6 text-xs whitespace-nowrap shrink-0 transition-all duration-300 ${
+                isAmbient && !scrolled
+                  ? "!bg-white !text-[#171717] hover:!bg-white/90 shadow-[0_4px_14px_rgba(255,255,255,0.2)]"
+                  : ""
+              }`}
+            >
               Join Now
             </CTAButton>
 
             {/* Ambient Effect Toggle Switch */}
-            <div className="pl-3 xl:pl-4 ml-1 border-l border-[#171717]/15 flex items-center shrink-0">
+            <div
+              className={`pl-3 xl:pl-4 ml-1 border-l flex items-center shrink-0 transition-colors duration-300 ${
+                isAmbient && !scrolled ? "border-white/20" : "border-[#171717]/15"
+              }`}
+            >
               <AmbientToggle />
             </div>
           </div>
@@ -129,7 +168,11 @@ export default function Navbar() {
             <AmbientToggle showLabel={false} />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="w-10 h-10 rounded-full bg-white border border-[#171717]/10 flex items-center justify-center text-[#171717] hover:bg-black/5 transition-colors"
+              className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
+                isAmbient && !scrolled
+                  ? "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                  : "bg-white text-[#171717] border-[#171717]/10 hover:bg-black/5"
+              }`}
               aria-label="Toggle navigation menu"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

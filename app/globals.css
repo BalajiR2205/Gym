@@ -184,4 +184,18 @@
   .gold-border {
     position: relative;
   }
+
+  @keyframes spinGoogle {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-google {
+    animation: spinGoogle 3s linear infinite;
+  }
 }
+
