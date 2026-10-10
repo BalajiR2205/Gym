@@ -59,18 +59,6 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
             className="lg:col-span-5 flex flex-col items-start"
           >
-            {/* Micro-label pill - stays identical to ambient off */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CAD3C1] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#171717]" />
-              <span>
-                01 / START{" "}
-                <span className="font-cursive font-bold text-sm tracking-normal normal-case inline-block -rotate-1">
-                  here
-                </span>
-              </span>
-              <span className="text-[#171717]/40">•</span>
-              <span>UNISEX FITNESS CENTRE</span>
-            </div>
 
             {/* Oversized Expressive Headline - text color changes between dark variant and white */}
             <h1
@@ -217,29 +205,7 @@ export default function HeroSection() {
                 <div className="absolute inset-0 bg-black/25" />
               </div>
 
-              {/* Floating Editorial Badges */}
-              <div className="absolute top-4 left-4 z-30 pointer-events-none">
-                <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md text-[#171717] text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Live Gym Vibe
-                </span>
-              </div>
-
-              <div className="absolute bottom-4 right-4 z-30 pointer-events-none">
-                <span className="inline-flex items-center gap-1 bg-[#F6EBC8] text-[#171717] text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-sm">
-                  Premium Equipment ↗
-                </span>
-              </div>
             </div>
-
-            {/* Playful Floating Sticker (Bottom Left) */}
-            <motion.div
-              initial={{ rotate: -6 }}
-              whileHover={{ rotate: 0, scale: 1.05 }}
-              className="absolute -bottom-5 -left-4 z-30 bg-[#EBD8DB] text-[#171717] text-[11px] font-extrabold uppercase tracking-widest px-4 py-2 rounded-2xl shadow-md border border-black/10"
-            >
-              TRAIN • MOVE • GROW
-            </motion.div>
           </motion.div>
         </div>
       </div>
