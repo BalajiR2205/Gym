@@ -6,6 +6,13 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Dumbbell } from "lucide-react";
 import CTAButton from "../ui/CTAButton";
 import { HERO_SUBHEADING } from "@/data/siteContent";
+import AmbientHeroVideo from "./AmbientHeroVideo";
+
+/**
+ * Visual Experiment Flag:
+ * Set to false to instantly revert to the standard solid pastel background.
+ */
+export const ENABLE_AMBIENT_HERO_VIDEO = true;
 
 export default function HeroSection() {
   const [isVideoReady, setIsVideoReady] = useState(false);
@@ -34,6 +41,9 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-[92vh] w-full bg-[#F0EEE9] pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden flex items-center"
     >
+      {/* Visual Experiment: Ambient Background Video Layer */}
+      {ENABLE_AMBIENT_HERO_VIDEO && <AmbientHeroVideo />}
+
       <div className="max-w-7xl xl:max-w-[1360px] mx-auto px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
           {/* Left Column: Bold Editorial Typography & CTAs */}
