@@ -34,14 +34,14 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-[92vh] w-full bg-[#F0EEE9] pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden flex items-center"
     >
-      <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
+      <div className="max-w-7xl xl:max-w-[1360px] mx-auto px-6 w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
           {/* Left Column: Bold Editorial Typography & CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-7 flex flex-col items-start"
+            className="lg:col-span-5 flex flex-col items-start"
           >
             {/* Micro-label pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CAD3C1] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
@@ -57,7 +57,7 @@ export default function HeroSection() {
             </div>
 
             {/* Oversized Expressive Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-display font-extrabold text-[#171717] tracking-tight leading-[1.08] mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] xl:text-[3.25rem] font-display font-extrabold text-[#171717] tracking-tight leading-[1.08] mb-6">
               <span className="whitespace-nowrap">
                 YOUR{" "}
                 <span className="inline-block relative">
@@ -112,7 +112,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-5 relative w-full"
+            className="lg:col-span-7 relative w-full"
           >
             {/* Background Decorative Offset Block (Pinterest aesthetic) */}
             <div className="absolute -inset-3.5 bg-[#CAD3C1] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
