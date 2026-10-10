@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Dumbbell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import CTAButton from "../ui/CTAButton";
+import AmbientToggle from "../ui/AmbientToggle";
 import { SITE_NAME } from "@/data/siteContent";
 
 const NAV_ITEMS = [
@@ -116,16 +117,24 @@ export default function Navbar() {
             <CTAButton href="/join" className="py-2.5 px-6 text-xs">
               Join Now
             </CTAButton>
+
+            {/* Ambient Effect Toggle Switch */}
+            <div className="pl-2 border-l border-[#171717]/15">
+              <AmbientToggle />
+            </div>
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden w-10 h-10 rounded-full bg-white border border-[#171717]/10 flex items-center justify-center text-[#171717] hover:bg-black/5 transition-colors"
-            aria-label="Toggle navigation menu"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {/* Mobile Actions: Ambient Toggle + Hamburger Button */}
+          <div className="flex items-center gap-2.5 lg:hidden">
+            <AmbientToggle showLabel={false} />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="w-10 h-10 rounded-full bg-white border border-[#171717]/10 flex items-center justify-center text-[#171717] hover:bg-black/5 transition-colors"
+              aria-label="Toggle navigation menu"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
       </header>
 

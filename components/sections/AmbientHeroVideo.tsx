@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 /**
  * Visual Experiment: Ambient Background Video Layer
@@ -27,7 +28,11 @@ export default function AmbientHeroVideo() {
   }, []);
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
       aria-hidden="true"
       className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none"
     >
@@ -48,6 +53,6 @@ export default function AmbientHeroVideo() {
 
       {/* 3. Soft Top Navbar Blending */}
       <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#F0EEE9]/40 via-transparent to-transparent" />
-    </div>
+    </motion.div>
   );
 }

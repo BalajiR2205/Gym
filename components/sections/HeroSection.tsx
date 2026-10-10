@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, Dumbbell } from "lucide-react";
 import CTAButton from "../ui/CTAButton";
 import { HERO_SUBHEADING } from "@/data/siteContent";
 import AmbientHeroVideo from "./AmbientHeroVideo";
+import { useAmbientMode } from "@/lib/hooks/useAmbientMode";
 
 /**
  * Visual Experiment Flag:
@@ -16,6 +17,7 @@ export const ENABLE_AMBIENT_HERO_VIDEO = true;
 
 export default function HeroSection() {
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const { isAmbient } = useAmbientMode();
 
   useEffect(() => {
     // Quick fallback to ensure smooth fade-in of the video
@@ -41,8 +43,12 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen w-full bg-[#F0EEE9] pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden flex items-center"
     >
-      {/* Visual Experiment: Ambient Background Video Layer */}
-      {ENABLE_AMBIENT_HERO_VIDEO && <AmbientHeroVideo />}
+      {/* Visual Experiment: Ambient Background Video Layer (Controlled by Navbar toggle switch) */}
+      {ENABLE_AMBIENT_HERO_VIDEO && (
+        <AnimatePresence>
+          {isAmbient && <AmbientHeroVideo />}
+        </AnimatePresence>
+      )}
 
       <div className="max-w-7xl xl:max-w-[1360px] mx-auto px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
