@@ -13,9 +13,9 @@ export default function AmbientToggle({
   const { isAmbient, toggleAmbient } = useAmbientMode();
 
   return (
-    <div className={`flex items-center gap-2 select-none ${className}`}>
+    <div className={`flex items-center gap-2 select-none whitespace-nowrap ${className}`}>
       {showLabel && (
-        <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-[#5F5F5A] hidden xl:inline-flex items-center gap-1">
+        <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-[#5F5F5A] inline-flex items-center gap-1 whitespace-nowrap">
           <Sparkles className={`w-3 h-3 ${isAmbient ? "text-[#171717]" : "text-[#5F5F5A]/50"}`} />
           <span>Ambient</span>
         </span>

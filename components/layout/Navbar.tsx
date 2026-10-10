@@ -64,37 +64,37 @@ export default function Navbar() {
             : "bg-transparent py-5"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl xl:max-w-[1360px] mx-auto px-6 flex items-center justify-between gap-4">
           {/* Brand Logo */}
           <Link
             href="/"
             onClick={(e) => handleNavClick(e, "#home")}
-            className="flex items-center gap-2.5 text-[#171717] group"
+            className="flex items-center gap-2.5 text-[#171717] group shrink-0"
           >
             <div className="w-9 h-9 rounded-xl bg-[#171717] text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
               <Dumbbell className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight leading-none text-[#171717]">
+              <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight leading-none text-[#171717] whitespace-nowrap">
                 {SITE_NAME}
               </span>
-              <span className="text-[9px] tracking-[0.25em] text-[#5F5F5A] font-bold uppercase leading-none mt-1">
+              <span className="text-[9px] tracking-[0.25em] text-[#5F5F5A] font-bold uppercase leading-none mt-1 whitespace-nowrap">
                 FITNESS CENTRE
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center">
+          <nav className="hidden lg:flex items-center shrink-0">
             {NAV_ITEMS.map((item, index) => (
               <div key={item.label} className="flex items-center">
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-xs font-bold tracking-[0.1em] uppercase text-[#5F5F5A] hover:text-[#171717] transition-colors py-1 px-3.5 xl:px-5 relative group"
+                  className="text-xs font-bold tracking-[0.08em] uppercase text-[#5F5F5A] hover:text-[#171717] transition-colors py-1.5 px-2 xl:px-4 relative group whitespace-nowrap"
                 >
                   <span>{item.label}</span>
-                  <span className="absolute bottom-0 left-3.5 right-3.5 xl:left-5 xl:right-5 h-0.5 bg-[#171717] scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-full" />
+                  <span className="absolute bottom-0 left-2 right-2 xl:left-4 xl:right-4 h-0.5 bg-[#171717] scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-full" />
                 </a>
                 {index < NAV_ITEMS.length - 1 && (
                   <span
@@ -107,19 +107,19 @@ export default function Navbar() {
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             <Link
               href="/login"
-              className="text-xs font-bold tracking-[0.12em] uppercase text-[#171717] hover:text-[#171717]/70 py-2.5 px-3.5 transition-colors"
+              className="text-xs font-bold tracking-[0.12em] uppercase text-[#171717] hover:text-[#171717]/70 py-2.5 px-2.5 xl:px-3.5 transition-colors whitespace-nowrap"
             >
               Log In
             </Link>
-            <CTAButton href="/join" className="py-2.5 px-6 text-xs">
+            <CTAButton href="/join" className="py-2.5 px-5 xl:px-6 text-xs whitespace-nowrap shrink-0">
               Join Now
             </CTAButton>
 
             {/* Ambient Effect Toggle Switch */}
-            <div className="pl-2 border-l border-[#171717]/15">
+            <div className="pl-3 xl:pl-4 ml-1 border-l border-[#171717]/15 flex items-center shrink-0">
               <AmbientToggle />
             </div>
           </div>

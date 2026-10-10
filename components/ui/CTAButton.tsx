@@ -22,7 +22,7 @@ export default function CTAButton({
   isExternal = false,
 }: CTAButtonProps) {
   const baseStyles =
-    "relative inline-flex items-center justify-center font-display font-bold tracking-wide text-xs sm:text-sm uppercase transition-all duration-300 ease-out py-3.5 px-7 rounded-full overflow-hidden";
+    "relative inline-flex items-center justify-center font-display font-bold tracking-wide text-xs sm:text-sm uppercase transition-all duration-300 ease-out py-3.5 px-7 rounded-full overflow-hidden whitespace-nowrap";
 
   const variants = {
     solid:
