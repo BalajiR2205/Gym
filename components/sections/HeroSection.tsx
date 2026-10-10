@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles, Dumbbell } from "lucide-react";
 import CTAButton from "../ui/CTAButton";
 import { HERO_SUBHEADING } from "@/data/siteContent";
@@ -18,6 +18,11 @@ export const ENABLE_AMBIENT_HERO_VIDEO = true;
 export default function HeroSection() {
   const [isVideoReady, setIsVideoReady] = useState(false);
   const { isAmbient } = useAmbientMode();
+
+  // Scroll parallax for cinematic card-under-sheet depth
+  const { scrollY } = useScroll();
+  const heroScale = useTransform(scrollY, [0, 600], [1, 0.95]);
+  const heroOpacity = useTransform(scrollY, [0, 600], [1, 0.72]);
 
   useEffect(() => {
     // Quick fallback to ensure smooth fade-in of the video
@@ -41,7 +46,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full bg-[#F0EEE9] pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden flex items-center"
+      className="sticky top-0 z-0 min-h-screen w-full bg-[#F0EEE9] pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden flex items-center"
     >
       {/* Visual Experiment: Ambient Background Video Layer (Controlled by Navbar toggle switch) */}
       {ENABLE_AMBIENT_HERO_VIDEO && (
@@ -50,7 +55,10 @@ export default function HeroSection() {
         </AnimatePresence>
       )}
 
-      <div className="max-w-7xl xl:max-w-[1360px] mx-auto px-6 w-full relative z-10">
+      <motion.div
+        style={{ scale: heroScale, opacity: heroOpacity }}
+        className="max-w-7xl xl:max-w-[1360px] mx-auto px-6 w-full relative z-10 origin-center"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
           {/* Left Column: Bold Editorial Typography & CTAs */}
           <motion.div
@@ -208,7 +216,7 @@ export default function HeroSection() {
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

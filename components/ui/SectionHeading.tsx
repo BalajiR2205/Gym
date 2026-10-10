@@ -8,6 +8,8 @@ interface SectionHeadingProps {
   align?: "left" | "center" | "right";
   badge?: string;
   badgeColor?: "mint" | "peach" | "sage" | "blue" | "yellow" | "coral" | "charcoal";
+  className?: string;
+  size?: "default" | "compact";
 }
 
 const BADGE_COLORS = {
@@ -26,7 +28,10 @@ export default function SectionHeading({
   align = "center",
   badge = "<GYM NAME> Fitness",
   badgeColor = "charcoal",
+  className,
+  size = "default",
 }: SectionHeadingProps) {
+  const isCompact = size === "compact";
   const alignmentClasses = {
     left: "text-left items-start",
     center: "text-center items-center",
@@ -39,12 +44,14 @@ export default function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-      className={`flex flex-col mb-14 md:mb-18 ${alignmentClasses[align]}`}
+      className={`flex flex-col ${className ?? "mb-14 md:mb-18"} ${alignmentClasses[align]}`}
     >
       {badge && (
-        <div className="inline-flex items-center gap-2 mb-4">
+        <div className={`inline-flex items-center gap-2 ${isCompact ? "mb-1.5" : "mb-4"}`}>
           <span
-            className={`text-[11px] uppercase tracking-[0.16em] font-bold px-3.5 py-1.5 rounded-full ${
+            className={`${
+              isCompact ? "text-[10px] px-3 py-1" : "text-[11px] px-3.5 py-1.5"
+            } uppercase tracking-[0.16em] font-bold rounded-full ${
               BADGE_COLORS[badgeColor] || BADGE_COLORS.charcoal
             }`}
           >
@@ -52,11 +59,23 @@ export default function SectionHeading({
           </span>
         </div>
       )}
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-[#171717] leading-[1.12]">
+      <h2
+        className={`${
+          isCompact
+            ? "text-2xl sm:text-3xl lg:text-[2rem]"
+            : "text-3xl sm:text-4xl md:text-5xl"
+        } font-display font-extrabold tracking-tight text-[#171717] leading-[1.12]`}
+      >
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-base md:text-lg text-[#5F5F5A] max-w-2xl leading-relaxed text-balance font-normal">
+        <p
+          className={`${
+            isCompact
+              ? "mt-1.5 text-xs sm:text-sm max-w-xl"
+              : "mt-4 text-base md:text-lg max-w-2xl"
+          } text-[#5F5F5A] leading-relaxed text-balance font-normal`}
+        >
           {subtitle}
         </p>
       )}
