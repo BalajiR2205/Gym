@@ -48,11 +48,11 @@ export default function AmbientHeroVideo() {
         className="absolute inset-0 w-full h-full object-cover scale-110 filter blur-[12px] md:blur-[16px] opacity-50 md:opacity-60 transform-gpu"
       />
 
-      {/* 2. Deep Cinematic Dark Gradient Overlay (Guarantees white text legibility on left while letting ambient movement shine on right) */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/85 via-black/60 to-black/35" />
+      {/* 2. Warm Cream Horizontal Gradient Overlay (Guarantees editorial aesthetic while letting ambient movement shine) */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#F0EEE9]/92 via-[#F0EEE9]/75 to-[#F0EEE9]/45" />
 
-      {/* 3. Soft Top Navbar and Bottom Section Blending */}
-      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-black/50 via-transparent to-black/40" />
+      {/* 3. Soft Top Navbar Blending */}
+      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#F0EEE9]/40 via-transparent to-transparent" />
     </motion.div>
   );
 }

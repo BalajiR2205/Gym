@@ -41,9 +41,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className={`relative min-h-screen w-full transition-colors duration-700 pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden flex items-center ${
-        isAmbient ? "bg-[#0c0c0c]" : "bg-[#F0EEE9]"
-      }`}
+      className="relative min-h-screen w-full bg-[#F0EEE9] pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden flex items-center"
     >
       {/* Visual Experiment: Ambient Background Video Layer (Controlled by Navbar toggle switch) */}
       {ENABLE_AMBIENT_HERO_VIDEO && (
@@ -61,33 +59,25 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
             className="lg:col-span-5 flex flex-col items-start"
           >
-            {/* Micro-label pill */}
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm transition-all duration-500 ${
-                isAmbient
-                  ? "bg-white/10 text-white border border-white/20 backdrop-blur-md"
-                  : "bg-[#CAD3C1] text-[#171717]"
-              }`}
-            >
-              <span
-                className={`w-2 h-2 rounded-full transition-colors duration-500 ${
-                  isAmbient ? "bg-white" : "bg-[#171717]"
-                }`}
-              />
+            {/* Micro-label pill - stays identical to ambient off */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CAD3C1] text-[#171717] text-xs font-bold uppercase tracking-[0.12em] mb-6 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#171717]" />
               <span>
                 01 / START{" "}
                 <span className="font-cursive font-bold text-sm tracking-normal normal-case inline-block -rotate-1">
                   here
                 </span>
               </span>
-              <span className={isAmbient ? "text-white/40" : "text-[#171717]/40"}>•</span>
+              <span className="text-[#171717]/40">•</span>
               <span>UNISEX FITNESS CENTRE</span>
             </div>
 
-            {/* Oversized Expressive Headline */}
+            {/* Oversized Expressive Headline - text color changes between dark variant and white */}
             <h1
               className={`text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] xl:text-[3.25rem] font-display font-extrabold tracking-tight leading-[1.08] mb-6 transition-colors duration-500 ${
-                isAmbient ? "text-white" : "text-[#171717]"
+                isAmbient
+                  ? "text-white drop-shadow-[0_2px_10px_rgba(23,23,23,0.45)]"
+                  : "text-[#171717]"
               }`}
             >
               <span className="whitespace-nowrap">
@@ -101,10 +91,12 @@ export default function HeroSection() {
               <span className="whitespace-nowrap">STARTS HERE.</span>
             </h1>
 
-            {/* Subtitle */}
+            {/* Subtitle - text color changes between dark variant and white */}
             <p
               className={`text-base sm:text-lg max-w-xl leading-relaxed mb-8 font-normal transition-colors duration-500 ${
-                isAmbient ? "text-white/85" : "text-[#5F5F5A]"
+                isAmbient
+                  ? "text-white drop-shadow-[0_1px_6px_rgba(23,23,23,0.35)]"
+                  : "text-[#5F5F5A]"
               }`}
             >
               {HERO_SUBHEADING}
@@ -112,15 +104,8 @@ export default function HeroSection() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-4 mb-10 w-full sm:w-auto">
-              <CTAButton
-                href="/join"
-                variant="solid"
-                className={`w-full sm:w-auto transition-all duration-500 ${
-                  isAmbient
-                    ? "!bg-white !text-[#171717] hover:!bg-white/90 shadow-[0_4px_20px_rgba(255,255,255,0.2)]"
-                    : ""
-                }`}
-              >
+              {/* Join The Gym CTA Button - stays identical to ambient off */}
+              <CTAButton href="/join" variant="solid" className="w-full sm:w-auto">
                 <span>JOIN THE GYM</span>
                 <ArrowRight className="w-4 h-4 ml-1" />
               </CTAButton>
@@ -151,7 +136,7 @@ export default function HeroSection() {
                     onClick={handleScrollToPlans}
                     className={`relative z-10 w-full sm:w-auto inline-flex items-center justify-center font-display font-bold tracking-wide text-xs sm:text-sm uppercase py-3.5 px-7 rounded-full transition-all duration-500 whitespace-nowrap active:scale-[0.98] ${
                       isAmbient
-                        ? "bg-[#121212] hover:bg-[#1c1c1c] text-white"
+                        ? "bg-[#171717] hover:bg-[#252522] text-white"
                         : "bg-[#F0EEE9] hover:bg-white text-[#171717]"
                     }`}
                   >
@@ -163,10 +148,10 @@ export default function HeroSection() {
 
             {/* Micro Highlights Pill Bar */}
             <div
-              className={`flex flex-wrap items-center gap-4 sm:gap-6 pt-6 border-t text-xs font-bold uppercase tracking-wider transition-colors duration-500 ${
+              className={`flex flex-wrap items-center gap-4 sm:gap-6 pt-6 border-t border-[#171717]/10 text-xs font-bold uppercase tracking-wider transition-colors duration-500 ${
                 isAmbient
-                  ? "border-white/15 text-white/85"
-                  : "border-[#171717]/10 text-[#5F5F5A]"
+                  ? "text-white drop-shadow-[0_1px_4px_rgba(23,23,23,0.35)]"
+                  : "text-[#5F5F5A]"
               }`}
             >
               <span className="inline-flex items-center gap-1.5">
@@ -199,11 +184,7 @@ export default function HeroSection() {
             <div className="absolute -inset-3.5 bg-[#CAD3C1] rounded-[36px] -rotate-1 pointer-events-none opacity-80" />
 
             {/* Main Rounded Video Card */}
-            <div
-              className={`relative aspect-[16/9] w-full rounded-[30px] overflow-hidden border-2 bg-[#171717] shadow-editorial-lg select-none transition-colors duration-500 ${
-                isAmbient ? "border-white/20" : "border-[#171717]/10"
-              }`}
-            >
+            <div className="relative aspect-[16/9] w-full rounded-[30px] overflow-hidden border-2 border-[#171717]/10 bg-[#171717] shadow-editorial-lg select-none">
               {/* Autoplaying muted looping background video */}
               <video
                 src="/videos/hero-gym.mp4"
