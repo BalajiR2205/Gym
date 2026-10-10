@@ -46,8 +46,8 @@ export default function AmbientHeroVideo() {
       {/* 2. Warm Cream Horizontal Gradient Overlay (Guarantees headline legibility on left while letting ambient movement shine on right) */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#F0EEE9]/92 via-[#F0EEE9]/75 to-[#F0EEE9]/45" />
 
-      {/* 3. Soft Top and Bottom Blending into Site Flow */}
-      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#F0EEE9]/50 via-transparent to-[#F0EEE9]/80" />
+      {/* 3. Soft Top Navbar Blending */}
+      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#F0EEE9]/40 via-transparent to-transparent" />
     </div>
   );
 }

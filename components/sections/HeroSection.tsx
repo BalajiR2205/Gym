@@ -39,7 +39,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-[92vh] w-full bg-[#F0EEE9] pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden flex items-center"
+      className="relative min-h-screen w-full bg-[#F0EEE9] pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden flex items-center"
     >
       {/* Visual Experiment: Ambient Background Video Layer */}
       {ENABLE_AMBIENT_HERO_VIDEO && <AmbientHeroVideo />}
