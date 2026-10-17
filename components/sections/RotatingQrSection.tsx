@@ -123,7 +123,7 @@ export default function RotatingQrSection() {
     <section id="qr-code" className="relative py-20 md:py-28 bg-[#F0EEE9] border-t border-[#171717]/8 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
         <SectionHeading
-          badge="07 / MEMBER ACCESS"
+          badge="MEMBER ACCESS"
           badgeColor="mint"
           title="Digital Check-In."
           subtitle="Scan our dynamic rotating QR code for touchless reception entry and automated attendance logging."

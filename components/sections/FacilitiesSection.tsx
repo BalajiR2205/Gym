@@ -110,7 +110,7 @@ export default function FacilitiesSection() {
     <section id="facilities" className="relative py-24 md:py-32 bg-[#F0EEE9] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
-          badge="03 / FACILITIES"
+          badge="FACILITIES"
           badgeColor="sage"
           title="Everything You Need to Train Better."
           subtitle="Designed with intention. From high-grade lifting platforms to climate-controlled training floors and refreshing amenities."

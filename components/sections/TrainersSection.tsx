@@ -9,7 +9,7 @@ export default function TrainersSection() {
     <section id="trainers" className="relative py-24 md:py-32 bg-[#F8F6F2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
-          badge="04 / COACHING"
+          badge="COACHING"
           badgeColor="mint"
           title="Meet Our Coaches."
           subtitle="Experienced mentors committed to your consistency, form, and personal milestones every single day."

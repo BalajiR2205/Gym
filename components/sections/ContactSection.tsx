@@ -52,7 +52,7 @@ export default function ContactSection() {
     <section id="contact" className="relative py-24 md:py-32 bg-[#F8F6F2] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
-          badge="06 / VISIT US"
+          badge="VISIT US"
           badgeColor="yellow"
           title="Come Train With Us."
           subtitle="Drop in for a quick floor walkthrough, chat with our coaching team, or reach out anytime."

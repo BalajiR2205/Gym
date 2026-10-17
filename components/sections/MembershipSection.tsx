@@ -13,7 +13,7 @@ export default function MembershipSection() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Heading */}
         <SectionHeading
-          badge="02 / MEMBERSHIPS"
+          badge="MEMBERSHIPS"
           badgeColor="peach"
           title="Simple, Flexible Plans."
           subtitle="All memberships include complete floor access, modern climate control, clean lockers, and complimentary trainer guidance."

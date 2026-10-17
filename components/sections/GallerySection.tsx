@@ -88,7 +88,7 @@ export default function GallerySection() {
     <section id="gallery" className="relative py-24 md:py-32 bg-[#F0EEE9] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <SectionHeading
-          badge="05 / PROGRESS"
+          badge="PROGRESS"
           badgeColor="blue"
           title="Real People. Real Progress."
           subtitle="A look inside our training spaces, member dedication, and the everyday consistency that transforms lifestyles."
