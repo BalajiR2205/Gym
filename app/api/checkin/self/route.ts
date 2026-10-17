@@ -68,7 +68,9 @@ export async function POST(request: Request) {
     }
 
     const now = new Date();
-    if (checkinToken.expires_at <= now) {
+    // Allow 45-second grace window after expires_at so members who scanned right before rotation can still check in
+    const graceMs = 45_000;
+    if (new Date(checkinToken.expires_at.getTime() + graceMs) <= now) {
       return NextResponse.json(
         { error: "Check-in token has expired", code: "TOKEN_EXPIRED" },
         { status: 400 }

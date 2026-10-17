@@ -10,14 +10,19 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+    const proto = request.headers.get("x-forwarded-proto") || "http";
+    const reqOrigin = host ? `${proto}://${host}` : undefined;
+
     const now = new Date();
+    const minBuffer = new Date(now.getTime() + 15_000); // Token must have at least 15s life left
 
     const existing = await prisma.checkinToken.findFirst({
       where: {
         window_start: { lte: now },
-        expires_at: { gt: now },
+        expires_at: { gt: minBuffer },
       },
       orderBy: { window_start: "desc" },
     });
@@ -36,7 +41,7 @@ export async function GET() {
       });
     }
 
-    const checkinUrl = getCheckinUrl(tokenRecord.token);
+    const checkinUrl = getCheckinUrl(tokenRecord.token, reqOrigin);
     const qr_image_data_url = await generateQrDataUrl(checkinUrl);
 
     return NextResponse.json({

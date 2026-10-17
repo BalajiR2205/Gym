@@ -12,12 +12,13 @@ export function getTokenWindow(now = new Date()) {
   return { windowStart, expiresAt };
 }
 
-export function getCheckinUrl(token: string): string {
+export function getCheckinUrl(token: string, reqOrigin?: string): string {
   const origin =
-    process.env.NEXT_PUBLIC_APP_URL ??
+    reqOrigin ||
+    process.env.NEXT_PUBLIC_APP_URL ||
     (process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000");
+      : "http://localhost:3001");
   return `${origin.replace(/\/$/, "")}/checkin?token=${encodeURIComponent(token)}`;
 }
 
